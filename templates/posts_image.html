@@ -2046,25 +2046,18 @@
 
                     function displaycomments(messages, names, pfps, user_ids, commentids, your_id, post_id) {
                         var increment = 0;
-
-
-
-
-
                         var messagesarray = messages.split("_COMMENTS_").reverse();
                         var namesarray = names.split("_COMMENTS_").reverse();
                         var pfpsarray = pfps.split("_COMMENTS_").reverse();
                         var useridsarray = user_ids.split("_COMMENTS_").reverse();
                         var commentidsarray = commentids.split("_COMMENTS_").reverse();
 
-                        var number = commentidsarray.length - 1
-
-                        document.getElementById("comments_amount").textContent = "(" + number + ")"
+                        var number = commentidsarray.length - 1;
+                        document.getElementById("comments_amount").textContent = "(" + number + ")";
 
                         if (typeof namesarray[1] === "undefined") {
                             no_posts();
                         };
-
 
                         function no_posts() {
                             var newDiv2 = document.createElement('div');
@@ -2086,183 +2079,138 @@
                             document.querySelector(".commentmae").appendChild(paragr);
                         };
 
-
                         var arraylength = messagesarray.length;
                         for (var i = 0; i < arraylength; i++) {
                             increment = increment + 1;
-
                             if (increment != 1) {
+                                var newDiv = document.createElement('div');
+                                var invite_text2 = document.createElement("P");
+                                var invite_text = document.createElement("P");
+                                var invite_text3 = document.createElement("P");
+                                var image = document.createElement("img");
 
-                            var newDiv = document.createElement('div');
-                            var invite_text2 = document.createElement("P");
-                            var invite_text = document.createElement("P");
-                            var invite_text3 = document.createElement("P");
-                            var image = document.createElement("img");
+                                var thingdiv = document.createElement("div");
+                                thingdiv.className = "friending2" + increment;
 
-                            var thingdiv = document.createElement("div");
-                            thingdiv.className = "friending2" + increment;
+                                var clearDiv = document.createElement("div");
+                                clearDiv.style.clear = "both";
 
+                                var text2 = namesarray[i];
+                                var comment = messagesarray[i].replace(/_THISISANAPOSTROPHE_/g, "'");
 
-                            var clearDiv = document.createElement("div");
-                            clearDiv.style.clear = "both";
+                                newDiv.style.fontSize = "20px";
+                                newDiv.style.backgroundColor = 'white';
+                                newDiv.style.padding = '24px 24px 24px 15px';
+                                newDiv.className = "friending" + increment;
+                                newDiv.style.borderRadius = "0px";
+                                newDiv.style.height = "40px";
+                                newDiv.style.overflow = "hidden";
 
+                                var div = document.createElement("div");
+                                div.className = "friending3" + increment;
 
+                                var user_id = useridsarray[i];
 
+                                invite_text2.textContent = text2;
+                                invite_text2.style.lineHeight = "0px";
+                                invite_text2.style.transform = "translate(-1px, -17px)";
+                                invite_text2.style.cursor = "pointer";
+                                invite_text2.style.float = "left";
+                                invite_text2.style.fontSize = "21px";
 
+                                invite_text.textContent = comment;
+                                invite_text.style.lineHeight = "0px";
+                                invite_text.style.fontSize = "17px";
+                                invite_text.style.transform = "translate(50px, -25px)";
 
+                                image.style.width = "40px";
+                                image.style.height = "40px";
+                                image.style.marginRight = "10px";
+                                image.style.borderRadius = "50%";
+                                image.src = "data:image/jpeg;base64," + pfpsarray[i];
+                                image.style.transform = "translate(0, -12.5px)";
+                                image.style.float = "left";
+                                image.style.cursor = "pointer";
+                                image.style.objectFit = "cover";
+                                image.className = "image_comment" + commentidsarray[i];
 
+                                newDiv.appendChild(div);
+                                div.appendChild(thingdiv);
+                                thingdiv.appendChild(image);
+                                thingdiv.appendChild(invite_text2);
+                                div.appendChild(clearDiv);
+                                div.appendChild(invite_text);
 
+                                document.getElementById("mormonsbelike2").appendChild(newDiv);
 
+                                document.querySelector(".commentbutton").click();
+                                document.querySelector(".commentbutton").click();
 
-                            var text2 = namesarray[i]
-                            var comment = messagesarray[i]
-                            var comment = comment.replace(/_THISISANAPOSTROPHE_/g, "'")
+                                if (useridsarray[i] == String(your_id)) {
+                                    var declinebutton = document.createElement('button');
+                                    declinebutton.style.float = "right";
+                                    declinebutton.className = "decline" + increment;
+                                    declinebutton.style.height = "30px";
+                                    declinebutton.textContent = "Delete";
+                                    declinebutton.style.fontSize = "16px";
+                                    declinebutton.style.color = "#787a80";
+                                    declinebutton.style.backgroundColor = "#f0f2f5";
+                                    declinebutton.style.border = "0px";
+                                    declinebutton.style.margin = "0px 0px 0px 0px";
+                                    declinebutton.style.transform = "translate(0, -90px)";
+                                    declinebutton.style.padding = "3px";
+                                    declinebutton.style.width = "85px";
+                                    declinebutton.style.borderRadius = "8px";
+                                    declinebutton.style.cursor = "pointer";
 
+                                    div.appendChild(declinebutton);
 
-                            newDiv.style.fontSize = "20px";
-                            newDiv.style.backgroundColor = 'white';
-                            newDiv.style.padding = '24px 24px 24px 15px';
-                            newDiv.className = "friending" + increment;
-                            newDiv.style.borderRadius = "0px";
-                            newDiv.style.height = "40px";
-                            newDiv.style.overflow = "hidden";
-
-
-                            var user_id = useridsarray[i];
-
-
-
-
-                            invite_text2.textContent = text2
-                            invite_text2.style.lineHeight = "0px";
-                            invite_text2.style.transform = "translate(-1px, -17px)";
-                            invite_text2.style.cursor = "pointer";
-                            invite_text2.style.float = "left";
-                            invite_text2.style.fontSize = "21px";
-
-
-
-
-
-                            invite_text.textContent = comment
-                            invite_text.style.lineHeight = "0px";
-                            invite_text.style.fontSize = "17px";
-                            invite_text.style.transform = "translate(50px, -25px)";
-
-
-
-
-
-
-                            image.style.width = "40px";
-                            image.style.height = "40px";
-                            image.style.marginRight = "10px";
-                            image.style.borderRadius = "50%";
-                            image.src = "data:image/jpeg;base64," + pfpsarray[i]
-                            image.style.transform = "translate(0, -12.5px)";
-                            image.style.float = "left";
-                            image.style.cursor = "pointer";
-                            image.style.objectFit = "cover"
-                            image.className = "image_comment" + commentidsarray[i]
-
-
-
-
-
-                            document.getElementById("mormonsbelike2").appendChild(newDiv);
-
-
-
-                            document.querySelector(".friending" + increment).appendChild(thingdiv);
-                            document.querySelector(".friending2" + increment).appendChild(image);
-                            document.querySelector(".friending2" + increment).appendChild(invite_text2);
-                            document.querySelector(".friending" + increment).appendChild(clearDiv);
-                            document.querySelector(".friending" + increment).appendChild(invite_text);
-
-                            if (useridsarray[i] == String(your_id)) {
-                                var declinebutton = document.createElement('button');
-
-                                declinebutton.style.float = "right"; declinebutton.className = "decline" + increment; declinebutton.style.height = "30px";
-                                declinebutton.textContent = "Delete"; declinebutton.style.fontSize = "16px"; declinebutton.style.color = "#787a80"; declinebutton.style.backgroundColor = "#f0f2f5";
-                                declinebutton.style.border = "0px"; declinebutton.style.margin = "0px 0px 0px 0px"; declinebutton.style.transform = "translate(0, -90px)";
-                                declinebutton.style.padding = "3px"; declinebutton.style.width = "85px"; declinebutton.style.borderRadius = "8px"; declinebutton.style.cursor = "pointer";
-
-                                document.querySelector(".friending" + increment).appendChild(declinebutton);
-                            }
-
-                            (function(index, user_id, your_id, comment_id) {
-                                newDiv.onmouseover = function() {
-                                    document.querySelector(".friending" + index).style.backgroundColor = "#f0f2f5";
-                                    if (user_id == String(your_id)) {
-                                        document.querySelector(".decline" + index).style.backgroundColor = "#caccd0";
-                                    }
-
-                                };
-
-                                newDiv.onmouseout = function() {
-                                    document.querySelector(".friending" + index).style.backgroundColor = "white";
-                                    if (user_id == String(your_id)) {
-                                        document.querySelector(".decline" + index).style.backgroundColor = "#f0f2f5";
-                                    }
-                                };
-
-
-                                image.onclick = function () {
-                                    window.location.href = "/users/" + user_id + "/posts";
-                                };
-
-                                invite_text2.onclick = function() {
-                                    window.location.href = "/users/" + user_id + "/posts";
-                                };
-
-                                if (user_id == String(your_id)) {
-                                    declinebutton.onclick = function() {
-                                        deletecomment(comment_id, post_id);
-                                        document.getElementById("mormonsbelike2").removeChild(document.querySelector(".friending"  + index))
-
-
-                                        number = document.getElementById("comments_amount").textContent.replace(")", "").replace("(", "")
-                                        number = parseInt(number)
-                                        number = number - 1
-
-
-                                        document.getElementById("comments_amount").textContent = "(" + number + ")"
-
-                                        commentidsarray = commentidsarray.filter(item => item !== comment_id);
-
-
-                                        if (commentidsarray.length == 1) {
-                                            if (document.getElementById("mormonsbelike2").innerHTML.trim() === '') {
-
+                                    declinebutton.onclick = (function(index, comment_id) {
+                                        return function() {
+                                            deletecomment(comment_id, post_id);
+                                            document.getElementById("mormonsbelike2").removeChild(document.querySelector(".friending" + index));
+                                            number = parseInt(document.getElementById("comments_amount").textContent.replace(")", "").replace("(", "")) - 1;
+                                            document.getElementById("comments_amount").textContent = "(" + number + ")";
+                                            commentidsarray = commentidsarray.filter(item => item !== comment_id);
+                                            if (commentidsarray.length == 1 && document.getElementById("mormonsbelike2").innerHTML.trim() === '') {
                                                 no_posts();
-
                                             }
-
-                                        }
-
-                                    };
-
+                                        };
+                                    })(increment, commentidsarray[i]);
                                 }
 
-                            })(increment, user_id, your_id, commentidsarray[i], post_id);
+                                (function(index, user_id) {
+                                    newDiv.onmouseover = function() {
+                                        this.style.backgroundColor = "#f0f2f5";
+                                        if (user_id == String(your_id)) {
+                                            document.querySelector(".decline" + index).style.backgroundColor = "#caccd0";
+                                        }
+                                    };
 
+                                    newDiv.onmouseout = function() {
+                                        this.style.backgroundColor = "white";
+                                        if (user_id == String(your_id)) {
+                                            document.querySelector(".decline" + index).style.backgroundColor = "#f0f2f5";
+                                        }
+                                    };
 
+                                    image.onclick = function() {
+                                        window.location.href = "/users/" + user_id + "/posts";
+                                    };
 
+                                    invite_text2.onclick = function() {
+                                        window.location.href = "/users/" + user_id + "/posts";
+                                    };
+                                })(increment, user_id);
                             }
-
-
                         }
 
                         for (var i = 0; i < arraylength; i++) {
-
-                            (function (index) {
+                            (function(index) {
                                 if (index !== 0) {
                                     var post_id = useridsarray[index];
-
-
-
                                     var imagen = document.querySelector(".image_comment" + commentidsarray[index]);
-                                    var url = '/get/pfp_comment/' + post_id
+                                    var url = '/get/pfp_comment/' + post_id;
 
                                     fetch(url)
                                         .then(response => {
@@ -2273,8 +2221,6 @@
                                         })
                                         .then(image => {
                                             imagen.src = "data:image/jpeg;base64," + image;
-                                            console.log("NAHHHH")
-
                                         })
                                         .catch(error => {
                                             console.error('error fetching image for post id:', post_id, error);
@@ -2283,9 +2229,7 @@
                             })(i);
                         }
 
-
-                        document.getElementById("friendshouse").click()
-
+                        document.getElementById("friendshouse").click();
                     }
 
 
