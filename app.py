@@ -8,7 +8,7 @@ import os, base64, random, sqlite3, editdistance
 from io import BytesIO
 from PIL import Image
 
-
+#GYATTTTT       
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = token_hex(16)
