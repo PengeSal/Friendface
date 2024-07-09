@@ -323,6 +323,24 @@
                         document.getElementById("search-input").style.width = "200px";
                         document.getElementById("search-container").style.boxShadow = "none";
                     });
+
+                    window.onload = function() {
+                        var string = "github.com/isaacgisby/lan-messager\n"
+                            if (document.getElementById("splash").textContent == string) {
+                                document.getElementById("splash").style.cursor = "pointer";
+                                document.getElementById("splash").onclick = function() {
+                                    window.open("https://github.com/isaacgisby/lan-messager");
+                        }}
+                        if (document.getElementById("splash").textContent == "Now in colour!!!\n") {
+                            document.getElementById("splash").style.width = "125px";
+                            document.getElementById("splash").style.background = "linear-gradient(to right, red, orange, yellow, green, blue, indigo, purple)";
+                            document.getElementById("splash").style.fontWeight = "bold";
+                            document.getElementById("splash").style.paddingLeft = "none";
+                            document.getElementById("splash").style.paddingRight = "none";
+                            document.getElementById("splash").style.webkitBackgroundClip = "text";
+                            document.getElementById("splash").style.webkitTextFillColor = "transparent";
+                        }
+                    }
                 </script>
                 
                 
