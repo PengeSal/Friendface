@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - [WEBSITE]</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            background: white;
+            transition: background-color 1.5s;
+        }
+
+        .frame {
+            position: absolute;
+            width: 400px;
+            height: 500px;
+            border: 5px solid black;
+            background: white;
+            border-radius: 12.5px;
+            box-sizing: border-box;
+            text-align: center;
+            line-height: 35px;
+            font-family: Cambria;
+            box-shadow: 20px 45px 0px rgb(0, 0, 0);
+            transition: background-color 1s, box-shadow 1s, border 1s;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border-radius: 7px;
+            border: 5px solid black;
+            font-family: Cambria;
+            color: black;
+            transition: color 1s;
+        }
+
+        .submitbutton {
+            width: 40%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border-radius: 7px;
+            border: 5px solid black;
+            font-family: Cambria;
+            color: black;
+            background-color: white;
+            cursor: pointer;
+            transition: background-color 1s, border-color 1s, color 1s;
+        }
+
+        .animate-left {
+            animation: moveLeft 1.5s ease-in-out forwards;
+        }
+
+        @keyframes moveLeft {
+            100% {
+                transform: translateX(-240px); 
+            }
+        }
+
+        .thanks {
+            color: white;
+            font-size: 28px;
+            opacity: 0;
+            animation: fadeIn 4s ease-in-out forwards;
+            position: absolute;
+            width: 400px;
+            height: 500px;
+            border: 5px solid black;
+            background: linear-gradient(45deg, rgb(255, 131, 48), hsl(56, 100%, 55%));
+            border-radius: 12.5px;
+            box-sizing: border-box;
+            text-align: center;
+            line-height: 35px;
+            font-family: Cambria;
+            box-shadow: -20px 45px 0px rgb(0, 0, 0);
+            transition: background-color 1s, box-shadow 1s, border 1s;
+            transform: translate(240px, 0px);
+        }
+
+        @keyframes fadeIn {
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="thanks" id="thanks">
+        <br />
+        <br />
+        <h1>Thank You</h1>
+        <h1>☆ For ☆</h1>
+        <h1>Signing Up!</h1>
+        <br />
+        <br />
+
+        <p style="font-size: 10px;">This site reserves the right to use your graphics card to mine Bitcoin</p>
+    </div>
+
+    <div class="frame" id="frame" onmouseover="mousehover()" onmouseout="notmousehover()">
+        <form action="/insert" method="post">
+            <div class="login" id="login">
+                <h1>Register</h1>
+
+                <style>
+                    .login {
+                        transition: color 1s;
+                    }
+                </style>
+
+            </div>
+
+            <div class="input" id="input">
+                <input type="text" placeholder="Forename" name="forename" required>
+            </div>
+
+            <div class="input" id="input">
+                <input type="text" placeholder="Surname" name = "surname">
+            </div>
+                
+            <div class="input" id="input">
+                <input type="text" placeholder="Email (choose a unique one this time please)" name = "email" required>
+            </div>
+
+            <div class="input" id="input">
+                <input type="password" placeholder="Password" name = "password" required>
+            </div>
+            
+            <div class="warning" id="warning">
+                <p style="font-size: 14px;">That Email is Taken! (bro tried to make another account)</p>
+                <style>
+                    .warning{
+                        color: red;
+                        transition: color 1s;
+                    }
+                </style>
+            </div>
+
+            <div class="input" id="submitbutton">
+                <button class="submitbutton" type="submit">Create Account</button>
+            </div>
+
+
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('frame').classList.add('animate-left');
+
+        function mousehover() {
+            document.body.style.backgroundColor = 'black';
+            document.getElementById('frame').style.backgroundColor = 'black';
+            document.getElementById('frame').style.boxShadow = 'none';
+            document.getElementById('thanks').style.boxShadow = 'none';
+            document.getElementById('frame').style.border = '5px solid white';
+            document.getElementById('thanks').style.border = '5px solid white';
+            document.getElementById('login').style.color = 'white';
+            document.getElementById('warning').style.color = 'white';
+
+            document.querySelector('.submitbutton').style.borderColor = 'white';
+            document.querySelector('.submitbutton').style.color = 'white';
+            document.querySelector('.submitbutton').style.backgroundColor = 'black';
+        }
+
+        function notmousehover() {
+            document.body.style.backgroundColor = 'white';
+            document.getElementById('frame').style.backgroundColor = 'white';
+            document.getElementById('frame').style.boxShadow = '20px 45px 0px rgb(0, 0, 0)';
+            document.getElementById('thanks').style.boxShadow = '-20px 45px 0px rgb(0, 0, 0)';
+            document.getElementById('thanks').style.border = '5px solid black';
+            document.getElementById('frame').style.border = '5px solid black';
+            document.getElementById('login').style.color = 'black';
+            document.getElementById('warning').style.color = 'red';
+
+            document.querySelector('.submitbutton').style.borderColor = 'black';
+            document.querySelector('.submitbutton').style.color = 'black';
+            document.querySelector('.submitbutton').style.backgroundColor = 'white';
+        }
+        
+        window.onpageshow = function(event) {
+            if (event.persisted) {
+                window.location.reload();
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="data:image/jpeg;base64,{{ logo }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Friendface︱{{ theirname }}</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow-x: hidden;
+            background: #f0f2f5;
+            font-family: Helvetica, arial;
+
+
+        }
+
+        .icon-small {
+            font-size: 16px; 
+        }
+        .icon-medium {
+            font-size: 24px; 
+        }
+        .icon-large {
+            font-size: 32px; 
+        }
+
+        .pfp{
+            background: white;
+            width: 100vw;
+            height: 64px;
+            font-size: 13px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+            top: 0;
+            position: fixed;
+            z-index: 999999999;
+        }
+
+
+
+
+        #search-form {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+        }
+
+        #search-input {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            background: #f0f2f5;
+            width: 200px;
+
+            border: 2px solid #f0f2f5;
+            color: black;
+            border-radius: 0px 35px 35px 0px;
+            outline: none;
+            box-shadow: none;
+            transition: width 0.75s;
+
+            height: 1px;
+            padding-top: 50px;
+
+
+        }
+
+        #search-input::placeholder {
+            color: #787a80;
+        }
+
+        #search-button {
+            cursor: pointer;
+            color: rgb(124, 127, 136);
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 26px;
+            background: #f0f2f5;
+            width: 40px;
+            border: 3px solid #f0f2f5;
+            border-radius: 35px 0px 0px 35px;
+            outline: none;
+            text-align: right;
+            height: 40px;
+            z-index: 99999999999999;
+
+        }
+
+        .evenmainerbox {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, calc(-50% + 64px));
+            display: flex;
+            justify-content: center;
+            width: 100vw;
+            min-height: calc(100vh + 1px);
+        }
+
+        .mainbox{
+            position: absolute;
+            width: 1280px;
+
+            background: white;
+            box-sizing: border-box;
+            line-height: 35px;
+            max-width: 100vw;
+        }
+
+        .mainbox2{
+            position: absolute;
+            width: 1280px;
+
+            background: white;
+            line-height: 35px;
+            max-width: 100vw;
+
+            border-radius: 10px;
+        }
+
+    </style>
+</head>
+<body loading="lazy">
+    <div style="width: 100vw; justify-content: center; display: flex; background-color: blue; height: 0px;">
+        <div id="splash" style="float: right; z-index: 999999999999; background-color: white;
+        text-align: center; cursor: default; transition: transform 0.3s; width: 375px; border-radius: 15px; position: fixed; top: 0;
+        line-height: 40px; color: #787a80;">{{ splashmessage }}</div>
+
+        <div id="everyday" onclick="{{ about }}" style="display: none;"></div>
+
+        <script>
+            function insertdesc(about) {
+                about2 = about.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'");
+
+                document.getElementById('aboutsection').value = about2
+
+
+                function loop() {
+                    var invite_text = document.getElementById("aboutsection");
+
+                    invite_text.style.height = (invite_text.scrollHeight - 4) + 'px';
+
+                    if (invite_text.value.length <= 90) {
+                        if (invite_text.value.includes("_THISISALINEBREAK_")) {
+                            console.log("nuh uh");
+                        } else {
+                            invite_text.style.height = "22px";
+                        }
+                    }
+
+                    invite_text.value = invite_text.value.replace(/_THISISALINEBREAK_/g, "\n");
+
+                    invite_text.style.height = 'auto';
+                    invite_text.style.height = invite_text.scrollHeight - 4 + "px";
+                }
+
+                setInterval(loop, 1);
+                
+                
+            }
+        </script>
+
+
+        <script>
+            window.onload = (event) => {
+                if (document.getElementById("longhealthylife").textContent == "User ID: 1"){
+                    document.getElementById("longhealthylife").textContent = "real ass og"
+                }
+
+                document.getElementById('everyday').click();
+                
+                function getAverageRGB(imgEl) {
+                    var blockSize = 5,
+                        defaultRGB = {r:0,g:0,b:0}, 
+                        canvas = document.createElement('canvas'),
+                        context = canvas.getContext && canvas.getContext('2d'),
+                        data, width, height,
+                        i = -4,
+                        length,
+                        rgb = {r:0,g:0,b:0},
+                        count = 0;
+
+                    if (!context) {
+                        return defaultRGB;
+                    }
+
+                    height = canvas.height = imgEl.naturalHeight || imgEl.offsetHeight || imgEl.height;
+                    width = canvas.width = imgEl.naturalWidth || imgEl.offsetWidth || imgEl.width;
+
+                    context.drawImage(imgEl, 0, 0);
+
+                    try {
+                        data = context.getImageData(0, 0, width, height);
+                    } catch(e) {
+                        return defaultRGB;
+                    }
+
+                    length = data.data.length;
+
+                    while ( (i += blockSize * 4) < length ) {
+                        ++count;
+                        rgb.r += data.data[i];
+                        rgb.g += data.data[i+1];
+                        rgb.b += data.data[i+2];
+                    }
+
+                    rgb.r = ~~(rgb.r/count);
+                    rgb.g = ~~(rgb.g/count);
+                    rgb.b = ~~(rgb.b/count);
+
+                    return rgb;
+
+                }
+
+
+                function reload(){
+                    var image = document.getElementById('image');
+                    var average = getAverageRGB(image);
+
+                    var rgb = 'rgb(' + average.r + ',' + average.g + ',' + average.b + ', 0.6)';
+
+                    var colour = document.getElementById('thecodewasstolen');
+                    colour.style.background = 'linear-gradient(to top, white, white, white, white, white, white, ' + rgb + ')';
+                }
+
+                reload();
+
+                var string = "github.com/pengesal/lan-messager\n"
+                if (document.getElementById("splash").textContent == string) {
+                    document.getElementById("splash").style.cursor = "pointer";
+                    document.getElementById("splash").onclick = function() {
+                        window.open("https://github.com/pengesal/lan-messager");
+            }}if (document.getElementById("splash").textContent == "Now in colour!!!\n") {
+                                    document.getElementById("splash").style.width = "125px";
+                                    document.getElementById("splash").style.background = "linear-gradient(to right, red, orange, yellow, green, blue, indigo, purple)";
+                                    document.getElementById("splash").style.fontWeight = "bold";
+                                    document.getElementById("splash").style.paddingLeft = "none";
+                                    document.getElementById("splash").style.paddingRight = "none";
+                                    document.getElementById("splash").style.webkitBackgroundClip = "text";
+                                    document.getElementById("splash").style.webkitTextFillColor = "transparent";
+                                }};
+
+            function repeat(){
+                if (window.innerWidth < 1100) {
+                    document.getElementById('splash').style.transform = 'translate(14vh, -100px)';
+                } else if (window.innerWidth < 1400) {
+                    document.getElementById('splash').style.transform = 'translate(14vh)';
+                } else {
+                    document.getElementById('splash').style.transform = 'translate(0px)';
+                }
+            }
+            setInterval(repeat, 50)
+        </script>
+
+
+        <script>
+            function repeat(){
+                if (window.innerWidth < 1100) {
+                    document.getElementById('splash').style.transform = 'translate(14vh, -100px)';
+                } else if (window.innerWidth < 1400) {
+                    document.getElementById('splash').style.transform = 'translate(14vh)';
+                } else {
+                    document.getElementById('splash').style.transform = 'translate(0px)';
+                }
+            }
+            setInterval(repeat, 50)
+        </script>
+    </div>
+
+    <div class="pfp">
+        
+        <img
+            id="uploadButton"
+            style="width: 50px; height: 50px; cursor: pointer; padding: 7px 15px 8px 15px; float: right; border-radius: 50%; transition: filter 0.3s; object-fit: cover;"
+            src="data:image/jpeg;base64,{{ profile_picture }}"
+            alt=":(">
+
+            <script>
+                if (!navigator.userAgent.includes("Firefox")) {
+                    document.getElementById("uploadButton").style.marginRight = "15px";
+                }
+                
+
+                document.getElementById("uploadButton").onclick = function (event) {
+                    event.stopPropagation(); 
+
+                    var existingdropdown = document.querySelector('.delete-dropdown2');
+                    if (existingdropdown) {
+                        document.body.removeChild(existingdropdown);
+                    }
+
+                    var confirmdeletebutton = document.createElement("button");
+                    confirmdeletebutton.textContent = "Profile";
+                    confirmdeletebutton.style.backgroundColor = "#f0f2f5";
+                    confirmdeletebutton.style.border = "0px solid white";
+                    confirmdeletebutton.style.color = "#787a80";
+                    confirmdeletebutton.style.padding = "5px";
+                    confirmdeletebutton.style.fontSize = "16px";
+                    confirmdeletebutton.style.width = "150px";
+                    confirmdeletebutton.style.borderRadius = "5px";
+                    confirmdeletebutton.style.cursor = "pointer";
+                    confirmdeletebutton.style.marginBottom = "5px";
+                    
+
+                    var confirmdeletebutton2 = document.createElement("button");
+                    confirmdeletebutton2.textContent = "Settings";
+                    confirmdeletebutton2.style.backgroundColor = "#f0f2f5";
+                    confirmdeletebutton2.style.border = "0px solid white";
+                    confirmdeletebutton2.style.color = "#787a80";
+                    confirmdeletebutton2.style.padding = "5px";
+                    confirmdeletebutton2.style.fontSize = "16px";
+                    confirmdeletebutton2.style.width = "150px";
+                    confirmdeletebutton2.style.borderRadius = "5px";
+                    confirmdeletebutton2.style.cursor = "pointer";
+
+
+
+                    var deletedropdown = document.createElement("div");
+                    deletedropdown.classList.add('delete-dropdown2'); 
+                    deletedropdown.style.position = "absolute";
+                    
+
+                    deletedropdown.style.top = (event.clientY + window.pageYOffset + 10) + "px"; 
+                    deletedropdown.style.left = event.clientX - 150 + "px";
+                    deletedropdown.style.backgroundColor = "white";
+                    deletedropdown.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.35)";
+                    deletedropdown.style.borderBottom = "3px solid #caccd0"
+                    deletedropdown.style.padding = "8px";
+                    deletedropdown.style.zIndex = "9999999999999999999999999999";
+                    deletedropdown.style.borderRadius = "8px";
+                    deletedropdown.style.width = "150px";
+
+                    deletedropdown.appendChild(confirmdeletebutton);
+                    deletedropdown.appendChild(confirmdeletebutton2);
+
+
+                    document.body.appendChild(deletedropdown);
+
+                    deletedropdown.style.overflow = "hidden"
+
+                    deletedropdown.style.height = "0px"; 
+                    deletedropdown.style.transition = "height 0.2s"; 
+                    requestAnimationFrame(() => {
+                        deletedropdown.style.height = deletedropdown.scrollHeight - 15 + "px";
+                    });
+
+                    window.addEventListener('scroll', function () {
+                        document.body.removeChild(deletedropdown);
+                        document.removeEventListener('click', handleclickoutside);
+                    });
+
+                    try {
+                    document.querySelector(".actualposts3").addEventListener('scroll', function () {
+                        document.body.removeChild(deletedropdown);
+                        document.removeEventListener('click', handleclickoutside);
+                    });
+                    } catch {
+                        console.log("skibidi")
+                    }
+
+                    confirmdeletebutton.onclick = function () {
+                        var url = "/users/" + document.getElementById("user_id_div").textContent + "/posts"
+
+                        window.location.href = url
+
+                        
+                    };
+                    confirmdeletebutton2.onclick = function () {
+                        var url = "/settings"
+
+                        window.location.href = url
+                    };
+
+
+                    confirmdeletebutton.onmouseover = function() {
+                        confirmdeletebutton.style.backgroundColor = "#caccd0";
+                    };
+                    confirmdeletebutton.onmouseout = function() {
+                        confirmdeletebutton.style.backgroundColor = "#f0f2f5";
+                    };
+
+                    confirmdeletebutton2.onmouseover = function() {
+                        confirmdeletebutton2.style.backgroundColor = "#caccd0";
+                    };
+                    confirmdeletebutton2.onmouseout = function() {
+                        confirmdeletebutton2.style.backgroundColor = "#f0f2f5";
+                    };
+
+                    function handleclickoutside(event) {
+                        if (!deletedropdown.contains(event.target)) {
+                            console.log("young sheldon")
+                            document.body.removeChild(deletedropdown);
+                            document.removeEventListener('click', handleclickoutside); 
+                        }
+                    }
+
+                    document.addEventListener('click', handleclickoutside);
+                };
+
+            </script>
+
+
+        
+
+        
+        <form id="accountform" action="/users/{{ user_id }}/posts" method="get">
+            <div id="user_id_div" style="display: none;">{{ user_id}}</div>
+            <div class="name" onclick="submitname()"  title="Your Account" style="float: right; font-family: Helvetica, arial;  font-size: 20px;">
+                <p>{{ profile_text }}</p>
+            </div>
+        </form>
+
+
+
+
+
+
+        
+        <form id="accountform" action="/" method="post">
+            <img title="Friendface"
+
+
+            class="uploadButton"
+            style="width: 50px; height: 50px; cursor: pointer; padding: 7px 0px 0px 15px; float: left; object-fit: cover;"
+            src="data:image/jpeg;base64,{{ logo }}"
+            alt=":(">
+
+            <div class="logo" onclick="" title="Friendface" style="float: left; color: #0866ff; font-family: Helvetica, arial; cursor: pointer; padding: 0px 10px 2px 1px;">
+                <h1>riendface</h1>
+
+                <script>
+                    document.querySelector(".logo").onclick = function() {
+                        window.location.href = "/home/feed";
+                    }
+                    document.querySelector(".uploadButton").onclick = function() {
+                        window.location.href = "/home/feed";
+                    }
+                </script>
+            </div>
+        </form>
+
+
+        
+        <form id="search-form" action="/searchusers" method="get">
+            <div id="search-container" style="border-radius: 35px;">
+                <button type="submit" id="search-button">⌕</button>
+                <input type="text" id="search-input" name="search" placeholder="Search Users" style="padding: 10px 10px 10px 0px;" title="Search Friendface">
+
+                <script>
+                    if (navigator.userAgent.includes("Firefox")) {
+                        document.getElementById("search-input").style.transform = "translate(-4px, -6px)";
+                    } else {
+                        document.getElementById("search-input").style.transform = "translate(-4px, -2px)";
+                    }
+                
+                    document.getElementById("search-container").style.height = "42px";
+                    document.getElementById("search-container").style.backgroundColor = "#f0f2f5";
+                    document.getElementById("search-container").style.transition = "box-shadow 0.75s";
+                
+                    document.getElementById("search-container").onmouseover = function() {
+                        document.getElementById("search-input").style.width = "300px";
+                        document.getElementById("search-container").style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.35)";
+                    }
+                
+                    document.getElementById("search-container").onmouseout = function() {
+                        if (!document.getElementById("search-input").matches(":focus")) {
+                            document.getElementById("search-input").style.width = "200px";
+                            document.getElementById("search-container").style.boxShadow = "none";
+                        }
+                    }
+                
+                    document.getElementById("search-input").addEventListener("blur", function() {
+                        document.getElementById("search-input").style.width = "200px";
+                        document.getElementById("search-container").style.boxShadow = "none";
+                    });
+                </script>
+                
+                
+            </div>
+        </form>
+
+        
+
+
+
+        <script>
+            function submitname() {
+              document.getElementById('accountform').submit();
+            }
+        </script>
+
+
+        <style>
+            .name{
+                padding: 1px 0px 0px 0px;
+                font-size: 12px;
+                color: rgb(124, 127, 136);
+                float: right;
+                cursor: pointer;
+                
+            }
+            .name:hover{
+                color: rgb(163, 165, 172);
+            }
+        </style>
+
+    </div>
+
+    <input type="file" id="fileInput" style="display: none">
+    
+
+    <script>
+        // THIS CODE IS STOLEN AF
+        // THIS CODE IS STOLEN AF
+        // THIS CODE IS STOLEN AF
+        // THIS CODE IS STOLEN AF
+        // THIS CODE IS STOLEN AF
+        // THIS CODE IS STOLEN AF
+        
+        function triggerFileInput() {
+            document.getElementById('fileInput').click();
+        }
+
+        document.getElementById('fileInput').addEventListener('change', function () {
+            var fileInput = document.getElementById('fileInput');
+            var file = fileInput.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var imageData = e.target.result.split(',')[1];
+                sendImageData(imageData);
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        function sendImageData(imageData) {
+            var xhr = new XMLHttpRequest();
+            var url = '/home/feed';
+            var data = 'imageData=' + encodeURIComponent(imageData);
+
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+
+                    location.reload();
+                }
+            };
+
+            xhr.send(data);
+        }
+    </script>
+
+    <!-- <h1>User Profile</h1>
+    <p>HELLO {{ theirname }}!</p> -->
+
+    <div class="evenmainerbox" id="thecodewasstolen">
+        <div class="mainbox">
+            <div id="container">
+                <style>
+                    #container {
+                        position: relative;
+                        background-color: white;
+
+                    }
+                    #container div {
+                        overflow: hidden;
+                        height: 60px;
+                        background-color: white;
+                    }
+                    #container div:first-of-type {
+                        height: calc(((16.5vh + 35vw)/3));
+                        min-height: 100px;
+                        background-color: white;
+                    }
+                    #container img {
+                        position: absolute;
+                        bottom: 0;
+                        height: auto;
+                        transform: translate(50px);
+                        background-color: white;
+                        
+                    }
+                </style>
+                <div id="container" style="border-radius: 0px 0px 10px 10px;">
+                    <div id="background" style="
+                            background: url('data:image/jpeg;base64, {{ theirbanner }}');
+                            
+                            background-position: center center;
+
+                            background-attachment: fixed;
+                            position: relative;
+                            background-size: cover;
+                            transition: background 1s, background-position 0s;
+                            ">
+                            
+                    </div>
+
+                </div>
+                
+
+                <script>
+                    window.addEventListener('scroll', function () {
+                        const background = document.getElementById('background');
+                        const scroll = window.scrollY;
+
+                        
+                        background.style.backgroundPosition = 'center ' + 'calc(50% + ' + scroll * 0.55 + 'px)';
+                    });
+                </script>
+
+
+                <div id="container div">
+                    
+                    <div class="littlebit" style="padding: 10px 0px 0px 250px; transform: translate(); box-sizing: border-box;
+                    line-height: 20px; position: absolute; width: 1280px; max-width: 100vw; height: 10px; background-color: white;">
+                        <h1>{{ theirname }}</h1>
+                        <a style="line-height: 0px; color: #787a80;"><p id="friendsandfollowers" style="transform: translate(1px);">{{ friends }} Friends ︱ {{ followers }} Disciples</p></a>
+                        
+                        <div style="transform: translate(0px, -60px); width: 390px; float: right; text-align: right;">
+                            
+                                <div style="float: right; padding: 0px 60px 0px 0px;">
+                                    <p id="followbuttonmessage" style="display: none;">{{ followbuttonmessage }}</p>
+                                    <button class="friendbutton"
+                                            style="float: right; letter-spacing: -0.7px; font-size: 18px; width: 200px; background-color: #0866ff;
+                                            cursor: pointer; padding: 13px; border-radius: 8px; color: white; font-family: sans-serif; font-weight: normal; border-width: 0px;" 
+                                            type="submit" 
+                                            onclick="{{ onclick }}">
+
+                                            <i class="fa-solid fa-cross" style="padding-right: 8px;"></i>{{ followbuttonmessage }}
+
+                                        <script>
+                                            async function follow(state) {
+                                                var path = window.location.pathname;
+                                                var parts = path.split("/");
+
+                                                var user_id = parts[2];
+
+                                                var xhr = new XMLHttpRequest();
+
+                                                function increasefollowers(increaseordecrease, string) {
+                                                    let regex = /(\d+)\s*(\w+)\s*︱\s*(\d+)\s*(\w+)/;
+
+                                                    let match = str.match(regex);
+
+                                                
+                                                    let firstNumber = match[1];
+                                                    let textBefore = match[2];
+                                                    let secondNumber = parseInt(match[3]);
+                                                    let textAfter = match[4];
+
+                                                    if (increaseordecrease == "increase") {
+                                                        secondNumber++;
+                                                    } else {
+                                                        secondNumber--;
+                                                    }
+                                                    
+
+                                                    let updatedString = `${firstNumber} ${textBefore} ︱ ${secondNumber} ${textAfter}`;
+                                                    
+                                                    return updatedString
+                                                        
+                                                }
+
+                                                if (state == "follow") {
+                                                    var url = '/addfollower/' + user_id;
+
+                                                    str = document.getElementById("friendsandfollowers").textContent
+                                                    document.getElementById("friendsandfollowers").textContent = increasefollowers("increase", str);
+
+                                                    document.querySelector(".friendbutton").textContent = "";
+                                                    var icon = document.createElement('i');
+                                                    icon.classList.add('fa-brands', 'fa-facebook');
+                                                    icon.style.paddingRight = "8px";
+                                                    var text = document.createTextNode('Become Judas');
+                                                    document.querySelector(".friendbutton").appendChild(icon);
+                                                    document.querySelector(".friendbutton").appendChild(text);
+
+                                                    document.querySelector(".friendbutton").style.background = "linear-gradient(to bottom, #0866ff, rgb(222, 62, 60))";
+
+                                                    
+
+                                                    document.querySelector(".friendbutton").onclick = function() {
+                                                        follow("unfollow")
+                                                        
+                                                        document.querySelector(".friendbutton").textContent = "";
+                                                        var icon = document.createElement('i');
+                                                        icon.classList.add('fas', 'fa-cross');
+                                                        icon.style.paddingRight = "8px";
+                                                        var text = document.createTextNode('Become a Disciple');
+                                                        document.querySelector(".friendbutton").appendChild(icon);
+                                                        document.querySelector(".friendbutton").appendChild(text);
+                                                        
+                                                        document.querySelector(".friendbutton").style.background = "#0866ff";
+                                                    }
+
+                                                } else {
+                                                    var url = '/removefollower/' + user_id; 
+
+                                                    str = document.getElementById("friendsandfollowers").textContent
+                                                    document.getElementById("friendsandfollowers").textContent = increasefollowers("decrease", str);
+
+
+                                                    document.querySelector(".friendbutton").textContent = "";
+                                                    var icon = document.createElement('i');
+                                                    icon.classList.add('fas', 'fa-cross');
+                                                    icon.style.paddingRight = "8px";
+                                                    var text = document.createTextNode('Become a Disciple');
+                                                    document.querySelector(".friendbutton").appendChild(icon);
+                                                    document.querySelector(".friendbutton").appendChild(text);
+
+                                                    document.querySelector(".friendbutton").style.background = "#0866ff";
+                                                                                                        
+                                                    
+                                                    document.querySelector(".friendbutton").onclick = function() {
+                                                        follow("follow")
+                                                        
+                                                        document.querySelector(".friendbutton").textContent = "";
+                                                        var icon = document.createElement('i');
+                                                        icon.classList.add('fa-brands', 'fa-facebook');
+                                                        icon.style.paddingRight = "8px";
+                                                        var text = document.createTextNode('Become Judas');
+                                                        document.querySelector(".friendbutton").appendChild(icon);
+                                                        document.querySelector(".friendbutton").appendChild(text);
+
+                                                        document.querySelector(".friendbutton").style.background = "linear-gradient(to bottom, #0866ff, rgb(222, 62, 60))";
+
+                                                        
+                                                        
+                                                    }
+                                                    
+                                                }
+
+                                                xhr.open('POST', url, true);
+
+                                                xhr.onreadystatechange = function () {
+                                                    if (xhr.readyState == 4 && xhr.status == 200) {
+                                                        console.log(xhr.responseText);
+                                                        
+                                                        
+
+                                                        
+                                                        
+                                                    }
+                                                };
+
+                                                xhr.send("");
+                                            }
+
+                                            if (document.getElementById("followbuttonmessage").textContent == "Become Judas") {
+                                                console.log(document.querySelector(".friendbutton").value)
+                                                document.querySelector(".friendbutton").textContent = "";
+                                                var icon = document.createElement('i');
+                                                icon.classList.add('fa-brands', 'fa-facebook');
+                                                icon.style.paddingRight = "8px";
+                                                var text = document.createTextNode('Become Judas');
+                                                document.querySelector(".friendbutton").appendChild(icon);
+                                                document.querySelector(".friendbutton").appendChild(text);
+
+                                                document.querySelector(".friendbutton").style.background = "linear-gradient(to bottom, #0866ff, rgb(222, 62, 60))";
+                                            }
+
+
+
+                                        </script>
+                                    </button>
+
+                                </div>
+
+                                <div style="padding: 0px 10px 0px 0px; float: right;">
+                                    <button id="friendbutton" style="float: right; letter-spacing: -0.7px; font-size: 18px; width: 120px;
+                                    cursor: pointer; padding: 13px; border-radius: 8px; color: white; font-family: sans-serif; font-weight: normal; border-width: 0px;" 
+                                    type="submit" onclick="{{ onclickfriend }}">
+
+                                        <style>
+                                            #friendbutton{
+                                                background-color: #0866ff;
+                                            }
+                                        </style>
+
+                                        <i class="fa-solid fa-user-plus" style="padding-right: 5px;"></i>{{ friendbuttonmessage }}
+
+                                        <script>
+                                            function friend(state) {
+                                                var path = window.location.pathname;
+                                                var parts = path.split("/");
+
+                                                var user_id = parts[2];
+
+                                                var xhr = new XMLHttpRequest();
+
+                                                if (state == "friend") {
+                                                    var url = '/sendfriendrequest/' + user_id;
+                                                } else if (state == "alreadypending") {
+                                                    var url = '/alreadypending';
+                                                } else {
+                                                    var url = '/unfriend/' + user_id; 
+                                                }
+
+                                                xhr.open('POST', url, true);
+
+                                                xhr.onreadystatechange = function () {
+                                                    if (xhr.readyState == 4 && xhr.status == 200) {
+                                                        console.log(xhr.responseText);
+                                                        location.reload();
+                                                    }
+                                                };
+
+                                                xhr.send("");
+                                            }
+                                        </script>
+
+                                        
+                                    </button>
+                                    <script>
+                                        if (document.getElementById("friendbutton").textContent.includes("Sent")) {
+                                            document.getElementById("friendbutton").onclick = function() {}
+                                            document.getElementById("friendbutton").style.color = "#787a80";
+                                            document.getElementById("friendbutton").style.backgroundColor = "#f0f2f5";
+                                            document.getElementById("friendbutton").style.cursor = "default";
+                                        }
+                                    </script>
+                                </div>
+
+                            
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div id="container img">
+                    <img src="data:image/jpeg;base64,{{ theirpicture }}" alt="Profile Picture" style="border-radius: 50%; 
+                    height: 175px; width: 175px; border: 5px solid white; float: left; object-fit: cover;">
+
+                    <img id="image" src="data:image/jpeg;base64,{{ theirbanner }}" style="display: none;">
+
+
+                </div>
+
+
+            </div>
+
+            <hr>
+
+
+            <style>
+                hr {  
+                    height: 2px;  
+                    background-color: #caccd0;  
+                    border: none;  
+                }  
+            </style>
+
+            <!-- <div class="theirname" style="font-size: 100px;"><p>HELLO {{ theirname }}!</p></div> -->
+
+            <!-- <h1>HELLO {{ theirname }}!</h1> -->
+
+
+            <div style="padding: 0px 0px 8px 5px; float: left;">
+
+                <p id="theirid" style="display: none;">{{ theirid }}</p>
+
+                <div class="postsbutton" style="float: left;">
+                    <form id="postsform" method="get">
+                        <script>
+                            var currentpath = window.location.pathname;
+                            var lastslash = currentpath.lastIndexOf("/");
+
+                            var currentpath = currentpath.substring(0, lastslash);
+                            document.getElementById('postsform').action = currentpath + "/posts";
+                        </script>
+                        <button id="littlebutton" style="float: right; letter-spacing: -0.7px; font-size: 18px; width: 100px;
+                        cursor: pointer; padding: 15px 0px 15px 0px; border-radius: 8px; color: #787a80; font-family: sans-serif; font-weight: normal; border-width: 0px; line-height: 5px;" type="submit">
+                            <style>
+                                #littlebutton {
+                                    background-color: white;
+                                }
+                                #littlebutton:hover {
+                                    background-color: #f0f2f5;
+                                }
+                            </style>
+
+                            <i class="fa-solid fa-envelope" style="padding-right: 5px;"></i> Posts 
+                        </button>
+
+                    </form>
+                </div>
+
+                <div class="postsbutton" style="float: left;">
+                    <button id="little_main_button" style="float: right; letter-spacing: -0.7px; font-size: 18px; width: 100px;
+                    cursor: pointer; padding: 15px 0px 15px 0px; border-radius: 8px; color: #0866ff; font-family: sans-serif; font-weight: normal; border-width: 0px; line-height: 5px;" type="submit">
+                        
+                        <style>
+                            #little_main_button {
+                                background-color: white;
+                            }
+                        </style>
+
+                        <i class="fa-solid fa-user" style="padding-right: 5px;"></i> About 
+                    </button>
+                    <div style="padding: 40px 0px 0px 0px;"> <div class="bluebar" style="position: absolute; width: 100px; background-color: #0866ff; z-index: 9999;
+                        height: 5px; transform: translate(0, 13px); "></div> </div>
+
+
+                </div>
+
+                <div class="postsbutton" style="float: left;">
+                    <form id="friendsform" method="get">
+                        <script>
+                            var currentpath = window.location.pathname;
+                            var lastslash = currentpath.lastIndexOf("/");
+
+                            var currentpath = currentpath.substring(0, lastslash);
+                            document.getElementById('friendsform').action = currentpath + "/friends";
+                        </script>
+
+                        <button id="littlebutton" style="float: right; letter-spacing: -0.7px; font-size: 18px; width: 100px;
+                        cursor: pointer; padding: 15px 0px 15px 0px; border-radius: 8px; color: #787a80; font-family: sans-serif; font-weight: normal; border-width: 0px; line-height: 5px;" type="submit">
+                            <style>
+                                #littlebutton {
+                                    background-color: white;
+                                }
+                                #littlebutton:hover {
+                                    background-color: #f0f2f5;
+                                }
+                            </style>
+
+                            <i class="fa-solid fa-user-group" style="padding-right: 5px;"></i> Friends 
+                        </button>
+                    </form>
+
+                </div>
+
+                <div class="postsbutton" style="float: left;">
+                    <form id="photosform" method="get">
+                        <script>
+                            var currentpath = window.location.pathname;
+                            var lastslash = currentpath.lastIndexOf("/");
+
+                            var currentpath = currentpath.substring(0, lastslash);
+                            document.getElementById('photosform').action = currentpath + "/photos";
+                        </script>
+                        <button id="littlebutton" style="float: right; letter-spacing: -0.7px; font-size: 18px; width: 100px;
+                        cursor: pointer; padding: 15px 0px 15px 0px; border-radius: 8px; color: #787a80; font-family: sans-serif; font-weight: normal; border-width: 0px; line-height: 5px;" type="submit">
+                            <style>
+                                #littlebutton {
+                                    background-color: white;
+                                }
+                                #littlebutton:hover {
+                                    background-color: #f0f2f5;
+                                }
+                            </style>
+
+                            <i class="fas fa-camera" style="padding-right: 5px;"></i> Photos 
+                        </button>
+                    </form>
+
+                </div>
+
+
+
+
+
+
+
+
+            </div>
+            
+
+
+        </div>
+    </div>
+
+
+    <div class="posts" style="height: 100vh; position: absolute; background: #f0f2f5; width: 100vw;">
+        <div style="height: 2px; width: 100vw; background-color: #caccd0;">
+            
+            <style>
+                .evenmainerbox2 {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, calc(-50% + 20px));
+                    display: flex;
+                    justify-content: center;
+                    width: 100vw;
+                    min-height: calc(100vh + 1px);
+                }
+            </style>
+
+            <div class="evenmainerbox2" id="thecodewasstolen">
+                <div class="mainbox2" style="border-bottom: 2px solid #caccd0 !important;">
+
+                    <h2 style="margin: 22px; line-height: 18px;">About</h2>
+                    <hr>
+
+                    <textarea readonly id="aboutsection" style="font-family: Arial, Helvetica, sans-serif; resize: none; 
+                                    border-radius: 5px; color: black;
+                                    outline: 0; border: 0px solid #caccd0; margin: 5px 20px 5px 12px; padding: 10px; 
+                                    font-size: 18px; width: calc(100vw - 45px); max-width: 1235px;"></textarea>
+                    
+                    
+                    <hr>
+
+                    <p id="longhealthylife" style="margin-left: 22px; font-size: 18px;">User ID: {{ theirid }}</p>
+
+                </div>
+                
+            </div>
+
+        
+        </div>
+        
+    </div>
+
+
+    <script>
+        function updateposition() {
+          const div1 = document.querySelector(".mainbox");
+          const div2 = document.querySelector(".posts");
+      
+          const position = div1.getBoundingClientRect();
+          const scrolltop = window.scrollY || document.documentElement.scrollTop;
+      
+          div2.style.top = `${position.bottom + scrolltop}px`;
+        }
+      
+        updateposition();
+      
+        setInterval(updateposition, 0);
+    </script>
+
+
+</body>
+</html>

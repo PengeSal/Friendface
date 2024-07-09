@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - [WEBSITE]</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            background: white;
+            transition: background-color 1.5s;
+        }
+
+        .frame {
+            position: absolute;
+            width: 400px;
+            height: 500px;
+            border: 5px solid black;
+            background: white;
+            border-radius: 12.5px;
+            box-sizing: border-box;
+            text-align: center;
+            line-height: 35px;
+            font-family: Cambria;
+            box-shadow: 20px 45px 0px rgb(0, 0, 0);
+            transition: background-color 1s, box-shadow 1s, border 1s;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border-radius: 7px;
+            border: 5px solid black;
+            font-family: Cambria;
+            color: black;
+            transition: color 1s;
+        }
+
+        .submitbutton {
+            width: 40%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border-radius: 7px;
+            border: 5px solid black;
+            font-family: Cambria;
+            color: black;
+            background-color: white;
+            cursor: pointer;
+            transition: background-color 1s, border-color 1s, color 1s;
+        }
+        
+        .createaccountbutton {
+            width: 160px;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            border-radius: 7px;
+            border: 5px solid white;
+            font-family: Cambria;
+            color: white;
+            background-color: black;
+            cursor: pointer;
+            transition: background-color 1s, border-color 1s, color 1s;
+        }
+
+        .animate-down {
+            animation: moveDown 1s ease-in-out forwards;
+        }
+
+        @keyframes moveDown {
+            100% {
+                transform: translateY(330px); 
+            }
+        }
+
+
+    </style>
+</head>
+<body> 
+    <form action="/register" method="post">
+        <div id="createaccountbutton">
+            <button class="createaccountbutton" type="submit">Create Account</button>
+        </div>
+    </form>
+
+    <div class="frame" id="frame" onmouseover="mousehover()" onmouseout="notmousehover()">
+        <form action="/check" method="post">
+            <div class="login" id="login">
+                <h1>Login</h1>
+                <style>
+                    .login {
+                        transition: color 1s;
+                    }
+                </style>
+            </div>
+
+            <div class="input" id="input">
+                <input type="text" placeholder="Email" name = "email" required>
+            </div>
+
+            <div class="input" id="input">
+                <input type="password" placeholder="Password" name = "password" required>
+            </div>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <div class="input" id="submitbutton">
+                <button class="submitbutton" type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        let timeout;
+    
+        function upordown(direction) {
+            if (direction == "down") {
+                document.querySelector('.createaccountbutton').style.borderColor = 'white';
+                document.querySelector('.createaccountbutton').style.color = 'white';
+                document.querySelector('.createaccountbutton').style.backgroundColor = 'white';
+                setTimeout(function(){
+                    document.getElementById('createaccountbutton').classList.remove('animate-down');
+                }, 700);
+
+            } else {
+                document.querySelector('.createaccountbutton').style.borderColor = 'white';
+                document.querySelector('.createaccountbutton').style.color = 'white';
+                document.querySelector('.createaccountbutton').style.backgroundColor = 'black';
+                document.getElementById('createaccountbutton').classList.add('animate-down');
+
+            }
+        }
+    
+        function mousehover() {
+            document.body.style.backgroundColor = 'black';
+            document.getElementById('frame').style.backgroundColor = 'black';
+            document.getElementById('frame').style.boxShadow = 'none';
+            document.getElementById('frame').style.border = '5px solid white';
+            document.getElementById('login').style.color = 'white';
+    
+            document.querySelector('.submitbutton').style.borderColor = 'white';
+            document.querySelector('.submitbutton').style.color = 'white';
+            document.querySelector('.submitbutton').style.backgroundColor = 'black';
+
+            document.querySelector('.createaccountbutton').style.borderColor = 'white';
+            document.querySelector('.createaccountbutton').style.color = 'white';
+            document.querySelector('.createaccountbutton').style.backgroundColor = 'black';
+    
+            upordown("up");
+            clearTimeout(timeout);
+        }
+
+        function notmousehover() {
+            document.body.style.backgroundColor = 'white';
+            document.getElementById('frame').style.backgroundColor = 'white';
+            document.getElementById('frame').style.boxShadow = '20px 40px 0px rgb(0, 0, 0)';
+            document.getElementById('frame').style.border = '5px solid black';
+            document.getElementById('login').style.color = 'black';
+    
+            document.querySelector('.submitbutton').style.borderColor = 'black';
+            document.querySelector('.submitbutton').style.color = 'black';
+            document.querySelector('.submitbutton').style.backgroundColor = 'white';
+
+            document.querySelector('.createaccountbutton').style.borderColor = 'black';
+            document.querySelector('.createaccountbutton').style.color = 'black';
+            document.querySelector('.createaccountbutton').style.backgroundColor = 'white';
+    
+            timeout = setTimeout(function () {
+                upordown("down");
+            }, 1750);
+        }
+    </script>
+</body>
+</html>

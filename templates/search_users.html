@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="data:image/jpeg;base64,{{ logo }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Friendface︱{{ theirname }}</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow-x: hidden;
+            background: #f0f2f5;
+            font-family: Helvetica, arial;
+            overflow-y: hidden;
+
+        }
+
+        .icon-small {
+            font-size: 16px; 
+        }
+        .icon-medium {
+            font-size: 24px; 
+        }
+        .icon-large {
+            font-size: 32px; 
+        }
+
+        .pfp{
+            background: white;
+            width: 100vw;
+            height: 64px;
+            font-size: 13px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+            top: 0;
+            position: fixed;
+            z-index: 999999999;
+        }
+
+
+
+
+        #search-form {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+        }
+
+        #search-input {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            background: #f0f2f5;
+            width: 200px;
+
+            border: 2px solid #f0f2f5;
+            color: black;
+            border-radius: 0px 35px 35px 0px;
+            outline: none;
+            box-shadow: none;
+            transition: width 0.75s;
+
+            height: 1px;
+            padding-top: 50px;
+
+
+        }
+
+        #search-input::placeholder {
+            color: #787a80;
+        }
+
+        #search-button {
+            cursor: pointer;
+            color: rgb(124, 127, 136);
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 26px;
+            background: #f0f2f5;
+            width: 40px;
+            border: 3px solid #f0f2f5;
+            border-radius: 35px 0px 0px 35px;
+            outline: none;
+            text-align: right;
+            height: 40px;
+            z-index: 99999999999999;
+
+        }
+
+        .evenmainerbox {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, calc(-50% + 64px));
+            display: flex;
+            justify-content: center;
+            width: 100vw;
+            min-height: calc(100vh + 1px);
+        }
+
+        .mainbox{
+            position: absolute;
+            width: 1280px;
+
+            background: white;
+            box-sizing: border-box;
+            line-height: 35px;
+            max-width: 100vw;
+        }
+
+        .mainbox2{
+            position: absolute;
+            width: 1280px;
+
+            background: white;
+            line-height: 35px;
+            max-width: 100vw;
+
+            border-radius: 10px;
+        }
+
+    </style>
+</head>
+<body loading="lazy">
+    <div style="width: 100vw; justify-content: center; display: flex; background-color: blue; height: 0px;">
+        <div id="splash" style="float: right; z-index: 999999999999; background-color: white;
+        text-align: center; cursor: default; transition: transform 0.3s; width: 375px; border-radius: 15px; position: fixed; top: 0;
+        line-height: 40px; color: #787a80;">{{ splashmessage }}</div>
+
+
+        <script>
+            function repeat(){
+                if (window.innerWidth < 1100) {
+                    document.getElementById('splash').style.transform = 'translate(14vh, -100px)';
+                } else if (window.innerWidth < 1400) {
+                    document.getElementById('splash').style.transform = 'translate(14vh)';
+                } else {
+                    document.getElementById('splash').style.transform = 'translate(0px)';
+                }
+            }
+            setInterval(repeat, 50)
+        </script>
+    </div>
+
+    <div class="pfp">
+
+        <img
+            id="uploadButton"
+            style="width: 50px; height: 50px; cursor: pointer; padding: 7px 15px 8px 15px; float: right; border-radius: 50%; transition: filter 0.3s; object-fit: cover;"
+            src="data:image/jpeg;base64,{{ profile_picture }}"
+            alt=":(">
+
+            <script>
+                if (!navigator.userAgent.includes("Firefox")) {
+                    document.getElementById("uploadButton").style.marginRight = "15px";
+                }
+
+
+                document.getElementById("uploadButton").onclick = function (event) {
+                    event.stopPropagation();
+
+                    var existingdropdown = document.querySelector('.delete-dropdown2');
+                    if (existingdropdown) {
+                        document.body.removeChild(existingdropdown);
+                    }
+
+                    var confirmdeletebutton = document.createElement("button");
+                    confirmdeletebutton.textContent = "Profile";
+                    confirmdeletebutton.style.backgroundColor = "#f0f2f5";
+                    confirmdeletebutton.style.border = "0px solid white";
+                    confirmdeletebutton.style.color = "#787a80";
+                    confirmdeletebutton.style.padding = "5px";
+                    confirmdeletebutton.style.fontSize = "16px";
+                    confirmdeletebutton.style.width = "150px";
+                    confirmdeletebutton.style.borderRadius = "5px";
+                    confirmdeletebutton.style.cursor = "pointer";
+                    confirmdeletebutton.style.marginBottom = "5px";
+
+
+                    var confirmdeletebutton2 = document.createElement("button");
+                    confirmdeletebutton2.textContent = "Settings";
+                    confirmdeletebutton2.style.backgroundColor = "#f0f2f5";
+                    confirmdeletebutton2.style.border = "0px solid white";
+                    confirmdeletebutton2.style.color = "#787a80";
+                    confirmdeletebutton2.style.padding = "5px";
+                    confirmdeletebutton2.style.fontSize = "16px";
+                    confirmdeletebutton2.style.width = "150px";
+                    confirmdeletebutton2.style.borderRadius = "5px";
+                    confirmdeletebutton2.style.cursor = "pointer";
+
+
+
+                    var deletedropdown = document.createElement("div");
+                    deletedropdown.classList.add('delete-dropdown2');
+                    deletedropdown.style.position = "absolute";
+
+
+                    deletedropdown.style.top = (event.clientY + window.pageYOffset + 10) + "px";
+                    deletedropdown.style.left = event.clientX - 150 + "px";
+                    deletedropdown.style.backgroundColor = "white";
+                    deletedropdown.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.35)";
+                    deletedropdown.style.borderBottom = "3px solid #caccd0"
+                    deletedropdown.style.padding = "8px";
+                    deletedropdown.style.zIndex = "9999999999999999999999999999";
+                    deletedropdown.style.borderRadius = "8px";
+                    deletedropdown.style.width = "150px";
+
+                    deletedropdown.appendChild(confirmdeletebutton);
+                    deletedropdown.appendChild(confirmdeletebutton2);
+
+
+                    document.body.appendChild(deletedropdown);
+
+                    deletedropdown.style.overflow = "hidden"
+
+                    deletedropdown.style.height = "0px";
+                    deletedropdown.style.transition = "height 0.2s";
+                    requestAnimationFrame(() => {
+                        deletedropdown.style.height = deletedropdown.scrollHeight - 15 + "px";
+                    });
+
+                    window.addEventListener('scroll', function () {
+                        document.body.removeChild(deletedropdown);
+                        document.removeEventListener('click', handleclickoutside);
+                    });
+
+                    try {
+                    document.querySelector(".actualposts3").addEventListener('scroll', function () {
+                        document.body.removeChild(deletedropdown);
+                        document.removeEventListener('click', handleclickoutside);
+                    });
+                    } catch {
+                        console.log("skibidi")
+                    }
+
+                    confirmdeletebutton.onclick = function () {
+                        var url = "/users/" + document.getElementById("user_id_div").textContent + "/posts"
+
+                        window.location.href = url
+
+
+                    };
+                    confirmdeletebutton2.onclick = function () {
+                        var url = "/settings"
+
+                        window.location.href = url
+                    };
+
+
+                    confirmdeletebutton.onmouseover = function() {
+                        confirmdeletebutton.style.backgroundColor = "#caccd0";
+                    };
+                    confirmdeletebutton.onmouseout = function() {
+                        confirmdeletebutton.style.backgroundColor = "#f0f2f5";
+                    };
+
+                    confirmdeletebutton2.onmouseover = function() {
+                        confirmdeletebutton2.style.backgroundColor = "#caccd0";
+                    };
+                    confirmdeletebutton2.onmouseout = function() {
+                        confirmdeletebutton2.style.backgroundColor = "#f0f2f5";
+                    };
+
+                    function handleclickoutside(event) {
+                        if (!deletedropdown.contains(event.target)) {
+                            console.log("young sheldon")
+                            document.body.removeChild(deletedropdown);
+                            document.removeEventListener('click', handleclickoutside);
+                        }
+                    }
+
+                    document.addEventListener('click', handleclickoutside);
+                };
+
+            </script>
+
+
+
+
+
+        <form id="accountform" action="/users/{{ user_id }}/posts" method="get">
+            <div id="user_id_div" style="display: none;">{{ user_id }}</div>
+            <div class="name" onclick="submitname()"  title="Your Account" style="float: right; font-family: Helvetica, arial;  font-size: 20px;">
+                <p>{{ profile_text }}</p>
+            </div>
+        </form>
+
+
+
+
+
+
+
+        <form id="accountform" action="/" method="post">
+            <img title="Friendface"
+
+
+            class="uploadButton"
+            style="width: 50px; height: 50px; cursor: pointer; padding: 7px 0px 0px 15px; float: left; object-fit: cover;"
+            src="data:image/jpeg;base64,{{ logo }}"
+            alt=":(">
+
+            <div class="logo" onclick="" title="Friendface" style="float: left; color: #0866ff; font-family: Helvetica, arial; cursor: pointer; padding: 0px 10px 2px 1px;">
+                <h1>riendface</h1>
+
+                <script>
+                    document.querySelector(".logo").onclick = function() {
+                        window.location.href = "/home/feed";
+                    }
+                    document.querySelector(".uploadButton").onclick = function() {
+                        window.location.href = "/home/feed";
+                    }
+                </script>
+            </div>
+        </form>
+
+
+
+        <form id="search-form" action="/searchusers" method="get">
+            <div id="search-container" style="border-radius: 35px;">
+                <button type="submit" id="search-button">⌕</button>
+                <input type="text" id="search-input" name="search" placeholder="Search Users" style="padding: 10px 10px 10px 0px;" title="Search Friendface">
+
+                <script>
+                    if (navigator.userAgent.includes("Firefox")) {
+                        document.getElementById("search-input").style.transform = "translate(-4px, -6px)";
+                    } else {
+                        document.getElementById("search-input").style.transform = "translate(-4px, -2px)";
+                    }
+
+                    document.getElementById("search-container").style.height = "42px";
+                    document.getElementById("search-container").style.backgroundColor = "#f0f2f5";
+                    document.getElementById("search-container").style.transition = "box-shadow 0.75s";
+
+                    document.getElementById("search-container").onmouseover = function() {
+                        document.getElementById("search-input").style.width = "300px";
+                        document.getElementById("search-container").style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.35)";
+                    }
+
+                    document.getElementById("search-container").onmouseout = function() {
+                        if (!document.getElementById("search-input").matches(":focus")) {
+                            document.getElementById("search-input").style.width = "200px";
+                            document.getElementById("search-container").style.boxShadow = "none";
+                        }
+                    }
+
+                    document.getElementById("search-input").addEventListener("blur", function() {
+                        document.getElementById("search-input").style.width = "200px";
+                        document.getElementById("search-container").style.boxShadow = "none";
+                    });
+                </script>
+
+
+            </div>
+        </form>
+
+
+
+
+
+        <script>
+            function submitname() {
+              document.getElementById('accountform').submit();
+            }
+        </script>
+
+
+        <style>
+            .name{
+                padding: 1px 0px 0px 0px;
+                font-size: 12px;
+                color: rgb(124, 127, 136);
+                float: right;
+                cursor: pointer;
+
+            }
+            .name:hover{
+                color: rgb(163, 165, 172);
+            }
+        </style>
+
+    </div>
+
+    <input type="file" id="fileInput" style="display: none">
+
+
+    <script>
+        // THIS CODE IS STOLEN AF
+        // THIS CODE IS STOLEN AF
+        // THIS CODE IS STOLEN AF
+        // THIS CODE IS STOLEN AF
+        // THIS CODE IS STOLEN AF
+        // THIS CODE IS STOLEN AF
+
+        function triggerFileInput() {
+            document.getElementById('fileInput').click();
+        }
+
+        document.getElementById('fileInput').addEventListener('change', function () {
+            var fileInput = document.getElementById('fileInput');
+            var file = fileInput.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var imageData = e.target.result.split(',')[1];
+                sendImageData(imageData);
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        function sendImageData(imageData) {
+            var xhr = new XMLHttpRequest();
+            var url = '/home/feed';
+            var data = 'imageData=' + encodeURIComponent(imageData);
+
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+
+                    location.reload();
+                }
+            };
+
+            xhr.send(data);
+        }
+    </script>
+    
+    <div onclick="{{ displaymatches }}" style="display: none;" id="clickme"></div>
+
+
+    <div class="evenmainerbox">
+        <div class="mainbox">
+            <div style="background-color: #f0f2f5; width: 100%; max-width: 1280px; height: 20px;"></div>
+            <div style="background-color: #f0f2f5; width: 100%; max-width: 1280px;">
+                <div style="background-color: white; width: 100%; max-width: 1280px; border-radius: 10px; height: 55px; border-bottom: 2px solid #caccd0;">
+                    <h2 style="padding-left: 20px; margin-top: 0; transform: translate(0, 10px);">Search Users</h2>
+                
+                </div>
+            </div>
+
+            <div style="background-color: #f0f2f5; width: 100%; max-width: 1280px; height: 20px;"></div>
+            <div style="background-color: #f0f2f5; width: 100%; max-width: 1280px;">
+                <div style="background-color: white; width: 100%; max-width: 1280px; border-radius: 10px 10px 0 0; height: 10px;">
+                    
+                
+                </div>
+            </div>
+
+            
+
+
+            <p style="margin-left: 20px; line-height: 16px; font-size: 22px; transform: translate(0, -4px);">{{ searchterm }}</p>
+            <hr>
+            <div class="resultsbox" style="max-height: calc(100vh - 300px); overflow-y: scroll; width: 1280px; overflow-x: hidden;">
+
+            </div>
+            <style>
+                hr {  
+                    height: 2px;  
+                    background-color: #caccd0;  
+                    border: none;  
+                    margin-bottom: 0;
+                }  
+            </style>
+
+            <div style="background-color: #f0f2f5;"><div style="height: 15px; border-bottom: 2px solid #caccd0; background-color: white; 
+            border-radius: 0 0 10px 10px; width: 100%; max-width: 1280px;"></div></div>
+
+            <div style="height: 10px; background-color: #f0f2f5; width: 100%; max-width: 1280px; 
+            color: #787a80; padding-bottom: 12px; padding-left: 10px;">Copyright © Friendface Corporation 2024</div>
+
+            <div style="height: 10px; background-color: #f0f2f5; width: 100%; max-width: 1280px; 
+            color: #787a80; padding-bottom: 12px; padding-left: 10px;">"Based" in British Virgin Islands</div>
+            
+        </div>
+
+
+
+        
+        
+
+
+    </div>
+
+
+
+
+    
+
+    <script>
+        window.onload = (event) => {
+            var string = "github.com/pengesal/lan-messager\n"
+            if (document.getElementById("splash").textContent == string) {
+                document.getElementById("splash").style.cursor = "pointer";
+                document.getElementById("splash").onclick = function() {
+                    window.open("https://github.com/pengesal/lan-messager");
+            }} 
+            if (document.getElementById("splash").textContent == "Now in colour!!!\n") {
+                                    document.getElementById("splash").style.width = "125px";
+                                    document.getElementById("splash").style.background = "linear-gradient(to right, red, orange, yellow, green, blue, indigo, purple)";
+                                    document.getElementById("splash").style.fontWeight = "bold";
+                                    document.getElementById("splash").style.paddingLeft = "none";
+                                    document.getElementById("splash").style.paddingRight = "none";
+                                    document.getElementById("splash").style.webkitBackgroundClip = "text";
+                                    document.getElementById("splash").style.webkitTextFillColor = "transparent";
+                                }
+
+            document.getElementById("clickme").click()
+        };
+        
+
+        function displaymatches(names, profile_pictures, user_ids, descriptions) {
+            var increment = 0; 
+
+            var namesarray = names.split("_MATCHES_");
+            var pfpsarray = profile_pictures.split("_MATCHES_");
+            var useridsarray = user_ids.split("_MATCHES_");
+            var descriptionsarray = descriptions.split("_MATCHES_");
+
+            if (typeof names[1] === "undefined") {
+                console.log(names[1]);
+                var newDiv2 = document.createElement('div');
+                var paragr = document.createElement('p');
+
+                newDiv2.style.backgroundColor = "white";
+                newDiv2.style.borderRadius = "10px";
+                newDiv2.style.maxWidth = "1280px";
+                newDiv2.style.width = "100vw"; 
+                newDiv2.style.height = "90px"; 
+                newDiv2.style.textAlign = "center"; 
+                
+                newDiv2.className = "maggiemae";
+
+                paragr.textContent = "The person you are looking for isn't here. Try going outside...";
+                paragr.style.transform = "translate(0, 40px)"; 
+                paragr.style.color = "#787a80"; 
+                paragr.style.lineHeight = "0";
+
+                document.querySelector(".resultsbox").appendChild(newDiv2);
+                document.querySelector(".maggiemae").appendChild(paragr);
+            }; 
+
+            var arraylength = namesarray.length;
+            for (var i = 0; i < arraylength - 1; i++) {
+                increment = increment + 1;
+
+                var newDiv = document.createElement("div");
+                var name = document.createElement("p");
+                var desc = document.createElement("p");
+                var pfp = document.createElement("img");
+                var visit = document.createElement("button");
+
+                (function(user_id, index) {
+                    name.onclick = function() {
+                        window.location.href = "/users/" + user_id + "/posts";
+                    }
+                    visit.onclick = function() {
+                        window.location.href = "/users/" + user_id + "/posts";
+                    }
+                    pfp.onclick = function() {
+                        window.location.href = "/users/" + user_id + "/posts";
+                    }
+                    newDiv.onmouseover = function() {
+                        document.querySelector(".newdiv" + index).style.backgroundColor = "#f0f2f5";
+                    };
+
+                    newDiv.onmouseout = function() {
+                        document.querySelector(".newdiv" + index).style.backgroundColor = "white";
+                    };
+
+                })(useridsarray[i], increment);
+
+
+                pfp.style.width = "75px";
+                pfp.style.height = "75px";
+                pfp.style.borderRadius = "50%";
+                pfp.style.float = "left";
+                pfp.style.padding = "12.5px";
+                pfp.src = "data:image/jpeg;base64," + pfpsarray[i]
+                pfp.style.cursor = "pointer";
+                pfp.style.objectFit = "cover"
+                pfp.style.zIndex = "99999999"
+                
+
+
+                name.textContent = namesarray[i];
+
+                name.style.fontSize = "22px";
+                name.style.position = "absolute";
+                name.style.fontWeight = "bold"
+                name.style.cursor = "pointer"
+                name.style.transform = "translate(100px, 0px)";
+
+                desc.textContent = descriptionsarray[i].replace(/_THISISALINEBREAK_/g, " ").replace(/_THISISANAPOSTROPHE_/g, "'").substring(0, 30) + "...";
+                desc.style.position = "absolute";
+                desc.style.fontSize = "16px";
+                desc.style.transform = "translate(100px, 27px)";
+                desc.style.color = "#787a80";
+
+
+                newDiv.className = "newdiv" + increment;
+                newDiv.style.width = "calc(50% - 26.5px)";
+                newDiv.style.border = "2px solid #f0f2f5"
+                newDiv.style.borderBottom = "2px solid #caccd0"
+                newDiv.style.height = "100px";
+                newDiv.style.marginTop = "15px";
+                newDiv.style.marginLeft = "15px";
+                newDiv.style.borderRadius = "10px";
+                newDiv.style.padding.borderRadius = "10px";
+                newDiv.style.backgroundColor = "white";
+                newDiv.style.float = "left";
+                newDiv.style.overflow = "hidden";
+
+
+                visit.style.float = "right";
+                visit.textContent = "Visit"; 
+                visit.style.fontSize = "16px"; 
+                visit.style.color = "white"; 
+                visit.style.backgroundColor = "#0866ff";
+                visit.style.border = "0px"; 
+                visit.style.margin = "0px 0px 0px 0px"; 
+                visit.style.transform = "translate(-10px, 31px)";
+                visit.style.padding = "7px"; 
+                visit.style.width = "70px"; 
+                visit.style.borderRadius = "8px"; 
+                visit.style.cursor = "pointer";
+
+
+                document.querySelector(".resultsbox").appendChild(newDiv)
+                document.querySelector(".newdiv" + increment).appendChild(pfp)
+                document.querySelector(".newdiv" + increment).appendChild(name)
+                document.querySelector(".newdiv" + increment).appendChild(desc)
+                document.querySelector(".newdiv" + increment).appendChild(visit)
+
+                
+
+
+
+            }
+
+
+
+        }
+    </script>
+
+
+
+
+</body>
+
+
+
+
+
+
+</html>

@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="data:image/jpeg;base64,{{ logo }}">
+    <title>Friendface︱Settings</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow-x: hidden;
+            background: #f0f2f5;
+            font-family: Helvetica, arial;
+            
+            
+        }
+
+        .pfp{
+            background: white;
+            width: 100vw;
+            height: 64px;
+            font-size: 13px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+            top: 0;
+            position: sticky;
+            z-index: 999999999;
+        }
+
+
+
+        #search-form {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+        }
+
+        #search-input {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            background: #f0f2f5;
+            width: 200px; 
+
+            border: 2px solid #f0f2f5;
+            color: black;
+            border-radius: 0px 35px 35px 0px;
+            outline: none;
+            box-shadow: none;
+            transition: width 0.75s;
+            
+            height: 1px;
+            padding-top: 50px;
+
+            
+        }
+
+        #search-input::placeholder {
+            color: #787a80;
+        }
+
+        #search-button {
+            cursor: pointer;
+            color: rgb(124, 127, 136);
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 26px;
+            background: #f0f2f5;
+            width: 40px;
+            border: 3px solid #f0f2f5;
+            border-radius: 35px 0px 0px 35px;
+            outline: none; 
+            text-align: right;
+            height: 40px;
+            z-index: 99999999999999;
+            
+        }
+
+        .evenmainerbox {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, calc(-50% + 64px));
+            display: flex;
+            justify-content: center;
+            width: 100vw;
+            min-height: calc(100vh + 1px);
+        }
+
+        .mainbox{
+            position: absolute;
+            width: 1280px;
+
+            background: white;
+            box-sizing: border-box;
+            line-height: 35px;
+            max-width: 100vw; 
+        }
+
+        .mainbox2{
+            position: absolute;
+            width: 1280px;
+
+            background: white;
+            line-height: 35px;
+            max-width: 100vw; 
+
+            border-radius: 0 0 10px 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <div style="width: 100vw; justify-content: center; display: flex; background-color: blue; height: 0px;">
+        <div id="splash" style="float: right; z-index: 999999999999; background-color: white; 
+        text-align: center; cursor: default; transition: transform 0.3s; width: 375px; border-radius: 15px; position: fixed; top: 0;
+        line-height: 40px; color: #787a80;">{{ splashmessage }}</div>
+
+
+        <script>
+            function repeat(){
+                if (window.innerWidth < 1100) {
+                    document.getElementById('splash').style.transform = 'translate(14vh, -100px)';
+                } else if (window.innerWidth < 1400) {
+                    document.getElementById('splash').style.transform = 'translate(14vh)';
+                } else {
+                    document.getElementById('splash').style.transform = 'translate(0px)';
+                }
+            }
+            setInterval(repeat, 50)
+        </script>
+    </div>
+
+    <div class="pfp">
+        
+        <img
+            id="uploadButton"
+            style="width: 50px; height: 50px; cursor: pointer; padding: 7px 15px 8px 15px; float: right; border-radius: 50%; transition: filter 0.3s; object-fit: cover;"
+            src="data:image/jpeg;base64,{{ profile_picture }}"
+            alt=":(">
+
+            <script>
+                if (!navigator.userAgent.includes("Firefox")) {
+                    document.getElementById("uploadButton").style.marginRight = "15px";
+                }
+                
+
+                document.getElementById("uploadButton").onclick = function (event) {
+                    event.stopPropagation(); 
+
+                    var existingdropdown = document.querySelector('.delete-dropdown2');
+                    if (existingdropdown) {
+                        document.body.removeChild(existingdropdown);
+                    }
+
+                    var confirmdeletebutton = document.createElement("button");
+                    confirmdeletebutton.textContent = "Profile";
+                    confirmdeletebutton.style.backgroundColor = "#f0f2f5";
+                    confirmdeletebutton.style.border = "0px solid white";
+                    confirmdeletebutton.style.color = "#787a80";
+                    confirmdeletebutton.style.padding = "5px";
+                    confirmdeletebutton.style.fontSize = "16px";
+                    confirmdeletebutton.style.width = "150px";
+                    confirmdeletebutton.style.borderRadius = "5px";
+                    confirmdeletebutton.style.cursor = "pointer";
+                    confirmdeletebutton.style.marginBottom = "5px";
+                    
+
+                    var confirmdeletebutton2 = document.createElement("button");
+                    confirmdeletebutton2.textContent = "Settings";
+                    confirmdeletebutton2.style.backgroundColor = "#f0f2f5";
+                    confirmdeletebutton2.style.border = "0px solid white";
+                    confirmdeletebutton2.style.color = "#787a80";
+                    confirmdeletebutton2.style.padding = "5px";
+                    confirmdeletebutton2.style.fontSize = "16px";
+                    confirmdeletebutton2.style.width = "150px";
+                    confirmdeletebutton2.style.borderRadius = "5px";
+                    confirmdeletebutton2.style.cursor = "pointer";
+
+                    var deletedropdown = document.createElement("div");
+                    deletedropdown.classList.add('delete-dropdown2'); 
+                    deletedropdown.style.position = "absolute";
+                    deletedropdown.style.top = (event.clientY + window.pageYOffset + 10) + "px"; 
+                    deletedropdown.style.left = event.clientX - 150 + "px";
+                    deletedropdown.style.backgroundColor = "white";
+                    deletedropdown.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.35)";
+                    deletedropdown.style.borderBottom = "3px solid #caccd0"
+                    deletedropdown.style.padding = "8px";
+                    deletedropdown.style.zIndex = "9999999999999999999999999999";
+                    deletedropdown.style.borderRadius = "8px";
+                    deletedropdown.style.width = "150px";
+
+                    deletedropdown.appendChild(confirmdeletebutton);
+                    deletedropdown.appendChild(confirmdeletebutton2);
+
+
+                    document.body.appendChild(deletedropdown);
+
+                    deletedropdown.style.overflow = "hidden"
+
+                    deletedropdown.style.height = "0px"; 
+                    deletedropdown.style.transition = "height 0.2s"; 
+                    requestAnimationFrame(() => {
+                        deletedropdown.style.height = deletedropdown.scrollHeight - 15 + "px";
+                    });
+
+                    window.addEventListener('scroll', function () {
+                        document.body.removeChild(deletedropdown);
+                        document.removeEventListener('click', handleclickoutside);
+                    });
+
+                    try {
+                    document.querySelector(".actualposts3").addEventListener('scroll', function () {
+                        document.body.removeChild(deletedropdown);
+                        document.removeEventListener('click', handleclickoutside);
+                    });
+                    } catch {
+                        console.log("skibidi")
+                    }
+
+                    confirmdeletebutton.onclick = function () {
+                        var url = "/users/" + document.getElementById("user_id_div").textContent + "/posts"
+
+                        window.location.href = url
+
+                        
+                    };
+                    confirmdeletebutton2.onclick = function () {
+                        var url = "/settings"
+
+                        window.location.href = url
+                    };
+
+
+                    confirmdeletebutton.onmouseover = function() {
+                        confirmdeletebutton.style.backgroundColor = "#caccd0";
+                    };
+                    confirmdeletebutton.onmouseout = function() {
+                        confirmdeletebutton.style.backgroundColor = "#f0f2f5";
+                    };
+
+                    confirmdeletebutton2.onmouseover = function() {
+                        confirmdeletebutton2.style.backgroundColor = "#caccd0";
+                    };
+                    confirmdeletebutton2.onmouseout = function() {
+                        confirmdeletebutton2.style.backgroundColor = "#f0f2f5";
+                    };
+
+                    function handleclickoutside(event) {
+                        if (!deletedropdown.contains(event.target)) {
+                            console.log("young sheldon")
+                            document.body.removeChild(deletedropdown);
+                            document.removeEventListener('click', handleclickoutside); 
+                        }
+                    }
+
+                    document.addEventListener('click', handleclickoutside);
+                };
+
+            </script>
+
+
+        
+
+        
+        <form id="accountform" action="/users/{{ user_id }}/posts" method="get">
+            <div id="user_id_div" style="display: none;">{{ user_id}}</div>
+            <div class="name" onclick="submitname()"  title="Your Account" style="float: right; font-family: Helvetica, arial; font-size: 20px;">
+                <p>{{ profile_text }}</p>
+            </div>
+        </form>
+
+
+
+
+
+
+        
+        <form id="accountform" action="/" method="post">
+            <img title="Friendface"
+
+
+            class="uploadButton"
+            style="width: 50px; height: 50px; cursor: pointer; padding: 7px 0px 0px 15px; float: left; object-fit: cover;"
+            src="data:image/jpeg;base64,{{ logo }}"
+            alt=":(">
+
+            <div class="logo" onclick="" title="Friendface" style="float: left; color: #0866ff; font-family: Helvetica, arial; cursor: pointer; padding: 0px 10px 2px 1px;">
+                <h1>riendface</h1>
+
+                <script>
+                    document.querySelector(".logo").onclick = function() {
+                        window.location.href = "/home/feed";
+                    }
+                    document.querySelector(".uploadButton").onclick = function() {
+                        window.location.href = "/home/feed";
+                    }
+                </script>
+            </div>
+        </form>
+
+
+        
+        <form id="search-form" action="/searchusers" method="get">
+            <div id="search-container" style="border-radius: 35px;">
+                <button type="submit" id="search-button">⌕</button>
+                <input type="text" id="search-input" name="search" placeholder="Search Users" style="padding: 10px 10px 10px 0px;" title="Search Friendface">
+
+                <script>
+                    if (navigator.userAgent.includes("Firefox")) {
+                        document.getElementById("search-input").style.transform = "translate(-4px, -6px)";
+                    } else {
+                        document.getElementById("search-input").style.transform = "translate(-4px, -2px)";
+                    }
+                
+                    document.getElementById("search-container").style.height = "42px";
+                    document.getElementById("search-container").style.backgroundColor = "#f0f2f5";
+                    document.getElementById("search-container").style.transition = "box-shadow 0.75s";
+                
+                    document.getElementById("search-container").onmouseover = function() {
+                        document.getElementById("search-input").style.width = "300px";
+                        document.getElementById("search-container").style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.35)";
+                    }
+                
+                    document.getElementById("search-container").onmouseout = function() {
+                        if (!document.getElementById("search-input").matches(":focus")) {
+                            document.getElementById("search-input").style.width = "200px";
+                            document.getElementById("search-container").style.boxShadow = "none";
+                        }
+                    }
+                
+                    document.getElementById("search-input").addEventListener("blur", function() {
+                        document.getElementById("search-input").style.width = "200px";
+                        document.getElementById("search-container").style.boxShadow = "none";
+                    });
+                </script>
+                
+                
+            </div>
+        </form>
+
+        
+
+
+
+        <script>
+            function submitname() {
+              document.getElementById('accountform').submit();
+            }
+        </script>
+
+
+        <style>
+            .name{
+                padding: 1px 0px 0px 0px;
+                font-size: 12px;
+                color: rgb(124, 127, 136);
+                float: right;
+                cursor: pointer;
+                
+            }
+            .name:hover{
+                color: rgb(163, 165, 172);
+            }
+        </style>
+
+    </div>
+
+    <input type="file" id="fileInput" style="display: none">
+    
+
+    <script>
+        // THIS CODE IS STOLEN AF
+        // THIS CODE IS STOLEN AF
+        // THIS CODE IS STOLEN AF
+        // THIS CODE IS STOLEN AF
+        // THIS CODE IS STOLEN AF
+        // THIS CODE IS STOLEN AF
+        
+        function triggerFileInput() {
+            document.getElementById('fileInput').click();
+        }
+
+        document.getElementById('fileInput').addEventListener('change', function () {
+            var fileInput = document.getElementById('fileInput');
+            var file = fileInput.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var imageData = e.target.result.split(',')[1];
+                sendImageData(imageData);
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        function sendImageData(imageData) {
+            var xhr = new XMLHttpRequest();
+            var url = '/home/feed';
+            var data = 'imageData=' + encodeURIComponent(imageData);
+
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+
+                    location.reload();
+                }
+            };
+
+            xhr.send(data);
+        }
+    </script>
+
+
+
+    <!-- <h1>User Profile</h1>
+    <p>HELLO {{ theirname }}!</p> -->
+
+    <style>
+        hr {  
+            height: 2px;  
+            background-color: #caccd0;  
+            border: none;  
+        }  
+    </style>
+
+    <!-- <h1>User Profile</h1>
+    <p>HELLO {{ theirname }}!</p> -->
+
+    <div class="evenmainerbox" id="thecodewasstolen">
+        <div class="mainbox" style="display: flex; align-items: center; flex-direction: column;">
+            <div style="background-color: #f0f2f5;">
+                <div style="display: flex; justify-content: center; background-color: white; height: 12px;
+                width: 100vw; max-width: 1280px; border-radius: 10px 10px 0 0; margin-top: 20px;"></div>
+            </div>
+            
+            <div style="display: flex; justify-content: center; background-color: white;
+            margin-top: 12px; width: 100vw; max-width: 1280px;">
+            <div style="transform: translate(0, 15px);">
+                <div style="font-size: 24px; font-weight: normal; float: left;">Settings</div>
+                <div style="font-size: 24px; float: left;">™ by </div>
+            </div>
+            <img
+
+
+            
+
+
+            class="uploadButton"
+            style="width: 50px; height: 50px; padding: 7px 0px 0px 15px; float: left; object-fit: cover;"
+            src="data:image/jpeg;base64,{{ logo }}"
+            alt=":(">
+
+            <div class="logo" title="Friendface" style="float: left; color: #0866ff; font-family: Helvetica, arial; padding: 0px 0 0px 1px;">
+                <h1 style="transform: translate(0, -7px);">riendface</h1>
+
+            </div>
+            </div>
+
+
+            <div style="background-color: #f0f2f5;">
+                <div style="display: flex; justify-content: center; background-color: white; height: 12px;
+                width: 100vw; max-width: 1280px; border-radius: 0 0 10px 10px; border-bottom: 2px solid #caccd0;"></div>
+            </div>
+
+
+            <div style="background-color: #f0f2f5;"><div style="height: 67px; width: 100vw; max-width: 1280px; background-color: white;
+            border-radius: 10px 10px 0 0;"><h2 style="margin-left: 22px; padding-top: 14px;">Profile Customisation</h2></div></div>
+
+            <div style="background-color: #caccd0; max-width: 1280px; width: 100vw; transform: translate(0, -7px); height: 2px;"></div>
+            
+    
+            <div style="width: 100vw; max-width: 880px; border-radius: 15px 15px 0 0; height: 167.5px; margin-top: 20px;">
+                
+                <div id="container">
+                    <style>
+                        #container {
+                            background-color: white;
+                        }
+                        #container div {
+                            overflow: hidden;
+                            height: 60px;
+                            background-color: white;
+                        }
+                        #container div:first-of-type {
+                            float: right;
+                            border-bottom: 3px solid #caccd0;
+                            
+                            
+                        }
+                        #container img {
+                            position: absolute;
+                            bottom: 0;
+                            height: auto;
+                            background-color: white;
+                        }
+                    </style>
+                    <div id="container" style="border-radius: 10px; position: relative; height: 125px; width: calc(100% - 300px); transform: translate(-15px);">
+                        
+                        <div id="background" class="container" style="background: url('data:image/jpeg;base64, {{ theirbanner }}');
+                        background-position: center center; background-attachment: fixed; position: absolute; width: 100%; height: 100%; background-size: cover; 
+                        transition: background 1s, background-position 0s, filter 0.3s; cursor: pointer;">
+                        </div>
+    
+                        <p class="whitetext2" style="color: white; position: absolute; 
+                        top: 50%; left: 50%; cursor: pointer; font-size: 20px; transform: translate(-50%, calc(-50% - 20px)); 
+                        opacity: 0; transition: opacity 0.3s;" id="skibidi">Change Banner</p>
+
+                    </div>
+
+                    <input type="file" id="fileInput2" style="display: none">
+    
+                    <script>
+                        function giggle() {
+                            document.getElementById("background").style.filter = "brightness(40%)";
+                            document.getElementById("skibidi").style.opacity = "1";
+                        }
+    
+                        function giggle2() {
+                            document.getElementById("background").style.filter = "brightness(100%)";
+                            document.getElementById("skibidi").style.opacity = "0";
+                        }
+    
+                        document.getElementById("background").onmouseover = function() {
+                            giggle()
+                        }
+                        document.getElementById("background").onmouseout = function() {
+                            giggle2()
+                        }
+    
+                        document.getElementById("background").onclick = function() {
+                            triggerFileInput2()
+                        }
+    
+                        document.getElementById("skibidi").onclick = function() {
+                            triggerFileInput2()
+                        }
+    
+                        document.getElementById("skibidi").onmouseover = function() {
+                            giggle()
+                        }
+                        document.getElementById("skibidi").onmouseout = function() {
+                            giggle2()
+                        }
+    
+                        function triggerFileInput2() {
+                            document.getElementById('fileInput2').click();
+                        }
+    
+                        document.getElementById('fileInput2').addEventListener('change', function () {
+                            var fileInput = document.getElementById('fileInput2');
+                            var file = fileInput.files[0];
+                            var reader = new FileReader();
+    
+                            reader.onload = function (e) {
+                                var imageData2 = e.target.result.split(',')[1];
+                                sendImageData2(imageData2);
+                            };
+    
+                            reader.readAsDataURL(file);
+                        });
+    
+                        function sendImageData2(imageData2) {
+                            var xhr = new XMLHttpRequest();
+                            var url = '/changebanner';
+                            var data = 'imageData=' + encodeURIComponent(imageData2);
+    
+                            xhr.open('POST', url, true);
+                            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    
+                            xhr.onreadystatechange = function () {
+                                if (xhr.readyState == 4 && xhr.status == 200) {
+                                    console.log(xhr.responseText);
+                                    location.reload();
+                                }
+                            };
+    
+                            xhr.send(data);
+                        }
+                    </script>
+    
+                    <div id="container img">
+                    
+                        <div style="border-radius: 50%; transition: filter 0.3s; position: absolute; cursor: pointer; height: 125px; width: 125px; transform: translate(15px);">
+    
+                            <img id="background2" src="data:image/jpeg;base64,{{ theirpicture }}" alt="Profile Picture" style="object-fit: cover;
+                                border-radius: 50%; transition: filter 0.3s; transform: translate(-5px, 5px); cursor: pointer; height: 125px; 
+                                width: 125px; border: 5px solid white; float: left; z-index: 999; overflow: hidden;" onclick="triggerFileInput()">
+    
+                            <p class="whitetext" style="color: white; position: absolute; transform: translate(12px, -8px); width: 100px;
+                            cursor: pointer; font-size: 20px; text-align: center; z-index: 9999; opacity: 0; 
+                            transition: opacity 0.3s;" id="skibidi2" onclick="triggerFileInput()">Change Profile Picture</p>
+
+                            <script>
+                                function giggle21() {
+                                    document.getElementById("background2").style.filter = "brightness(40%)";
+                                    document.getElementById("skibidi2").style.opacity = "1";
+                                }
+    
+                                function giggle22() {
+                                    document.getElementById("background2").style.filter = "brightness(100%)";
+                                    document.getElementById("skibidi2").style.opacity = "0";
+                                }
+    
+                                document.getElementById("background2").onmouseover = function() {
+                                    giggle21()
+                                }
+                                document.getElementById("background2").onmouseout = function() {
+                                    giggle22()
+                                }
+
+                                document.getElementById("skibidi2").onmouseover = function() {
+                                    giggle21()
+                                }
+                                document.getElementById("skibidi2").onmouseout = function() {
+                                    giggle22()
+                                }
+                            </script>
+                        </div>
+    
+                        <img id="image" src="data:image/jpeg;base64,{{ theirbanner }}" style="display: none; ">
+                    </div>
+                    <div style="width: 800px; font-size: 20.25px; color: black;">
+                    
+                        <div style="float: left; transform: translate(15px);">Profile Picture</div>
+                        <div style="float: left; transform: translate(160px);">Banner</div>
+                    </div>
+
+                    
+                        
+                        
+                        
+                </div>
+
+                
+            </div>
+
+
+
+            <!-- <div style="transform: translate(0, -30px); background-color: white;">
+            
+                <div style="float: left;">Profile Picture</div>
+                <div style="float: left;">Banner</div>
+            
+            </div> -->
+
+
+
+
+
+
+
+            
+            <div id="rest_of_settings" style="width: 100vw; max-width: 1280px;">
+    
+                <div style="background-color: #caccd0; max-width: 1280px; width: 100vw; 
+                transform: translate(0, -7px); height: 2px; margin-top: 50px;"></div>
+
+                <div class="evenmainerbox2" id="thecodewasstolen">
+                    <div class="mainbox2">
+                        
+
+
+
+
+                        <form action="/changedescription_fromsettings" method="POST">
+                            <textarea id="aboutsectionedit" rows="10" style="font-family: Arial, Helvetica, sans-serif; resize: none; border-radius: 5px;
+                                        border: 2px solid #caccd0; margin: 5px 0px 5px 20px; padding: 10px; max-width: 585px; width: calc(100vw / 2 - 55px);" 
+                                        placeholder="Type something...?" name="desc" required></textarea>
+                            
+                            <textarea readonly id="aboutsection" rows="10" style="font-family: Arial, Helvetica, sans-serif; resize: none; border-radius: 5px; color: #787a80;
+                                        outline: 0; border: 2px solid #caccd0; margin: 5px 20px 5px 0px; padding: 10px; float: right; max-width: 585px; width: calc(100vw / 2 - 55px);"
+                                        placeholder="Type something...?"></textarea>
+
+
+                            
+                            <br style="line-height: 0px;" />
+
+                            <button type="submit"
+                                style="font-size: 16px; color: white; background-color: rgb(8, 102, 255); 
+                                border: 0px; margin: 0px 0px 20px 20px; padding: 10px; width: 90px; 
+                                border-radius: 8px; cursor: pointer;">Publish
+                            </button>
+                            
+                        </form>
+
+                        <hr>
+                        <form action="/changenames_fromsettings" method="POST">
+                            <textarea id="firstnameedit" rows="1" style="font-family: Arial, Helvetica, sans-serif; resize: none; border-radius: 5px;
+                                        border: 2px solid #caccd0; margin: 5px 0px 5px 20px; padding: 10px; width: 100px;" 
+                                        placeholder="Forename" name="forename" required></textarea>
+                            
+                            
+
+                            <textarea readonly id="surname" rows="1" style="font-family: Arial, Helvetica, sans-serif; resize: none; border-radius: 5px; color: #787a80;
+                                        outline: 0; border: 2px solid #caccd0; margin: 5px 16px 5px 0px; padding: 10px; float: right; width: 100px;" 
+                                        placeholder="Surname"></textarea>
+                            
+                            <textarea id="surnameedit" rows="1" style="font-family: Arial, Helvetica, sans-serif; resize: none; border-radius: 5px;
+                                        border: 2px solid #caccd0; margin: 5px 0px 5px 16px; padding: 10px; width: 100px;" 
+                                        placeholder="Surname" name="surname"></textarea>
+                            
+                            <textarea readonly id="firstname" rows="1" style="font-family: Arial, Helvetica, sans-serif; resize: none; border-radius: 5px; color: #787a80;
+                                        outline: 0; border: 2px solid #caccd0; margin: 5px 20px 5px 0px; padding: 10px; float: right; width: 100px;" 
+                                        placeholder="Forename"></textarea>
+
+
+                            
+                            <br style="line-height: 0px;" />
+
+                            <button type="submit"
+                                style="font-size: 16px; color: white; background-color: rgb(8, 102, 255); 
+                                border: 0px; margin: 0px 0px 20px 20px; padding: 10px; width: 90px; 
+                                border-radius: 8px; cursor: pointer;">Publish
+                            </button>
+                            
+                        </form>
+
+                        <div id="everyday" onclick="{{ about }}" style="display: none;"></div>
+
+
+                        <div style="background-color: #f0f2f5;"><div style="height: 67px; width: 100vw; max-width: 1280px; background-color: white;
+                        "><h2 style="margin-left: 22px; padding-top: 14px;">More Options</h2></div></div>
+                        <div style="background-color: #caccd0; max-width: 1280px; width: 100vw; transform: translate(0, -7px); height: 2px;"></div>
+
+                        <div style="width: 100vw; max-width: 1280px;">
+                        <p style="float: left; font-size: 19.25px; margin-left: 22px;">Enable Dark Mode</p>
+
+                        <div id="toggle1" style="padding: 4px; width: 32px; transform: translate(0, 24px); margin-left: 15px;
+                            background-color: #caccd0; border-radius: 20px; cursor: pointer; transition: background-color 0.3s; float: left;">
+
+                            <div id="circle1" style="width: 16px; height: 16px; border-radius: 8px; background-color: white; transition: transform 0.3s;">
+                            
+                            <script>
+                                document.getElementById("toggle1").onclick = function() {
+                                    function clicked() {
+                                        document.getElementById("circle1").style.transform = "translate(16px)";
+                                        
+                                        function swapColorsInDocument() {
+                                            function swapElementColors(element) {
+                                                const computedStyle = getComputedStyle(element);
+                                                let color = computedStyle.color;
+
+                                                if (color === 'rgb(255, 255, 255)') { 
+                                                element.style.color = 'rgb(33, 33, 33)';
+                                                } else if (color === 'rgb(0, 0, 0)') {
+                                                element.style.color = 'rgb(254, 254, 254)';
+                                                } else if (color === 'rgb(8, 102, 255)') {
+                                                element.style.color = 'rgb(57, 105, 251)';
+                                                } else if (color === 'rgb(240, 242, 245)') {
+                                                element.style.color = 'rgb(23, 23, 23)';
+                                                } else if (color === 'rgb(202, 204, 208)') {
+                                                element.style.color = 'rgb(55, 55, 55)';
+                                                } else if (color === 'rgb(120, 122, 128)') {
+                                                element.style.color = 'rgb(180, 180, 180)';
+                                                } 
+
+
+                                                let backgroundColor = computedStyle.backgroundColor;
+
+                                                if (backgroundColor === 'rgb(255, 255, 255)') { 
+                                                element.style.backgroundColor = 'rgb(33, 33, 33)';
+                                                } else if (backgroundColor === 'rgb(0, 0, 0)') { 
+                                                element.style.backgroundColor = 'rgb(254, 254, 254)';
+                                                } else if (backgroundColor === 'rgb(8, 102, 255)' || backgroundColor === 'rgb(57, 105, 251)') {
+                                                element.style.backgroundColor = 'rgb(57, 105, 251)';
+                                                element.style.color = 'rgb(255, 255, 255)';
+                                                }  else if (backgroundColor === 'rgb(240, 242, 245)') {
+                                                element.style.backgroundColor = 'rgb(23, 23, 23)';
+                                                } else if (backgroundColor === 'rgb(202, 204, 208)') {
+                                                element.style.backgroundColor = 'rgb(55, 55, 55)';
+                                                } else if (backgroundColor === 'rgb(120, 122, 128)') {
+                                                element.style.backgroundColor = 'rgb(180, 180, 180)';
+                                                } 
+
+                                                
+                                                let borderColor = computedStyle.borderColor;
+                                                let borderBottomColor = computedStyle.borderBottomColor;
+
+                                                if (borderColor === 'rgb(255, 255, 255)') { 
+                                                element.style.borderColor = 'rgb(33, 33, 33)';
+                                                } else if (borderColor === 'rgb(0, 0, 0)') { 
+                                                element.style.borderColor = 'rgb(254, 254, 254)';
+                                                } else if (borderColor === 'rgb(8, 102, 255)') {
+                                                element.style.borderColor = 'rgb(57, 105, 251)';
+                                                }  else if (borderColor === 'rgb(240, 242, 245)') {
+                                                element.style.borderColor = 'rgb(23, 23, 23)';
+                                                } else if (borderColor === 'rgb(202, 204, 208)') {
+                                                element.style.borderColor = 'rgb(55, 55, 55)';
+                                                } else if (borderBottomColor === 'rgb(202, 204, 208)') {
+                                                element.style.borderBottomColor = 'rgb(55, 55, 55)';
+                                                } else if (borderColor === 'rgb(120, 122, 128)') {
+                                                element.style.borderColor = 'rgb(180, 180, 180)';
+                                                } 
+
+
+                                                let boxShadow = computedStyle.boxShadow;
+
+                                                if (boxShadow === 'rgb(255, 255, 255)') { 
+                                                element.style.boxShadow = 'rgb(33, 33, 33)';
+                                                } else if (boxShadow === 'rgb(0, 0, 0)') { 
+                                                element.style.boxShadow = 'rgb(254, 254, 254)';
+                                                } else if (boxShadow === 'rgb(8, 102, 255)') {
+                                                element.style.boxShadow = 'rgb(57, 105, 251)';
+                                                }  else if (boxShadow === 'rgb(240, 242, 245)') {
+                                                element.style.boxShadow = 'rgb(23, 23, 23)';
+                                                } else if (boxShadow === 'rgb(202, 204, 208)') {
+                                                element.style.boxShadow = 'rgb(55, 55, 55)';
+                                                } else if (boxShadow === 'rgb(120, 122, 128)') {
+                                                element.style.boxShadow = 'rgb(180, 180, 180)';
+                                                } 
+
+
+
+
+                                            }
+
+                                            const allElements = document.querySelectorAll('*'); 
+                                            allElements.forEach(element => {
+                                                swapElementColors(element);
+                                            });
+
+                                            document.getElementById("toggle1").style.backgroundColor = "rgb(57, 105, 251)";
+                                            document.querySelector(".whitetext").style.color = "white"; document.querySelector(".whitetext2").style.color = "white";
+                                        }
+
+                                        swapColorsInDocument();
+                                        document.getElementById("darkmode").textContent = "yes"
+
+
+
+                                        var xhr = new XMLHttpRequest();
+
+                                        var url = "/darkmode/yes";
+
+                                        xhr.open('POST', url, true);
+
+                                        xhr.onreadystatechange = function() {
+                                            if (xhr.readyState == 4 && xhr.status == 200) {
+                                                console.log(xhr.responseText);
+                                                
+                                            }
+                                        };
+
+                                        xhr.send("");
+                                                                            
+
+                                        document.getElementById("toggle1").onclick = function() {
+                                            function swapColorsInDocument() {
+                                                function swapElementColors(element) {
+                                                    const computedStyle = getComputedStyle(element);
+                                                    let color = computedStyle.color;
+
+                                                    if (color === 'rgb(33, 33, 33)') { 
+                                                        element.style.color = 'rgb(255, 255, 255)';
+                                                    } else if (color === 'rgb(254, 254, 254)') {
+                                                        element.style.color = 'rgb(0, 0, 0)';
+                                                    } else if (color === 'rgb(57, 105, 251)') {
+                                                        element.style.color = 'rgb(8, 102, 255)';
+                                                    } else if (color === 'rgb(23, 23, 23)') {
+                                                        element.style.color = 'rgb(240, 242, 245)';
+                                                    } else if (color === 'rgb(55, 55, 55)') {
+                                                        element.style.color = 'rgb(202, 204, 208)';
+                                                    } else if (color === 'rgb(180, 180, 180)') {
+                                                        element.style.color = 'rgb(120, 122, 128)';
+                                                    }
+
+                                                    let backgroundColor = computedStyle.backgroundColor;
+
+                                                    if (backgroundColor === 'rgb(33, 33, 33)') { 
+                                                        element.style.backgroundColor = 'rgb(255, 255, 255)';
+                                                    } else if (backgroundColor === 'rgb(254, 254, 254)') { 
+                                                        element.style.backgroundColor = 'rgb(0, 0, 0)';
+                                                    } else if (backgroundColor === 'rgb(57, 105, 251)') {
+                                                        element.style.backgroundColor = 'rgb(8, 102, 255)';
+                                                        element.style.color = 'rgb(255, 255, 255)';
+                                                    } else if (backgroundColor === 'rgb(23, 23, 23)') {
+                                                        element.style.backgroundColor = 'rgb(240, 242, 245)';
+                                                    } else if (backgroundColor === 'rgb(55, 55, 55)') {
+                                                        element.style.backgroundColor = 'rgb(202, 204, 208)';
+                                                    } else if (backgroundColor === 'rgb(180, 180, 180)') {
+                                                        element.style.backgroundColor = 'rgb(120, 122, 128)';
+                                                    }
+
+                                                    let borderColor = computedStyle.borderColor;
+                                                    let borderBottomColor = computedStyle.borderBottomColor;
+
+                                                    if (borderColor === 'rgb(33, 33, 33)') { 
+                                                        element.style.borderColor = 'rgb(255, 255, 255)';
+                                                    } else if (borderColor === 'rgb(254, 254, 254)') { 
+                                                        element.style.borderColor = 'rgb(0, 0, 0)';
+                                                    } else if (borderColor === 'rgb(57, 105, 251)') {
+                                                        element.style.borderColor = 'rgb(8, 102, 255)';
+                                                    } else if (borderColor === 'rgb(23, 23, 23)') {
+                                                        element.style.borderColor = 'rgb(240, 242, 245)';
+                                                    } else if (borderColor === 'rgb(55, 55, 55)') {
+                                                        element.style.borderColor = 'rgb(202, 204, 208)';
+                                                    } else if (borderBottomColor === 'rgb(55, 55, 55)') {
+                                                        element.style.borderBottomColor = 'rgb(202, 204, 208)';
+                                                    } else if (borderColor === 'rgb(180, 180, 180)') {
+                                                        element.style.borderColor = 'rgb(120, 122, 128)';
+                                                    }
+
+                                                    let boxShadow = computedStyle.boxShadow;
+
+                                                    if (boxShadow === 'rgb(33, 33, 33)') { 
+                                                        element.style.boxShadow = 'rgb(255, 255, 255)';
+                                                    } else if (boxShadow === 'rgb(254, 254, 254)') { 
+                                                        element.style.boxShadow = 'rgb(0, 0, 0)';
+                                                    } else if (boxShadow === 'rgb(57, 105, 251)') {
+                                                        element.style.boxShadow = 'rgb(8, 102, 255)';
+                                                    } else if (boxShadow === 'rgb(23, 23, 23)') {
+                                                        element.style.boxShadow = 'rgb(240, 242, 245)';
+                                                    } else if (boxShadow === 'rgb(55, 55, 55)') {
+                                                        element.style.boxShadow = 'rgb(202, 204, 208)';
+                                                    } else if (boxShadow === 'rgb(180, 180, 180)') {
+                                                        element.style.boxShadow = 'rgb(120, 122, 128)';
+                                                    }
+
+
+
+
+                                                }
+
+                                                const allElements = document.querySelectorAll('*'); 
+                                                allElements.forEach(element => {
+                                                    swapElementColors(element);
+                                                });
+
+                                                document.querySelector(".whitetext").style.color = "white"; document.querySelector(".whitetext2").style.color = "white";
+                                                document.getElementById("toggle1").style.backgroundColor = "#caccd0";
+                                            }
+
+                                            swapColorsInDocument();
+                                            document.getElementById("darkmode").textContent = "no"
+
+
+                                            
+
+
+                                            var xhr = new XMLHttpRequest();
+
+                                            var url = "/darkmode/no";
+
+                                            xhr.open('POST', url, true);
+
+                                            xhr.onreadystatechange = function() {
+                                                if (xhr.readyState == 4 && xhr.status == 200) {
+                                                    console.log(xhr.responseText);
+                                                    
+                                                }
+                                            };
+
+                                            xhr.send("");
+
+                                            document.getElementById("circle1").style.transform = "translate(0px)";
+                                            document.getElementById("toggle1").style.backgroundColor = "#caccd0";
+                                            document.getElementById("toggle1").onclick = function() {
+                                                clicked();
+                                            }
+                                        }
+                                    } clicked();
+                                }
+
+                                document.addEventListener('DOMContentLoaded', (event) => {
+                                    function swapColorsInDocumentLight() {
+                                        function swapElementColors(element) {
+                                            const computedStyle = getComputedStyle(element);
+                                            let color = computedStyle.color;
+
+                                            if (color === 'rgb(33, 33, 33)') { 
+                                                element.style.color = 'rgb(255, 255, 255)';
+                                            } else if (color === 'rgb(254, 254, 254)') {
+                                                element.style.color = 'rgb(0, 0, 0)';
+                                            } else if (color === 'rgb(57, 105, 251)') {
+                                                element.style.color = 'rgb(8, 102, 255)';
+                                            } else if (color === 'rgb(23, 23, 23)') {
+                                                element.style.color = 'rgb(240, 242, 245)';
+                                            } else if (color === 'rgb(55, 55, 55)') {
+                                                element.style.color = 'rgb(202, 204, 208)';
+                                            } else if (color === 'rgb(180, 180, 180)') {
+                                                element.style.color = 'rgb(120, 122, 128)';
+                                            }
+
+                                            let backgroundColor = computedStyle.backgroundColor;
+
+                                            if (backgroundColor === 'rgb(33, 33, 33)') { 
+                                                element.style.backgroundColor = 'rgb(255, 255, 255)';
+                                            } else if (backgroundColor === 'rgb(254, 254, 254)') { 
+                                                element.style.backgroundColor = 'rgb(0, 0, 0)';
+                                            } else if (backgroundColor === 'rgb(57, 105, 251)') {
+                                                element.style.backgroundColor = 'rgb(8, 102, 255)';
+                                                element.style.color = 'rgb(255, 255, 255)';
+                                            } else if (backgroundColor === 'rgb(23, 23, 23)') {
+                                                element.style.backgroundColor = 'rgb(240, 242, 245)';
+                                            } else if (backgroundColor === 'rgb(55, 55, 55)') {
+                                                element.style.backgroundColor = 'rgb(202, 204, 208)';
+                                            } else if (backgroundColor === 'rgb(180, 180, 180)') {
+                                                element.style.backgroundColor = 'rgb(120, 122, 128)';
+                                            }
+
+                                            let borderColor = computedStyle.borderColor;
+                                            let borderBottomColor = computedStyle.borderBottomColor;
+
+                                            if (borderColor === 'rgb(33, 33, 33)') { 
+                                                element.style.borderColor = 'rgb(255, 255, 255)';
+                                            } else if (borderColor === 'rgb(254, 254, 254)') { 
+                                                element.style.borderColor = 'rgb(0, 0, 0)';
+                                            } else if (borderColor === 'rgb(57, 105, 251)') {
+                                                element.style.borderColor = 'rgb(8, 102, 255)';
+                                            } else if (borderColor === 'rgb(23, 23, 23)') {
+                                                element.style.borderColor = 'rgb(240, 242, 245)';
+                                            } else if (borderColor === 'rgb(55, 55, 55)') {
+                                                element.style.borderColor = 'rgb(202, 204, 208)';
+                                            } else if (borderBottomColor === 'rgb(55, 55, 55)') {
+                                                element.style.borderBottomColor = 'rgb(202, 204, 208)';
+                                            } else if (borderColor === 'rgb(180, 180, 180)') {
+                                                element.style.borderColor = 'rgb(120, 122, 128)';
+                                            }
+
+                                            let boxShadow = computedStyle.boxShadow;
+
+                                            if (boxShadow === 'rgb(33, 33, 33)') { 
+                                                element.style.boxShadow = 'rgb(255, 255, 255)';
+                                            } else if (boxShadow === 'rgb(254, 254, 254)') { 
+                                                element.style.boxShadow = 'rgb(0, 0, 0)';
+                                            } else if (boxShadow === 'rgb(57, 105, 251)') {
+                                                element.style.boxShadow = 'rgb(8, 102, 255)';
+                                            } else if (boxShadow === 'rgb(23, 23, 23)') {
+                                                element.style.boxShadow = 'rgb(240, 242, 245)';
+                                            } else if (boxShadow === 'rgb(55, 55, 55)') {
+                                                element.style.boxShadow = 'rgb(202, 204, 208)';
+                                            } else if (boxShadow === 'rgb(180, 180, 180)') {
+                                                element.style.boxShadow = 'rgb(120, 122, 128)';
+                                            }
+
+
+
+
+                                        }
+                                        
+
+                                        const allElements = document.querySelectorAll('*'); 
+                                        allElements.forEach(element => {
+                                            swapElementColors(element);
+                                        });
+
+                                        document.querySelector(".whitetext").style.color = "white"; document.querySelector(".whitetext2").style.color = "white";
+                                        document.getElementById("toggle1").style.backgroundColor = "#caccd0";
+                                    }
+                                    
+                                    function swapColorsInDocumentDark() {
+                                        function swapElementColors(element) {
+                                            const computedStyle = getComputedStyle(element);
+                                            let color = computedStyle.color;
+
+                                            if (color === 'rgb(255, 255, 255)') { 
+                                            element.style.color = 'rgb(33, 33, 33)';
+                                            } else if (color === 'rgb(0, 0, 0)') {
+                                            element.style.color = 'rgb(254, 254, 254)';
+                                            } else if (color === 'rgb(8, 102, 255)') {
+                                            element.style.color = 'rgb(57, 105, 251)';
+                                            } else if (color === 'rgb(240, 242, 245)') {
+                                            element.style.color = 'rgb(23, 23, 23)';
+                                            } else if (color === 'rgb(202, 204, 208)') {
+                                            element.style.color = 'rgb(55, 55, 55)';
+                                            } else if (color === 'rgb(120, 122, 128)') {
+                                            element.style.color = 'rgb(180, 180, 180)';
+                                            } 
+
+
+                                            let backgroundColor = computedStyle.backgroundColor;
+
+                                            if (backgroundColor === 'rgb(255, 255, 255)') { 
+                                            element.style.backgroundColor = 'rgb(33, 33, 33)';
+                                            } else if (backgroundColor === 'rgb(0, 0, 0)') { 
+                                            element.style.backgroundColor = 'rgb(254, 254, 254)';
+                                            } else if (backgroundColor === 'rgb(8, 102, 255)' || backgroundColor === 'rgb(57, 105, 251)') {
+                                            element.style.backgroundColor = 'rgb(57, 105, 251)';
+                                            element.style.color = 'rgb(255, 255, 255)';
+                                            }  else if (backgroundColor === 'rgb(240, 242, 245)') {
+                                            element.style.backgroundColor = 'rgb(23, 23, 23)';
+                                            } else if (backgroundColor === 'rgb(202, 204, 208)') {
+                                            element.style.backgroundColor = 'rgb(55, 55, 55)';
+                                            } else if (backgroundColor === 'rgb(120, 122, 128)') {
+                                            element.style.backgroundColor = 'rgb(180, 180, 180)';
+                                            } 
+
+                                            
+                                            let borderColor = computedStyle.borderColor;
+                                            let borderBottomColor = computedStyle.borderBottomColor;
+
+                                            if (borderColor === 'rgb(255, 255, 255)') { 
+                                            element.style.borderColor = 'rgb(33, 33, 33)';
+                                            } else if (borderColor === 'rgb(0, 0, 0)') { 
+                                            element.style.borderColor = 'rgb(254, 254, 254)';
+                                            } else if (borderColor === 'rgb(8, 102, 255)') {
+                                            element.style.borderColor = 'rgb(57, 105, 251)';
+                                            }  else if (borderColor === 'rgb(240, 242, 245)') {
+                                            element.style.borderColor = 'rgb(23, 23, 23)';
+                                            } else if (borderColor === 'rgb(202, 204, 208)') {
+                                            element.style.borderColor = 'rgb(55, 55, 55)';
+                                            } else if (borderBottomColor === 'rgb(202, 204, 208)') {
+                                            element.style.borderBottomColor = 'rgb(55, 55, 55)';
+                                            } else if (borderColor === 'rgb(120, 122, 128)') {
+                                            element.style.borderColor = 'rgb(180, 180, 180)';
+                                            } 
+
+
+                                            let boxShadow = computedStyle.boxShadow;
+
+                                            if (boxShadow === 'rgb(255, 255, 255)') { 
+                                            element.style.boxShadow = 'rgb(33, 33, 33)';
+                                            } else if (boxShadow === 'rgb(0, 0, 0)') { 
+                                            element.style.boxShadow = 'rgb(254, 254, 254)';
+                                            } else if (boxShadow === 'rgb(8, 102, 255)') {
+                                            element.style.boxShadow = 'rgb(57, 105, 251)';
+                                            }  else if (boxShadow === 'rgb(240, 242, 245)') {
+                                            element.style.boxShadow = 'rgb(23, 23, 23)';
+                                            } else if (boxShadow === 'rgb(202, 204, 208)') {
+                                            element.style.boxShadow = 'rgb(55, 55, 55)';
+                                            } else if (boxShadow === 'rgb(120, 122, 128)') {
+                                            element.style.boxShadow = 'rgb(180, 180, 180)';
+                                            } 
+
+
+
+
+                                        }
+
+                                        const allElements = document.querySelectorAll('*'); 
+                                        allElements.forEach(element => {
+                                            swapElementColors(element);
+                                        });
+
+                                        document.getElementById("toggle1").style.backgroundColor = "rgb(57, 105, 251)";
+                                        document.querySelector(".whitetext").style.color = "white"; document.querySelector(".whitetext2").style.color = "white";
+                                    }
+
+                                    document.addEventListener('mousedown', function(event) {
+                                        if (document.getElementById("darkmode").textContent == "yes") {
+                                            swapColorsInDocumentDark();
+                                        } else {
+                                            swapColorsInDocumentLight();
+                                        }
+
+                                    });
+
+                                    document.addEventListener('mouseover', function(event) {
+                                        if (document.getElementById("darkmode").textContent == "yes") {
+                                            swapColorsInDocumentDark();
+                                        } else {
+                                            swapColorsInDocumentLight();
+                                        }
+
+                                    });
+
+
+                                    var observer = new MutationObserver(function(mutations) {
+                                        mutations.forEach(function(mutation) {
+                                            mutation.addedNodes.forEach(function(node) {
+                                                if (node.nodeType === Node.ELEMENT_NODE) {
+                                                    console.log("blue swade shosw");
+                                                    if (document.getElementById("darkmode").textContent == "yes") {
+                                                        swapColorsInDocumentDark();
+                                                    } else {
+                                                        swapColorsInDocumentLight();
+                                                    }
+                                                }
+                                            });
+                                        });
+                                    });
+
+                                    observer.observe(document.body, { childList: true, subtree: true });
+
+
+                                    if (document.getElementById("darkmode").textContent == "yes") {
+                                        document.getElementById("toggle1").click();
+                                    }
+
+                                });
+
+                                
+                            </script>
+
+                            
+        
+                        </div>
+
+                        
+
+
+                    </div>
+                    </div>
+
+                    <!-- <div style="width: 100vw; max-width: 1280px;"> 
+                    <p style="float: left; font-size: 19.25px; margin-left: 22px;">Enable Dark Mode</p>
+
+                    <div id="toggle2" style="padding: 4px; width: 32px; transform: translate(0, 24px); margin-left: 15px;
+                        background-color: #caccd0; border-radius: 20px; cursor: pointer; transition: background-color 0.3s; float: left;">
+
+                        <div id="circle2" style="width: 16px; height: 16px; border-radius: 8px; background-color: white; transition: transform 0.3s;">
+                        
+                        <script>
+                            document.getElementById("toggle2").onclick = function() {
+                                function clicked() {
+                                    document.getElementById("circle2").style.transform = "translate(16px)";
+
+                                    document.getElementById("toggle2").style.backgroundColor = "rgb(57, 105, 251)";
+                                                                        
+
+                                    document.getElementById("toggle2").onclick = function() {
+
+
+                                        document.getElementById("circle2").style.transform = "translate(0px)";
+                                        document.getElementById("toggle2").style.backgroundColor = "#caccd0";
+                                        document.getElementById("toggle2").onclick = function() {
+                                            clicked();
+                                        }
+                                    }
+                                } clicked();
+                            }
+
+
+                            </script>
+                    </div> -->
+                    </div>
+                </div>
+
+            
+                
+    
+
+
+                <div id="darkmode" style="display: none;">{{ dark_mode }}</div>
+
+
+
+
+            </div>
+        </div>
+    </div>
+    
+
+
+    <div id="canada" style="display: none;">{{ about }}</div>
+
+    
+
+    <script>
+        window.onload = (event) => {
+            document.getElementById('everyday').click();
+
+
+            var string = "github.com/pengesal/lan-messager\n"
+            if (document.getElementById("splash").textContent == string) {
+                document.getElementById("splash").style.cursor = "pointer";
+                document.getElementById("splash").onclick = function() {
+                    window.open("https://github.com/pengesal/lan-messager");
+            }} 
+            if (document.getElementById("splash").textContent == "Now in colour!!!\n") {
+                                    document.getElementById("splash").style.width = "125px";
+                                    document.getElementById("splash").style.background = "linear-gradient(to right, red, orange, yellow, green, blue, indigo, purple)";
+                                    document.getElementById("splash").style.fontWeight = "bold";
+                                    document.getElementById("splash").style.paddingLeft = "none";
+                                    document.getElementById("splash").style.paddingRight = "none";
+                                    document.getElementById("splash").style.webkitBackgroundClip = "text";
+                                    document.getElementById("splash").style.webkitTextFillColor = "transparent";
+                                }
+            insertdesc(document.getElementById("canada").textContent);
+            insert();
+
+            document.getElementById("clickme").click()
+        };
+
+        function insertdesc(about) {
+            about = about.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'");
+
+            document.getElementById('aboutsectionedit').value = about
+            document.getElementById('aboutsection').value = about
+        }
+
+
+        function insert() {
+            document.getElementById('everyday').click();
+
+            document.getElementById('firstnameedit').value = '{{ forename }}';
+            document.getElementById('firstname').value = '{{ forename }}';
+            document.getElementById('surnameedit').value = '{{ surname }}';
+            document.getElementById('surname').value = '{{ surname }}';
+        }
+        
+    </script>
+
+
+
+
+</body>
+
+
+
+
+
+
+</html>
