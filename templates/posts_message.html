@@ -992,7 +992,7 @@
 
                 <script>
                     document.getElementById("commentbar").addEventListener("input", function(event) {
-                        if (this.value.length > 75) {
+                        if (this.value.length > 1000) {
                             this.value = this.value.slice(0, 75);
                         }
                     });
@@ -1440,10 +1440,11 @@
 
                                 newDiv.style.fontSize = "20px";
                                 newDiv.style.backgroundColor = 'white';
-                                newDiv.style.padding = '24px 24px 24px 15px';
+                                newDiv.style.padding = '24px 24px 0 15px';
                                 newDiv.className = "friending" + increment;
                                 newDiv.style.borderRadius = "0px";
-                                newDiv.style.height = "40px";
+                                newDiv.style.minHeight = "40px";
+                                newDiv.style.height = "fit-content";
                                 newDiv.style.overflow = "hidden";
 
                                 var div = document.createElement("div");
@@ -1459,9 +1460,13 @@
                                 invite_text2.style.fontSize = "21px";
 
                                 invite_text.textContent = comment;
-                                invite_text.style.lineHeight = "0px";
+                                invite_text.style.lineHeight = "17px";
+                                invite_text.style.width = "50%";
                                 invite_text.style.fontSize = "17px";
                                 invite_text.style.transform = "translate(50px, -25px)";
+                                invite_text.style.whiteSpace = "normal"
+                                invite_text.style.wordWrap = "break-word"
+                                
 
                                 image.style.width = "40px";
                                 image.style.height = "40px";
@@ -1479,10 +1484,6 @@
                                 thingdiv.appendChild(image);
                                 thingdiv.appendChild(invite_text2);
                                 div.appendChild(clearDiv);
-                                div.appendChild(invite_text);
-
-                                document.getElementById("mormonsbelike2").appendChild(newDiv);
-
                                 if (useridsarray[i] == String(your_id)) {
                                     var declinebutton = document.createElement('button');
                                     declinebutton.style.float = "right";
@@ -1494,7 +1495,7 @@
                                     declinebutton.style.backgroundColor = "#f0f2f5";
                                     declinebutton.style.border = "0px";
                                     declinebutton.style.margin = "0px 0px 0px 0px";
-                                    declinebutton.style.transform = "translate(0, -90px)";
+                                    declinebutton.style.transform = "translate(0, -50px)";
                                     declinebutton.style.padding = "3px";
                                     declinebutton.style.width = "85px";
                                     declinebutton.style.borderRadius = "8px";
@@ -1515,6 +1516,13 @@
                                         };
                                     })(increment, commentidsarray[i]);
                                 }
+                                
+                                div.appendChild(invite_text);
+
+
+                                document.getElementById("mormonsbelike2").appendChild(newDiv);
+
+                                
 
                                 (function(index, user_id) {
                                     newDiv.onmouseover = function() {
