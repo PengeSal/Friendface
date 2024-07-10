@@ -588,8 +588,6 @@
 
                         console.log("Cleaned Text:", result.cleanedText);
 
-
-
                         document.getElementById("shame").textContent = result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, '');
                         document.getElementById("shame").style.height = document.getElementById("shame").scrollHeight + "px";
 
@@ -1328,19 +1326,29 @@
 
                 <script>
                     function revealcomments() {
+                        
+
                         document.getElementById("shame2").style.width = "calc(50% - 1px)";
                         document.getElementById("mormonsbelike").style.width = "calc(50% - 1px)";
                         document.getElementById("mormonsbelike").style.borderLeft = "2px solid #f0f2f5";
                         document.getElementById("mormonsbelike").style.height = "50vh";
 
+                        document.getElementById("shame").style.height = "0px"
+                        document.getElementById("shame").style.height = document.getElementById("shame").scrollHeight - 4 + "px";
                         document.querySelector(".commentbutton").onclick = function() {
-                            document.getElementById("shame2").style.width = "100vw";
-
-                            document.getElementById("mormonsbelike").style.width = "0px";
                             
 
+                            document.getElementById("shame2").style.width = "100vw";
+                            document.getElementById("mormonsbelike").style.width = "0px";
                             document.getElementById("mormonsbelike").style.borderLeft = "0px solid #f0f2f5";
                             document.getElementById("mormonsbelike").style.height = "0px";
+
+                            document.getElementById("shame").style.height = "0px"
+                            document.getElementById("shame").style.height = document.getElementById("shame").scrollHeight - 4 + "px";
+
+                                
+                            
+                            
                             document.querySelector(".commentbutton").onclick = function() {
                                 revealcomments();
                             }
@@ -1452,9 +1460,20 @@
 
                                 var user_id = useridsarray[i];
 
+                                //name
                                 invite_text2.textContent = text2;
+                                console.log(useridsarray[i] + ", " + post_id)
+                                if (useridsarray[i] == document.getElementById("theirid").textContent) {
+                                    invite_text2.textContent = text2.trim();
+
+                                    var authorSpan = document.createElement("span");
+                                    authorSpan.textContent = " (Author)";
+                                    authorSpan.style.color = "#787a80";
+
+                                    invite_text2.appendChild(authorSpan);
+                                }
                                 invite_text2.style.lineHeight = "0px";
-                                invite_text2.style.transform = "translate(-1px, -17px)";
+                                invite_text2.style.transform = "translate(-1px, -15px)";
                                 invite_text2.style.cursor = "pointer";
                                 invite_text2.style.float = "left";
                                 invite_text2.style.fontSize = "21px";
@@ -1464,9 +1483,8 @@
                                 invite_text.style.width = "50%";
                                 invite_text.style.fontSize = "17px";
                                 invite_text.style.transform = "translate(50px, -25px)";
-                                invite_text.style.whiteSpace = "normal"
-                                invite_text.style.wordWrap = "break-word"
-                                
+                                invite_text.style.whiteSpace = "normal";
+                                invite_text.style.wordWrap = "break-word";
 
                                 image.style.width = "40px";
                                 image.style.height = "40px";
@@ -1519,10 +1537,7 @@
                                 
                                 div.appendChild(invite_text);
 
-
                                 document.getElementById("mormonsbelike2").appendChild(newDiv);
-
-                                
 
                                 (function(index, user_id) {
                                     newDiv.onmouseover = function() {
