@@ -227,7 +227,10 @@ def get_max_post_id(cursor):
 def create_post(isreply, replying_to):
     data = request.form.get('imageData')
 
-    photo = data.split("_SEPARATINGIMAGEDATAFROMMESSAGEDATA_")[1]
+    try:
+        photo = data.split("_SEPARATINGIMAGEDATAFROMMESSAGEDATA_")[1]
+    except:
+        pass
     message = data.split("_SEPARATINGIMAGEDATAFROMMESSAGEDATA_")[0].replace("\n", "_THISISALINEBREAK_").replace("'", "_THISISANAPOSTROPHE_")
 
     name = f"{current_user.forename} {current_user.surname}"
@@ -600,7 +603,10 @@ def get_image(image, post_id):
     elif image == "reply_message":
         cursor.execute("""SELECT message FROM posts WHERE post_id=?""", (post_id,))
         message = cursor.fetchone()
-        message = message[0]
+        try:
+            message = message[0]
+        except:
+            return "Post not found"
 
         return message
 
@@ -908,7 +914,7 @@ def search_users():
 
     displaymatches = f"displaymatches('{names}', '{pfps}', '{user_ids}', '{descriptions}')"
 
-    searchterm = f'Showing results for "{searchterm}"'
+
 
 
 
