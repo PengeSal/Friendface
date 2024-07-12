@@ -407,7 +407,7 @@ def insert_data():
     following = str(followinglist)
 
 
-
+    total_views = 0
 
     friendinglist = []
     friending = str(friendinglist)
@@ -437,12 +437,13 @@ def insert_data():
                 about TEXT,
                 liking TEXT,
                 disliking TEXT,
-                dark_mode TEXT)""")
+                dark_mode TEXT,
+                total_views INTEGER)""")
 
         cursor.execute("""
-                INSERT INTO users (forename, surname, email, password, verify, profile_picture, banner, friends, friending, followers, following, pendingfriends, about, dark_mode)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """, (forename, surname, email.lower(), hashed_password, verify, profile_picture, banner, friends, friending, followers, following, pendingfriends, about, dark_mode))
+                INSERT INTO users (forename, surname, email, password, verify, profile_picture, banner, friends, friending, followers, following, pendingfriends, about, dark_mode, total_views)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """, (forename, surname, email.lower(), hashed_password, verify, profile_picture, banner, friends, friending, followers, following, pendingfriends, about, dark_mode, total_views))
 
         conn.commit()
 
@@ -1559,7 +1560,129 @@ def home(mode):
         if splash == "Established 2004\n":
             splash = f"Established {random.randint(1997, 2009)}"
 
+        num_mutuals = []
 
+
+        
+        def get_random_user_excluding(current_user_id):
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            
+            cursor.execute("SELECT friending, pendingfriends FROM users WHERE user_id=?", (current_user_id,))
+            user_data = cursor.fetchone()
+            
+            if user_data:
+                friending = json.loads(user_data['friending'])
+                pending_friends = json.loads(user_data['pendingfriends'])
+                
+                friends_of_friends = set()
+                for friend_id in friending:
+                    cursor.execute("SELECT friending FROM users WHERE user_id=?", (friend_id,))
+                    friend_data = cursor.fetchone()
+                    if friend_data:
+                        friend_friending = json.loads(friend_data['friending'])
+                        friends_of_friends.update(friend_friending)
+                
+                friends_of_friends.discard(current_user_id)
+                friends_of_friends.difference_update(friending)
+                friends_of_friends.difference_update(pending_friends)
+
+                
+                
+                cursor.execute("""
+                    SELECT user_id FROM users 
+                    WHERE ? IN (SELECT json_each.value FROM json_each(pendingfriends))
+                """, (current_user_id,))
+                sent_requests = set(row['user_id'] for row in cursor.fetchall())
+                friends_of_friends.difference_update(sent_requests)
+
+                num_mutuals.append(len(list(friends_of_friends)))
+                
+                if friends_of_friends:
+                    potential_users = list(friends_of_friends)
+                    while potential_users:
+                        recommended_user_id = random.choice(potential_users)
+                        cursor.execute("SELECT pendingfriends FROM users WHERE user_id=?", (recommended_user_id,))
+                        recommended_user_data = cursor.fetchone()
+                        
+                        if recommended_user_data:
+                            recommended_pending_friends = json.loads(recommended_user_data['pendingfriends'])
+                            if current_user_id not in recommended_pending_friends:
+                                conn.close()
+                                return recommended_user_id
+                            else:
+                                potential_users.remove(recommended_user_id)
+                    return None
+                else:
+                    cursor.execute("""
+                        SELECT user_id FROM users 
+                        WHERE user_id != ? 
+                        AND user_id NOT IN (SELECT json_each.value FROM json_each(?))
+                        AND user_id NOT IN (SELECT json_each.value FROM json_each(?))
+                        AND user_id NOT IN (SELECT user_id FROM users WHERE ? IN (SELECT json_each.value FROM json_each(pendingfriends)))
+                        ORDER BY RANDOM() LIMIT 1
+                    """, (current_user_id, json.dumps(friending), json.dumps(pending_friends), current_user_id))
+                    result = cursor.fetchone()
+                    if result:
+                        recommended_user_id = result['user_id']
+                    else:
+                        return None
+            else:
+                cursor.execute("""
+                    SELECT user_id FROM users 
+                    WHERE user_id != ? 
+                    AND user_id NOT IN (SELECT json_each.value FROM json_each(?))
+                    ORDER BY RANDOM() LIMIT 1
+                """, (current_user_id, json.dumps(pending_friends)))
+                result = cursor.fetchone()
+                if result:
+                    recommended_user_id = result['user_id']
+                else:
+                    return None
+
+            conn.close()
+            
+            return recommended_user_id
+        
+
+
+        def get_user_details(user_id):
+            conn = get_db_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT forename, surname, profile_picture FROM users WHERE user_id=?", (user_id,))
+            user = cursor.fetchone()
+            conn.close()
+            return user
+
+        recommended_user_id = get_random_user_excluding(current_user.id)
+
+        recommended_forename = ""
+        recommended_surname = ""
+        recommended_pfp = ""
+
+        
+
+        if recommended_user_id:
+            recommended_user = get_user_details(recommended_user_id)
+            if recommended_user:
+                recommended_forename = recommended_user[0]
+                recommended_surname = recommended_user[1]
+                recommended_pfp = recommended_user[2]
+                try:
+                    num_mutuals = num_mutuals[0]
+                except:
+                    num_mutuals = ""
+                
+                if num_mutuals > 0:
+                    num_mutuals = f"{num_mutuals} Mutual Friends"
+                elif num_mutuals == 0:
+                    num_mutuals = f"Friend Suggestion"
+        else:
+            num_mutuals = "<script>\n    document.getElementById('id4').style.display = 'none';\n</script>"
+        
+
+
+        
         if user_data:
             user_data = user_data[0]
             conn.close()
@@ -1637,17 +1760,21 @@ def home(mode):
             posts = f"displayposts('{post_ids}', '{names}', '{messages}', '{user_ids}', '{profile_pictures}', '{likes}', '{dislikes}', '{comments_amounts}', '{photos}', '{times}', '{likers}', '{dislikers}', '{replying_to}', {current_user.id}, 'yes', '')"
 
             conn2.close()
+ 
 
             if mode == "feed":
-                return render_template('index.html', profile_picture=user_data, profile_text=name,
+                return render_template('index.html', profile_picture=user_data, profile_text=name, recommended_user_id=recommended_user_id, num_mutuals=num_mutuals,
+                                    recommended_forename=recommended_forename, recommended_surname=recommended_surname, recommended_pfp=recommended_pfp,
                                        logo=logo, user_id = user_id, splashmessage=splash, displayposts = posts, forename = current_user.forename)
 
             elif mode == "liked":
-                return render_template('index.html', profile_picture=user_data, profile_text=name,
+                return render_template('index.html', profile_picture=user_data, profile_text=name, recommended_user_id=recommended_user_id, num_mutuals=num_mutuals,
+                                    recommended_forename=recommended_forename, recommended_surname=recommended_surname, recommended_pfp=recommended_pfp,
                                        logo=logo, user_id = user_id, splashmessage=splash, displayposts = posts, forename = current_user.forename)
 
             elif mode == "most_viewed":
-                return render_template('index.html', profile_picture=user_data, profile_text=name,
+                return render_template('index.html', profile_picture=user_data, profile_text=name, recommended_user_id=recommended_user_id, num_mutuals=num_mutuals,
+                                    recommended_forename=recommended_forename, recommended_surname=recommended_surname, recommended_pfp=recommended_pfp,
                                        logo=logo, user_id = user_id, splashmessage=splash, displayposts = posts, forename = current_user.forename)
 
 
@@ -2153,6 +2280,12 @@ def view(post_id):
 
     try:
         cursor.execute("""UPDATE posts SET views=views+1 WHERE post_id=?""", (post_id,))
+
+        cursor.execute("""SELECT user_id FROM posts WHERE post_id=?""", (post_id,))
+        user_id = cursor.fetchone()
+        user_id = user_id[0]
+
+        cursor.execute("""UPDATE users SET total_views=total_views+1 WHERE user_id=?""", (user_id,))
 
 
         return "biggle"
