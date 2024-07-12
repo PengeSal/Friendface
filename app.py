@@ -1596,7 +1596,7 @@ def home(mode):
                 sent_requests = set(row['user_id'] for row in cursor.fetchall())
                 friends_of_friends.difference_update(sent_requests)
 
-                num_mutuals.append(len(list(friends_of_friends)))
+                
                 
                 if friends_of_friends:
                     potential_users = list(friends_of_friends)
@@ -1608,7 +1608,16 @@ def home(mode):
                         if recommended_user_data:
                             recommended_pending_friends = json.loads(recommended_user_data['pendingfriends'])
                             if current_user_id not in recommended_pending_friends:
+                                cursor.execute("SELECT friending FROM users WHERE user_id=?", (recommended_user_id,))
+                                friends_from_recommended_user = cursor.fetchone()
+                                friends_from_recommended_user = eval(friends_from_recommended_user[0])
+                                cursor.execute("SELECT friending FROM users WHERE user_id=?", (current_user.id,))
+                                friends_from_current_user = cursor.fetchone()
+                                friends_from_current_user = eval(friends_from_current_user[0])
+                                friends_of_friends = list(set(friends_from_recommended_user).intersection(set(friends_from_current_user)))
+                                num_mutuals.append(len(list(friends_of_friends)))
                                 conn.close()
+
                                 return recommended_user_id
                             else:
                                 potential_users.remove(recommended_user_id)
