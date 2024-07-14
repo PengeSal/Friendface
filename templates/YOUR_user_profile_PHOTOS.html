@@ -812,11 +812,20 @@
             </style>
 
             <div class="evenmainerbox2" id="thecodewasstolen">
-                <div class="mainbox2">
+                <div class="mainbox2" style="border-bottom: 2px solid #caccd0 !important;">
+                    <div style="width: 1280px; height: 75px;">
+                        <h2 style="float: left; margin: 22px; line-height: 18px;">Photos</h2>
+                        <p style="float: left; font-size: 20px; padding-left: 5px; transform: translate(-20px, -6px);" id="repliesamount"></p>
+                    </div>
 
-                    <p style="padding: 10px; color: #caccd0; text-align: center;">nothing to see here</p>
+                    <hr style="transform: translate(0, -12px); margin: 0;">
+
+                    <button id="clickme" style="display: none;" onclick="{{ displayposts }}"></button>
+
+                    <div class="mainbox3"></div>
 
                 </div>
+                
             </div>
 
             <script>
@@ -904,6 +913,270 @@
                     }
                 }
                 setInterval(repeat, 50)
+
+                function displayposts(post_ids, names, messages, user_ids, profile_pictures, likes, dislikes,
+                    comments_amounts, photos, times, likers, dislikers, replying_to, your_id) {
+
+                    var increment = 0;
+
+
+
+
+                    var post_ids = post_ids.split("_SEPARATOR_").reverse();
+                    var names = names.split("_SEPARATOR_").reverse();
+                    var messages = messages.split("_SEPARATOR_").reverse();
+                    var user_ids = user_ids.split("_SEPARATOR_").reverse();
+                    var profile_pictures = profile_pictures.split("_SEPARATOR_").reverse();
+                    var likes = likes.split("_SEPARATOR_").reverse();
+                    var dislikes = dislikes.split("_SEPARATOR_").reverse();
+                    var comments_amounts = comments_amounts.split("_SEPARATOR_").reverse();
+                    var photos = photos.split("_SEPARATOR_").reverse();
+                    var times = times.split("_SEPARATOR_").reverse();
+                    var likers = likers.split("_SEPARATOR_").reverse();
+                    var dislikers = dislikers.split("_SEPARATOR_").reverse();
+                    var replying_to = replying_to.split("_SEPARATOR_").reverse();
+                    var your_id = your_id
+
+
+                    if (typeof names[1] === "undefined") {
+                        no_posts();
+                    };
+
+
+                    function no_posts() {
+                        var newDiv2 = document.createElement('div');
+                        var paragr = document.createElement('p');
+
+                        newDiv2.style.borderRadius = "10px";
+                        newDiv2.style.width = "100%";
+                        newDiv2.style.height = "95px";
+                        newDiv2.style.textAlign = "center";
+
+                        newDiv2.className = "maggiemae";
+
+                        paragr.textContent = "This person has no photos";
+                        paragr.style.transform = "translate(0, 30px)";
+                        paragr.style.color = "#787a80";
+                        paragr.style.lineHeight = "0";
+
+                        document.querySelector(".mainbox3").appendChild(newDiv2);
+                        document.querySelector(".maggiemae").appendChild(paragr);
+                    }
+
+                    var number = post_ids.length - 1
+
+                    document.getElementById("repliesamount").textContent = "(" + number + ")"
+
+
+                    var arraylength = post_ids.length;
+                    for (var i = 0; i < arraylength; i++) {
+                        increment = increment + 1;
+
+
+                        if (increment != 1) {
+
+
+                        var actualimage = document.createElement("img");
+                        var user_id = user_ids[i];
+
+                        
+                        
+                        var actualimage = document.createElement("img");
+
+                        
+                        actualimage.style.cursor = "pointer";
+                        actualimage.style.objectFit = "cover";
+                        actualimage.id = "actualimage" + increment;
+                        actualimage.className = "actualimage" + post_ids[i];
+                        actualimage.src = "data:image/jpeg;base64," + photos[i];
+                        actualimage.style.width = "calc(20% - 12px)";
+                        actualimage.style.marginLeft = "10px";
+                        actualimage.style.aspectRatio = "1/1";
+
+
+
+
+
+                        document.querySelector(".mainbox3").appendChild(actualimage);
+
+                        }
+                    }
+
+                    console.log(post_ids)
+                    
+                    for (var i = 0; i < arraylength; i++) {
+                        (function (index) {
+                            if (index !== 0) {
+                                var post_id = post_ids[index];
+
+                                try {
+                                    var actualimage = document.querySelector(".actualimage" + post_id); 
+                                } catch {
+                                    console.log("stoopid")
+                                }
+
+                                var url = '/get/image/' + post_id;
+
+                                fetch(url)
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error('you lose');
+                                        }
+                                        return response.text();
+                                    })
+                                    .then(image => {
+                                        try {
+                                        actualimage.src = "data:image/jpeg;base64," + image;
+
+                                        actualimage.onclick = function () {
+                                            function displayimage(){
+
+                                            let scrollPosition = { top: 0, left: 0 };
+
+
+                                            scrollPosition = {
+                                                top: window.scrollY,
+                                                left: window.scrollX
+                                            };
+
+                                            document.body.style.overflow = 'hidden';
+                                            document.documentElement.style.overflow = 'hidden';
+
+                                            window.scrollTo(scrollPosition.left, scrollPosition.top);
+
+
+
+
+
+
+                                            event.stopPropagation();
+
+                                            var existingdropdown = document.querySelector('.delete-dropdown');
+                                            if (existingdropdown) {
+                                                document.body.removeChild(existingdropdown);
+                                            }
+
+
+
+
+                                            var image = document.createElement("img");
+                                            image.src = actualimage.src
+                                            image.style.maxHeight = "calc(100vh - 214px)";
+                                            image.style.maxWidth = "calc(100vw - 214px)";
+                                            image.style.alignSelf = "center";
+                                            image.style.objectFit = "cover";
+                                            image.style.transform = "translate(calc(50vw - 50%))"
+
+
+                                            var button = document.createElement("button");
+                                            button.style.borderRadius = "50%";
+                                            button.style.backgroundColor = "white";
+                                            button.style.border = "none";
+                                            button.style.width = "50px";
+                                            button.style.height = "50px";
+                                            button.textContent = "✖";
+                                            button.style.fontSize = "20px";
+                                            button.style.paddingBottom = "3px";
+                                            button.style.position = "absolute";
+                                            button.style.margin = "25px";
+                                            button.style.marginTop = "25px";
+
+                                            button.onmouseout = function () {
+                                                button.style.backgroundColor = "white";
+                                            };
+
+                                            button.onmouseover = function() {
+                                                button.style.backgroundColor = "#caccd0";
+                                            };
+
+
+                                            var deletedropdown = document.createElement("div");
+                                            deletedropdown.classList.add('delete-dropdown');
+                                            deletedropdown.id = "deletedropdown"
+                                            deletedropdown.style.position = "absolute";
+                                            deletedropdown.style.top = window.pageYOffset + 64 + "px";
+                                            deletedropdown.style.backgroundColor = "rgba(0, 0, 0, 0.75)";
+                                            deletedropdown.style.zIndex = "9999";
+                                            deletedropdown.style.height = "calc(100vh - 64px)";
+                                            deletedropdown.style.width = "100vw";
+                                            deletedropdown.style.backdropFilter = "blur(75px)"
+
+                                            deletedropdown.style.display = "flex";
+
+
+
+                                            document.body.appendChild(deletedropdown);
+
+                                            deletedropdown.appendChild(image);
+                                            deletedropdown.appendChild(button);
+
+
+
+
+
+
+
+                                            deletedropdown.addEventListener('click', handleclickoutside);
+                                            image.addEventListener('click', displayimage);
+
+
+
+
+                                            function handleclickoutside(event) {
+                                                let scrollPosition = { top: 0, left: 0 };
+
+                                                document.body.style.overflow = '';
+                                                document.documentElement.style.overflow = '';
+
+
+
+
+                                                console.log("giggle")
+                                                // if (!deletedropdown.contains(image)) {
+                                                    document.body.removeChild(deletedropdown);
+                                                    document.removeEventListener('click', handleclickoutside);
+                                                // }
+                                            }
+
+                                            function handleclickoutside2(event) {
+                                                actualimage.click()
+                                            }
+
+                                            document.addEventListener('click', handleclickoutside);
+                                            }
+                                            displayimage();
+
+                                        };
+                                        
+                                        } catch {
+                                            console.error("stoopid")
+                                        }
+                                        
+                                        
+
+                                    })
+                                    .catch(error => {
+                                        console.error('error fetching image for post id:', post_id, error);
+                                    });
+
+                                    
+                                
+
+
+                                
+                            }
+                        })(i);
+                    }
+
+                    
+
+                    
+                }
+
+                document.getElementById("clickme").click()
+
+                console.log(document.getElementById("clickme").textContent)
+
             </script>
 
         

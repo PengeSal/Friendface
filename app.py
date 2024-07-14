@@ -2186,6 +2186,7 @@ def user_profile(user_id, typeofthing):
             photoalbum = ""
 
             try:
+
                 if typeofthing == "posts":
                     post_ids = ""
                     names = ""
@@ -2269,10 +2270,98 @@ def user_profile(user_id, typeofthing):
 
 
                     conn2.close()
+
+                elif typeofthing == "photos":
+                    print("CENTER")
+                    print("CENTER")
+                    print("CENTER")
+                    print("CENTER")
+                    print("CENTER")
+                    print("CENTER")
+                    print("CENTER")
+                    print("CENTER")
+                    print("CENTER")
+                    print("CENTER")
+                    print("CENTER")
+
+                    post_ids = ""
+                    names = ""
+                    messages = ""
+                    user_ids = ""
+                    profile_pictures = ""
+                    likes = ""
+                    dislikes = ""
+                    comments_amounts = ""
+                    photos = ""
+                    times = ""
+                    likers = ""
+                    dislikers = ""
+                    replying_to = ""
+
+                    db_path = os.path.join(os.getcwd(), 'friendface.db')
+                    conn2 = sqlite3.connect(db_path)
+                    cursor2 = conn2.cursor()
+
+                    print("CENTER2")
+
+                    cursor2.execute("""SELECT * FROM posts WHERE user_id=? AND is_photo='yes'""", (user_id,))
+                    posts = cursor2.fetchall()
+
+                    print("CENTER2")
+
+                    for post in posts:
+                        for column_name, value in zip(cursor2.description, post):
+
+
+                            if column_name[0] == "post_id":
+                                post_ids = f"{post_ids}{value}_SEPARATOR_"
+                            if column_name[0] == "name":
+                                names = f"{names}{value}_SEPARATOR_"
+                            if column_name[0] == "message":
+                                messages = f"{messages}{value}_SEPARATOR_"
+                            if column_name[0] == "user_id":
+                                user_ids = f"{user_ids}{value}_SEPARATOR_"
+                            if column_name[0] == "profile_picture":
+                                profile_pictures = f"{profile_pictures}image_SEPARATOR_"
+                            if column_name[0] == "likes":
+                                likes = f"{likes}{value}_SEPARATOR_"
+                            if column_name[0] == "dislikes":
+                                dislikes = f"{dislikes}{value}_SEPARATOR_"
+                            if column_name[0] == "comments_amounts":
+                                comments_amounts = f"{comments_amounts}{value}_SEPARATOR_"
+                            if column_name[0] == "is_photo":
+                                if value != "no":
+                                    print("THIS IS A PHOTO")
+                                    print("THIS IS A PHOTO")
+                                    print("THIS IS A PHOTO")
+
+                                    photos = f"{photos}image_SEPARATOR_"
+                                else:
+                                    photos = f"{photos}_SEPARATOR_"
+                                    print("THIS IS NOT NOT NOT A PHOTO")
+                                    print("THIS IS NOT NOT NOT A PHOTO")
+                                    print("THIS IS NOT NOT NOT A PHOTO")
+
+
+                            if column_name[0] == "time":
+                                times = f"{times}{value}_SEPARATOR_"
+                            if column_name[0] == "likers":
+                                likers = f"{likers}{value}_SEPARATOR_"
+                            if column_name[0] == "dislikers":
+                                dislikers = f"{dislikers}{value}_SEPARATOR_"
+                            if column_name[0] == "replying_to":
+                                replying_to = f"{replying_to}{value}_SEPARATOR_"
+
+
+                    posts = f"displayposts('{post_ids}', '{names}', '{messages}', '{user_ids}', '{profile_pictures}', '{likes}', '{dislikes}', '{comments_amounts}', '{photos}', '{times}', '{likers}', '{dislikers}', '{replying_to}', {current_user.id})"
+
+                    
+
+                    conn2.close()
                 else:
                     posts = ""
 
-
+                
 
 
 
