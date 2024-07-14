@@ -98,7 +98,7 @@ def get_more_posts():
     conn2 = sqlite3.connect(db_path)
     cursor2 = conn2.cursor()
 
-    cursor2.execute("""SELECT * FROM posts""")
+    cursor2.execute("""SELECT * FROM posts WHERE dislikers NOT LIKE ?""", (f"%{current_user.id}%",))
     posts = cursor2.fetchall()
 
     columns = {description[0]: index for index, description in enumerate(cursor2.description)}
@@ -1345,7 +1345,7 @@ def declinefriend(user_id):
         else:
             return "Friend request not found", 400
     conn.close()
-    return redirect(url_for("home"))
+    return "biggle"
 
 @app.route('/sendfriendrequest/<int:user_id>', methods=['POST', 'GET'])
 @login_required
@@ -1680,8 +1680,10 @@ def home(mode):
                 try:
                     num_mutuals = num_mutuals[0]
                 except:
-                    num_mutuals = ""
+                    num_mutuals = 0
                 
+                print("NUM MUTUALS: " + str(num_mutuals))
+
                 if num_mutuals > 0:
                     num_mutuals = f"{num_mutuals} Mutual Friends"
                 elif num_mutuals == 0:
@@ -1691,98 +1693,179 @@ def home(mode):
         
 
 
+
+        posts = ""
+
         
         if user_data:
-            user_data = user_data[0]
-            conn.close()
-
-
-
-            post_ids = ""
-            names = ""
-            messages = ""
-            user_ids = ""
-            profile_pictures = ""
-            likes = ""
-            dislikes = ""
-            comments_amounts = ""
-            photos = ""
-            times = ""
-            likers = ""
-            dislikers = ""
-            replying_to = ""
-
             db_path = os.path.join(os.getcwd(), 'friendface.db')
             conn2 = sqlite3.connect(db_path)
             cursor2 = conn2.cursor()
 
-            try:
-                cursor2.execute("""SELECT * FROM posts""")
-                posts = cursor2.fetchall()
-            except:
-                posts = ""
+            user_data = user_data[0]
+            conn.close()
+            
+            if mode == "feed":
+                post_ids = ""
+                names = ""
+                messages = ""
+                user_ids = ""
+                profile_pictures = ""
+                likes = ""
+                dislikes = ""
+                comments_amounts = ""
+                photos = ""
+                times = ""
+                likers = ""
+                dislikers = ""
+                replying_to = ""
 
-            random.shuffle(posts)
-            selected_posts = posts[:10]
+                
 
-            for post in selected_posts:
-                for column_name, value in zip(cursor2.description, post):
-                    if column_name[0] == "post_id":
-                        post_ids = f"{post_ids}{value}_SEPARATOR_"
-                    if column_name[0] == "name":
-                        names = f"{names}{value}_SEPARATOR_"
-                    if column_name[0] == "message":
-                        messages = f"{messages}{value}_SEPARATOR_"
-                    if column_name[0] == "user_id":
-                        user_ids = f"{user_ids}{value}_SEPARATOR_"
-                    if column_name[0] == "profile_picture":
-                        profile_pictures = f"{profile_pictures}image_SEPARATOR_"
-                    if column_name[0] == "likes":
-                        likes = f"{likes}{value}_SEPARATOR_"
-                    if column_name[0] == "dislikes":
-                        dislikes = f"{dislikes}{value}_SEPARATOR_"
-                    if column_name[0] == "comments_amounts":
-                        comments_amounts = f"{comments_amounts}{value}_SEPARATOR_"
-                    if column_name[0] == "is_photo":
-                        if value != "no":
-                            print("THIS IS A PHOTO")
-                            print("THIS IS A PHOTO")
-                            print("THIS IS A PHOTO")
+                try:
+                    cursor2.execute("""SELECT * FROM posts WHERE dislikers NOT LIKE ?""", (f"%{current_user.id}%",))
+                    posts = cursor2.fetchall()
+                except Exception as e:
+                    posts = []
 
-                            photos = f"{photos}image_SEPARATOR_"
-                        else:
-                            photos = f"{photos}_SEPARATOR_"
-                            print("THIS IS NOT NOT NOT A PHOTO")
-                            print("THIS IS NOT NOT NOT A PHOTO")
-                            print("THIS IS NOT NOT NOT A PHOTO")
+                random.shuffle(posts)
+                selected_posts = posts[:10]
+
+                for post in selected_posts:
+                    for column_name, value in zip(cursor2.description, post):
+                        if column_name[0] == "post_id":
+                            post_ids = f"{post_ids}{value}_SEPARATOR_"
+                        if column_name[0] == "name":
+                            names = f"{names}{value}_SEPARATOR_"
+                        if column_name[0] == "message":
+                            messages = f"{messages}{value}_SEPARATOR_"
+                        if column_name[0] == "user_id":
+                            user_ids = f"{user_ids}{value}_SEPARATOR_"
+                        if column_name[0] == "profile_picture":
+                            profile_pictures = f"{profile_pictures}image_SEPARATOR_"
+                        if column_name[0] == "likes":
+                            likes = f"{likes}{value}_SEPARATOR_"
+                        if column_name[0] == "dislikes":
+                            dislikes = f"{dislikes}{value}_SEPARATOR_"
+                        if column_name[0] == "comments_amounts":
+                            comments_amounts = f"{comments_amounts}{value}_SEPARATOR_"
+                        if column_name[0] == "is_photo":
+                            if value != "no":
+                                print("THIS IS A PHOTO")
+                                print("THIS IS A PHOTO")
+                                print("THIS IS A PHOTO")
+
+                                photos = f"{photos}image_SEPARATOR_"
+                            else:
+                                photos = f"{photos}_SEPARATOR_"
+                                print("THIS IS NOT NOT NOT A PHOTO")
+                                print("THIS IS NOT NOT NOT A PHOTO")
+                                print("THIS IS NOT NOT NOT A PHOTO")
 
 
-                    if column_name[0] == "time":
-                        times = f"{times}{value}_SEPARATOR_"
-                    if column_name[0] == "likers":
-                        likers = f"{likers}{value}_SEPARATOR_"
-                    if column_name[0] == "dislikers":
-                        dislikers = f"{dislikers}{value}_SEPARATOR_"
-                    if column_name[0] == "replying_to":
-                        replying_to = f"{replying_to}{value}_SEPARATOR_"
+                        if column_name[0] == "time":
+                            times = f"{times}{value}_SEPARATOR_"
+                        if column_name[0] == "likers":
+                            likers = f"{likers}{value}_SEPARATOR_"
+                        if column_name[0] == "dislikers":
+                            dislikers = f"{dislikers}{value}_SEPARATOR_"
+                        if column_name[0] == "replying_to":
+                            replying_to = f"{replying_to}{value}_SEPARATOR_"
 
-            posts = f"displayposts('{post_ids}', '{names}', '{messages}', '{user_ids}', '{profile_pictures}', '{likes}', '{dislikes}', '{comments_amounts}', '{photos}', '{times}', '{likers}', '{dislikers}', '{replying_to}', {current_user.id}, 'yes', '')"
+                posts = f"displayposts('{post_ids}', '{names}', '{messages}', '{user_ids}', '{profile_pictures}', '{likes}', '{dislikes}', '{comments_amounts}', '{photos}', '{times}', '{likers}', '{dislikers}', '{replying_to}', {current_user.id}, 'yes', '')"
 
-            conn2.close()
+                conn2.close()
+            
+
+
+
+
+
+            if mode == "liked":
+                post_ids = ""
+                names = ""
+                messages = ""
+                user_ids = ""
+                profile_pictures = ""
+                likes = ""
+                dislikes = ""
+                comments_amounts = ""
+                photos = ""
+                times = ""
+                likers = ""
+                dislikers = ""
+                replying_to = ""
+
+                
+
+                try:
+                    cursor2.execute("""SELECT * FROM posts WHERE likers LIKE ?""", (f"%{current_user.id}%",))
+                    posts = cursor2.fetchall()
+
+                except Exception as e:
+                    posts = []
+
+                random.shuffle(posts)
+                selected_posts = posts
+
+                for post in selected_posts:
+                    for column_name, value in zip(cursor2.description, post):
+                        if column_name[0] == "post_id":
+                            post_ids = f"{post_ids}{value}_SEPARATOR_"
+                        if column_name[0] == "name":
+                            names = f"{names}{value}_SEPARATOR_"
+                        if column_name[0] == "message":
+                            messages = f"{messages}{value}_SEPARATOR_"
+                        if column_name[0] == "user_id":
+                            user_ids = f"{user_ids}{value}_SEPARATOR_"
+                        if column_name[0] == "profile_picture":
+                            profile_pictures = f"{profile_pictures}image_SEPARATOR_"
+                        if column_name[0] == "likes":
+                            likes = f"{likes}{value}_SEPARATOR_"
+                        if column_name[0] == "dislikes":
+                            dislikes = f"{dislikes}{value}_SEPARATOR_"
+                        if column_name[0] == "comments_amounts":
+                            comments_amounts = f"{comments_amounts}{value}_SEPARATOR_"
+                        if column_name[0] == "is_photo":
+                            if value != "no":
+                                print("THIS IS A PHOTO")
+                                print("THIS IS A PHOTO")
+                                print("THIS IS A PHOTO")
+
+                                photos = f"{photos}image_SEPARATOR_"
+                            else:
+                                photos = f"{photos}_SEPARATOR_"
+                                print("THIS IS NOT NOT NOT A PHOTO")
+                                print("THIS IS NOT NOT NOT A PHOTO")
+                                print("THIS IS NOT NOT NOT A PHOTO")
+
+
+                        if column_name[0] == "time":
+                            times = f"{times}{value}_SEPARATOR_"
+                        if column_name[0] == "likers":
+                            likers = f"{likers}{value}_SEPARATOR_"
+                        if column_name[0] == "dislikers":
+                            dislikers = f"{dislikers}{value}_SEPARATOR_"
+                        if column_name[0] == "replying_to":
+                            replying_to = f"{replying_to}{value}_SEPARATOR_"
+
+                posts = f"displayposts('{post_ids}', '{names}', '{messages}', '{user_ids}', '{profile_pictures}', '{likes}', '{dislikes}', '{comments_amounts}', '{photos}', '{times}', '{likers}', '{dislikers}', '{replying_to}', {current_user.id}, 'yes', '')"
+
+                conn2.close()
  
 
             if mode == "feed":
-                return render_template('index.html', profile_picture=user_data, profile_text=name, recommended_user_id=recommended_user_id, num_mutuals=num_mutuals,
+                return render_template('index_feed.html', profile_picture=user_data, profile_text=name, recommended_user_id=recommended_user_id, num_mutuals=num_mutuals,
                                     recommended_forename=recommended_forename, recommended_surname=recommended_surname, recommended_pfp=recommended_pfp,
                                        logo=logo, user_id = user_id, splashmessage=splash, displayposts = posts, forename = current_user.forename)
 
             elif mode == "liked":
-                return render_template('index.html', profile_picture=user_data, profile_text=name, recommended_user_id=recommended_user_id, num_mutuals=num_mutuals,
+                return render_template('index_liked.html', profile_picture=user_data, profile_text=name, recommended_user_id=recommended_user_id, num_mutuals=num_mutuals,
                                     recommended_forename=recommended_forename, recommended_surname=recommended_surname, recommended_pfp=recommended_pfp,
                                        logo=logo, user_id = user_id, splashmessage=splash, displayposts = posts, forename = current_user.forename)
 
             elif mode == "most_viewed":
-                return render_template('index.html', profile_picture=user_data, profile_text=name, recommended_user_id=recommended_user_id, num_mutuals=num_mutuals,
+                return render_template('index_most_viewed.html', profile_picture=user_data, profile_text=name, recommended_user_id=recommended_user_id, num_mutuals=num_mutuals,
                                     recommended_forename=recommended_forename, recommended_surname=recommended_surname, recommended_pfp=recommended_pfp,
                                        logo=logo, user_id = user_id, splashmessage=splash, displayposts = posts, forename = current_user.forename)
 

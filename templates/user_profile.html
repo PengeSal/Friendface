@@ -2141,11 +2141,9 @@
                                                     })
                                                     
                                                     .then(message => {
-                                                        console.log("MESSAGE: " + message)
-                                                        link.textContent = message + "...";
+                                                        link.textContent = message.replace(/_THISISALINEBREAK_/g, " ").replace(/_THISISANAPOSTROPHE_/g, "'").substring(0, 30) + "..."
 
 
-                                                        console.log("MESSAGE: " + message)
                                                         
                                                     })
                                                     .catch(error => {

@@ -893,7 +893,7 @@
 
                             (function(user_id, index) {
                                 name.onclick = function() {
-                                    window.location.href = "/users/" + user_id + "/posts";
+                                    window.location.href = "/users/" + user_id + "/friends";
                                 }
                                 accept.onclick = function() {
                                     acceptfriendrequest(user_id);
@@ -902,7 +902,7 @@
                                     declinefriendrequest(user_id);
                                 };
                                 pfp.onclick = function() {
-                                    window.location.href = "/users/" + user_id + "/posts";
+                                    window.location.href = "/users/" + user_id + "/friends";
                                 }
                                 newDiv.onmouseover = function() {
                                     document.querySelector(".newdiv" + index).style.backgroundColor = "#f0f2f5";
@@ -1048,13 +1048,13 @@
 
                             (function(user_id, index) {
                                 name.onclick = function() {
-                                    window.location.href = "/users/" + user_id + "/posts";
+                                    window.location.href = "/users/" + user_id + "/friends";
                                 }
                                 visit.onclick = function() {
                                     handleDecline(user_id);
                                 };
                                 pfp.onclick = function() {
-                                    window.location.href = "/users/" + user_id + "/posts";
+                                    window.location.href = "/users/" + user_id + "/friends";
                                 }
                                 newDiv.onmouseover = function() {
                                     document.querySelector(".newdiv" + index).style.backgroundColor = "#f0f2f5";

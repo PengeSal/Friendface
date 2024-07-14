@@ -1,0 +1,2383 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="data:image/jpeg;base64,{{ logo }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Friendface︱Home</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 200vh;
+            overflow: hidden;
+            background: #f0f2f5;
+            font-family: Helvetica, arial;
+        }
+
+        .pfp{
+            background: white;
+            width: 100vw;
+            height: 64px;
+            font-size: 13px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+            top: 0;
+            position: fixed;
+            z-index: 999999999;
+        }
+
+
+
+        #search-form {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+        }
+
+        #search-input {
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            background: #f0f2f5;
+            width: 200px; 
+
+            border: 2px solid #f0f2f5;
+            color: black;
+            border-radius: 0px 35px 35px 0px;
+            outline: none;
+            box-shadow: none;
+            transition: width 0.75s;
+            
+            height: 1px;
+            padding-top: 50px;
+
+            
+        }
+
+        #search-input::placeholder {
+            color: #787a80;
+        }
+
+        #search-button {
+            cursor: pointer;
+            color: rgb(124, 127, 136);
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 26px;
+            background: #f0f2f5;
+            width: 40px;
+            border: 3px solid #f0f2f5;
+            border-radius: 35px 0px 0px 35px;
+            outline: none; 
+            text-align: right;
+            height: 40px;
+            z-index: 99999999999999;
+            
+        }
+
+    </style>
+</head>
+
+<body>
+    <div style="width: 100vw; justify-content: center; display: flex; background-color: blue; height: 0px;">
+        <div id="splash" style="float: right; z-index: 999999999999; background-color: white; 
+        text-align: center; cursor: default; transition: transform 0.3s; width: 375px; border-radius: 15px; position: fixed; top: 0;
+        line-height: 40px; color: #787a80;">{{ splashmessage }}</div>
+
+
+        <script>
+            function repeat(){
+                if (window.innerWidth < 1100) {
+                    document.getElementById('splash').style.transform = 'translate(14vh, -100px)';
+                } else if (window.innerWidth < 1400) {
+                    document.getElementById('splash').style.transform = 'translate(14vh)';
+                } else {
+                    document.getElementById('splash').style.transform = 'translate(0px)';
+                }
+            }
+            setInterval(repeat, 50)
+        </script>
+    </div>
+
+    <div class="pfp">
+        
+        <img
+            id="uploadButton"
+            style="width: 50px; height: 50px; cursor: pointer; padding: 7px 15px 8px 15px; float: right; border-radius: 50%; transition: filter 0.3s; object-fit: cover;"
+            src="data:image/jpeg;base64,{{ profile_picture }}"
+            alt=":(">
+
+            <script>
+
+                
+
+                document.getElementById("uploadButton").onclick = function (event) {
+                    event.stopPropagation(); 
+
+                    var existingdropdown = document.querySelector('.delete-dropdown2');
+                    if (existingdropdown) {
+                        document.body.removeChild(existingdropdown);
+                    }
+
+                    var confirmdeletebutton = document.createElement("button");
+                    confirmdeletebutton.textContent = "Profile";
+                    confirmdeletebutton.style.backgroundColor = "#f0f2f5";
+                    confirmdeletebutton.style.border = "0px solid white";
+                    confirmdeletebutton.style.color = "#787a80";
+                    confirmdeletebutton.style.padding = "5px";
+                    confirmdeletebutton.style.fontSize = "16px";
+                    confirmdeletebutton.style.width = "150px";
+                    confirmdeletebutton.style.borderRadius = "5px";
+                    confirmdeletebutton.style.cursor = "pointer";
+                    confirmdeletebutton.style.marginBottom = "5px";
+                    
+
+                    var confirmdeletebutton2 = document.createElement("button");
+                    confirmdeletebutton2.textContent = "Settings";
+                    confirmdeletebutton2.style.backgroundColor = "#f0f2f5";
+                    confirmdeletebutton2.style.border = "0px solid white";
+                    confirmdeletebutton2.style.color = "#787a80";
+                    confirmdeletebutton2.style.padding = "5px";
+                    confirmdeletebutton2.style.fontSize = "16px";
+                    confirmdeletebutton2.style.width = "150px";
+                    confirmdeletebutton2.style.borderRadius = "5px";
+                    confirmdeletebutton2.style.cursor = "pointer";
+
+
+
+                    var deletedropdown = document.createElement("div");
+                    deletedropdown.classList.add('delete-dropdown2'); 
+                    deletedropdown.style.position = "absolute";
+                    
+
+                    deletedropdown.style.top = (event.clientY + window.pageYOffset + 10) + "px"; 
+                    deletedropdown.style.left = event.clientX - 150 + "px";
+                    deletedropdown.style.backgroundColor = "white";
+                    deletedropdown.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.35)";
+                    deletedropdown.style.borderBottom = "3px solid #caccd0"
+                    deletedropdown.style.padding = "8px";
+                    deletedropdown.style.zIndex = "9999999999999999999999999999";
+                    deletedropdown.style.borderRadius = "8px";
+                    deletedropdown.style.width = "150px";
+
+                    deletedropdown.appendChild(confirmdeletebutton);
+                    deletedropdown.appendChild(confirmdeletebutton2);
+
+
+                    document.body.appendChild(deletedropdown);
+
+                    deletedropdown.style.overflow = "hidden"
+
+                    deletedropdown.style.height = "0px"; 
+                    deletedropdown.style.transition = "height 0.2s"; 
+                    requestAnimationFrame(() => {
+                        deletedropdown.style.height = deletedropdown.scrollHeight - 15 + "px";
+                    });
+
+                    window.addEventListener('scroll', function () {
+                        document.body.removeChild(deletedropdown);
+                        document.removeEventListener('click', handleclickoutside);
+                    });
+
+                    try {
+                    document.querySelector(".actualposts3").addEventListener('scroll', function () {
+                        document.body.removeChild(deletedropdown);
+                        document.removeEventListener('click', handleclickoutside);
+                    });
+                    } catch {
+                        console.log("skibidi")
+                    }
+
+                    confirmdeletebutton.onclick = function () {
+                        var url = "/users/" + document.getElementById("user_id_div").textContent + "/posts"
+
+                        window.location.href = url
+
+                        
+                    };
+                    confirmdeletebutton2.onclick = function () {
+                        var url = "/settings"
+
+                        window.location.href = url
+                    };
+
+
+                    confirmdeletebutton.onmouseover = function() {
+                        confirmdeletebutton.style.backgroundColor = "#caccd0";
+                    };
+                    confirmdeletebutton.onmouseout = function() {
+                        confirmdeletebutton.style.backgroundColor = "#f0f2f5";
+                    };
+
+                    confirmdeletebutton2.onmouseover = function() {
+                        confirmdeletebutton2.style.backgroundColor = "#caccd0";
+                    };
+                    confirmdeletebutton2.onmouseout = function() {
+                        confirmdeletebutton2.style.backgroundColor = "#f0f2f5";
+                    };
+
+                    function handleclickoutside(event) {
+                        if (!deletedropdown.contains(event.target)) {
+                            console.log("young sheldon")
+                            document.body.removeChild(deletedropdown);
+                            document.removeEventListener('click', handleclickoutside); 
+                        }
+                    }
+
+                    document.addEventListener('click', handleclickoutside);
+                };
+
+            </script>
+
+
+        
+
+        
+        <form id="accountform" action="/users/{{ user_id }}/posts" method="get">
+            <div id="user_id_div" style="display: none;">{{ user_id}}</div>
+            <div class="name" onclick="submitname()"  title="Your Account" style="float: right; font-family: Helvetica, arial;  font-size: 20px;">
+                <p>{{ profile_text }}</p>
+            </div>
+        </form>
+
+
+
+
+
+
+        
+        <form id="accountform" action="/" method="post">
+            <img title="Friendface"
+
+
+            class="uploadButton"
+            style="width: 50px; height: 50px; cursor: pointer; padding: 7px 0px 0px 15px; float: left; object-fit: cover;"
+            src="data:image/jpeg;base64,{{ logo }}"
+            alt=":(">
+
+            <div class="logo" onclick="" title="Friendface" style="float: left; color: #0866ff; font-family: Helvetica, arial; cursor: pointer; padding: 0px 10px 2px 1px;">
+                <h1>riendface</h1>
+
+                <script>
+                    document.querySelector(".logo").onclick = function() {
+                        window.location.href = "/home/feed";
+                    }
+                    document.querySelector(".uploadButton").onclick = function() {
+                        window.location.href = "/home/feed";
+                    }
+                </script>
+            </div>
+        </form>
+
+
+        
+        <form id="search-form" action="/searchusers" method="get">
+            <div id="search-container" style="border-radius: 35px;">
+                <button type="submit" id="search-button">⌕</button>
+                <input type="text" id="search-input" name="search" placeholder="Search Users" style="padding: 10px 10px 10px 0px;" title="Search Friendface">
+
+                <script>
+                    if (navigator.userAgent.includes("Firefox")) {
+                        document.getElementById("search-input").style.transform = "translate(-4px, -6px)";
+                    } else {
+                        document.getElementById("search-input").style.transform = "translate(-4px, -2px)";
+                    }
+                
+                    document.getElementById("search-container").style.height = "42px";
+                    document.getElementById("search-container").style.backgroundColor = "#f0f2f5";
+                    document.getElementById("search-container").style.transition = "box-shadow 0.75s";
+                
+                    document.getElementById("search-container").onmouseover = function() {
+                        document.getElementById("search-input").style.width = "300px";
+                        document.getElementById("search-container").style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.35)";
+                    }
+                
+                    document.getElementById("search-container").onmouseout = function() {
+                        if (!document.getElementById("search-input").matches(":focus")) {
+                            document.getElementById("search-input").style.width = "200px";
+                            document.getElementById("search-container").style.boxShadow = "none";
+                        }
+                    }
+                
+                    document.getElementById("search-input").addEventListener("blur", function() {
+                        document.getElementById("search-input").style.width = "200px";
+                        document.getElementById("search-container").style.boxShadow = "none";
+                    });
+                </script>
+                
+                
+            </div>
+        </form>
+
+        
+
+
+
+        <script>
+            function submitname() {
+              document.getElementById('accountform').submit();
+            }
+        </script>
+
+
+        <style>
+            .name{
+                padding: 1px 0px 0px 0px;
+                font-size: 12px;
+                color: rgb(124, 127, 136);
+                float: right;
+                cursor: pointer;
+                
+            }
+            .name:hover{
+                color: rgb(163, 165, 172);
+            }
+        </style>
+
+    </div>
+
+    <input type="file" id="fileInput" style="display: none">
+    
+
+    <script>
+        // THIS CODE IS STOLEN AF
+        // THIS CODE IS STOLEN AF
+        // THIS CODE IS STOLEN AF
+        // THIS CODE IS STOLEN AF
+        // THIS CODE IS STOLEN AF
+        // THIS CODE IS STOLEN AF
+        
+        function triggerFileInput() {
+            document.getElementById('fileInput').click();
+        }
+
+        document.getElementById('fileInput').addEventListener('change', function () {
+            var fileInput = document.getElementById('fileInput');
+            var file = fileInput.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var imageData = e.target.result.split(',')[1];
+                sendImageData(imageData);
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        function sendImageData(imageData) {
+            var xhr = new XMLHttpRequest();
+            var url = '/home/feed';
+            var data = 'imageData=' + encodeURIComponent(imageData);
+
+            xhr.open('POST', url, true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log(xhr.responseText);
+
+                    location.reload();
+                }
+            };
+
+            xhr.send(data);
+        }
+    </script>
+
+
+
+
+
+<div id="id" style="width: 380px; border-radius: 10px;
+background-color: #f0f2f5; top: 84px; transform: translate(calc(50vw - 775px)); 
+position: absolute;  z-index: 99 !important;">
+
+    <div id="id2" style="float: right; height: calc(100vh - 100px);">
+
+    <div style="max-width: 720px; width: calc(100% - 30px); background-color: white; float: right; border-radius: 10px; margin-bottom: 9px; transform: translate(0, -2px); overflow: hidden;
+                border-bottom: 2px solid #caccd0; padding: 0 15px 0 15px; line-height: 15px; z-index: 999;"><h2 style="float: left;">Home</h2></div>
+
+
+    
+    <div style="max-height: calc(100vh - 250px); overflow-y: scroll; height: auto; width: calc(100%); overflow-x: hidden;">
+        <button id="profilebutton" class="papalazarou" style="width: 100%; height: 50px; font-size: 18px; text-align: left; padding-left: 12px; margin-top: 5px;
+            border: none; border-radius: 10px; cursor: pointer; background-color: #f0f2f5; display: flex; align-items: center;">
+            <img src="data:image/jpeg;base64,{{ profile_picture }}" style="width: 40px; height: 40px; float: left; border-radius: 50%; object-fit: 
+                cover; margin-right: 7px; min-width: 40px;">
+                Your profile
+        </button>
+
+
+        <script>
+            document.getElementById("profilebutton").onclick = function () {
+                window.location.href = "/users/{{ user_id }}/posts";
+            };
+        </script>
+
+        <button id="premiumbutton" class="papalazarou" style="width: 100%; height: 50px; font-size: 18px; text-align: left; padding-left: 12px; margin-top: 10px;
+            border: none; border-radius: 10px; cursor: pointer; background-color: #f0f2f5; display: flex; align-items: center; ">
+            <img src="{{ url_for('static', filename='icons/premium.png') }}" style="width: 40px; height: 40px; float: left; object-fit: contain; margin-right: 7px;">
+            Friendface Premium</button>
+        <script>
+            document.getElementById("premiumbutton").onclick = function () {
+                window.location.href = "/premium";
+            };
+        </script>
+
+        <button id="feedbutton" class="papalazarou" style="width: 100%; height: 50px; font-size: 18px; text-align: left; padding-left: 12px; margin-top: 10px;
+                        border: none; border-radius: 10px; cursor: pointer; background-color: #f0f2f5; display: flex; align-items: center;">
+                        <img src="{{ url_for('static', filename='icons/feed.png') }}" style="width: 40px; height: 40px; float: left; object-fit: cover; margin-right: 7px;">
+                        Your Feed</button>
+        <script>
+            document.getElementById("feedbutton").onclick = function () {
+                window.location.href = "/home/feed";
+            };
+        </script>
+
+        <button id="yourlikedbutton" class="papalazarou" id="search_users" style="width: 100%; height: 50px; font-size: 18px; text-align: left; padding-left: 12px; margin-top: 10px;
+                border: none; border-radius: 10px; cursor: pointer; background-color: #f0f2f5; display: flex; align-items: center;">
+                <img src="{{ url_for('static', filename='icons/liked.png') }}" style="width: 40px; height: 40px; float: left; object-fit: cover; margin-right: 7px;">
+                Your Liked Posts</button>
+        <script>
+            document.getElementById("yourlikedbutton").onclick = function () {
+                window.location.href = "/home/liked";
+            };
+        </script>
+
+        <button id="mostviewedbutton" class="papalazarou" style="width: 100%; height: 50px; font-size: 18px; text-align: left; padding-left: 12px; margin-top: 10px;
+                    border: none; border-radius: 10px; cursor: pointer; background-color: #f0f2f5;  display: flex; align-items: center;">
+                    <img src="{{ url_for('static', filename='icons/viewed.png') }}" style="width: 40px; height: 40px; float: left; object-fit: cover; margin-right: 7px;">
+                    Most Popular</button>
+        <script>
+            document.getElementById("mostviewedbutton").onclick = function () {
+                window.location.href = "/home/most_viewed";
+            };
+        </script>
+
+        <button class="papalazarou" style="width: 100%; height: 50px; font-size: 18px; text-align: left; padding-left: 12px; margin-top: 10px;cursor: pointer;  
+            border: none; border-radius: 10px; background-color: #f0f2f5; display: flex; align-items: center;">
+            <img src="{{ url_for('static', filename='icons/pc.png') }}" style="width: 40px; height: 40px; float: left; object-fit: cover; margin-right: 7px;">
+            Download PC App</button>
+
+
+        <button class="papalazarou" style="width: 100%; height: 50px; font-size: 18px; text-align: left; padding-left: 12px; margin-top: 10px; cursor: pointer; 
+                border: none; border-radius: 10px; background-color: #f0f2f5; display: flex; align-items: center;">
+                <img src="{{ url_for('static', filename='icons/note.png') }}" style="width: 40px; height: 40px; float: left; object-fit: cover; margin-right: 7px;">
+                Friendface Notes™</button>
+
+        <button class="papalazarou" style="width: 100%; height: 45px; font-size: 18px; text-align: left; padding-left: 12px; margin-top: 10px; cursor: pointer; margin-bottom: 10px;
+                    border: none; border-radius: 10px; background-color: #f0f2f5; display: flex; align-items: center;">
+                    <img src="{{ url_for('static', filename='icons/message.png') }}" style="width: 40px; height: 40px; float: left; object-fit: cover; margin-right: 7px;">
+                    Direct Messages</button>
+        
+        
+        
+
+
+        <button class="papalazarou" id="settings" style="width: 100%; height: 45px; font-size: 18px; text-align: left; padding-left: 12px; margin-top: 10px; cursor: pointer; margin-bottom: 10px;
+                    border: none; border-radius: 10px; background-color: #f0f2f5; display: flex; align-items: center;">
+                    <img src="{{ url_for('static', filename='icons/settings.png') }}" style="width: 40px; height: 40px; float: left; object-fit: cover; margin-right: 7px;">
+                    Settings™</button>
+        <script>
+            document.getElementById("settings").onclick = function () {
+                window.location.href = "/settings";
+            };
+        </script>
+    </div>
+
+
+    <div id="messagey" style="position: absolute; transform: translate(0, -75px); float: right; top: calc(100vh - 90px); overflow: hidden;">
+        <p style="color: #787a80; margin-top: 15px; margin-left: 10px; line-height: 35px;">Copyright © Friendface Corporation 2024</p>
+        <p style="color: #787a80; margin-top: 15px; margin-left: 10px; line-height: 35px; transform: translate(0, -29px);">"Based" in British Virgin Islands</p>
+    </div>
+
+    </div>
+
+    
+        
+    
+
+
+
+
+
+
+
+    
+
+    <script>
+        document.querySelectorAll(".papalazarou").forEach(function(button) {
+            button.style.borderBottom = "2px solid #f0f2f5"
+            
+            button.onmouseover = function() {
+
+                this.style.backgroundColor = "#e4e6eb"
+            }
+            button.onmouseout = function() {
+                
+                this.style.backgroundColor = "#f0f2f5"
+                
+            }
+
+            
+        });
+
+
+        document.getElementById("search_users").onclick = function() {
+            document.getElementById("search-input").click()
+        }
+
+    </script>
+
+
+    
+
+
+</div>
+
+
+
+
+<div id="id3" style="width: 380px; height: 100px; background-color: #f0f2f5; top: 84px; 
+    position: absolute; transform: translate(calc(50vw + 395px)); position: absolute; z-index: 99 !important;">
+    <div id="id4" style="width: 380px;">
+    <div style="width: 100%; border-radius: 10px 10px 0 0; background-color: white; display: flex;">
+        
+        <img id="suggested_pfp" src="data:image/jpeg;base64,{{ recommended_pfp }}" style="width: 80px; height: 80px; object-fit: cover; cursor: pointer;
+                border-radius: 50%; padding: 10px; margin-left: 10px; min-width: 80px;" onclick="window.location.href = '/users/{{ recommended_user_id }}/posts';">
+
+        <div style="height: 90px; padding-left: 10px; width: calc(100% - 50px); margin-right: 10px; overflow: hidden;">
+            <div id="mutuals" style="padding-top: 25px; font-size: 18px;">{{ num_mutuals | safe}}</div>
+            <div id="suggested_name" style="padding-top: 5px; font-size: 20px; font-weight: bold; 
+            cursor: pointer;" onclick="window.location.href = '/users/{{ recommended_user_id }}/posts';">{{ recommended_forename }} {{ recommended_surname }}</div>
+        </div>
+
+        <script>
+            document.getElementById("profile_photo").onclick = function() {
+                var url = "/users/" + document.getElementById("user_id_div").textContent + "/posts"
+    
+                window.location.href = url
+            }
+        </script>
+ 
+        
+
+    </div>
+    <div style="width: 100%; border-radius: 0 0 10px 10px; border-bottom: 2px solid #caccd0; background-color: white; height: 52.5px; padding-top: 5px;">
+
+        <script>
+            async function addfriend(user_id) {
+                var xhr = new XMLHttpRequest();
+
+                var url = '/sendfriendrequest/' + user_id;
+
+                xhr.open('POST', url, true);
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && xhr.status == 200) {
+                        console.log(xhr.responseText);
+                        
+                    }
+                };
+
+                xhr.send("");
+
+                friendbutton = document.querySelector(".friendbutton");
+                friendbutton.style.cursor = "auto";
+
+                var icon = document.createElement('i');
+                icon.classList.add('fas', 'fa-user-plus');
+                icon.style.paddingRight = "8px";
+                var text = document.createTextNode('Sent');
+                friendbutton.textContent = "";
+                friendbutton.appendChild(icon);
+                friendbutton.appendChild(text);
+
+                friendbutton.style.backgroundColor = "#f0f2f5";
+                friendbutton.style.color = "#787a80";
+            
+
+            }
+
+        </script>
+
+        <button class="friendbutton" onclick="addfriend('{{ recommended_user_id }}')"
+            style="float: left; letter-spacing: -0.6px; font-size: 16px; width: calc(50% - 20px); background-color: #0866ff; margin-left: 15px; height: 37px; overflow: hidden;
+            cursor: pointer; padding: 8px; border-radius: 8px; color: white; font-family: sans-serif; font-weight: normal; border-width: 0px;">
+
+            <i class="fa-solid fa-user-plus" style="padding-right: 8px;"></i>Friend
+
+        </button>
+
+        <button class="ignorebutton" onclick="document.getElementById('id4').style.display = 'none';"
+            style="float: left; letter-spacing: -0.6px; font-size: 16px; width: calc(50% - 20px); margin-left: 10px; height: 37px; overflow: hidden;
+            cursor: pointer; padding: 8px; border-radius: 8px; color: #787a80; font-family: sans-serif; font-weight: normal; border-width: 0px;">
+
+            <i class="fa-solid fa-circle-xmark" style="padding-right: 8px;"></i>Ignore
+
+        </button>
+
+        <style>
+            .ignorebutton{
+                background-color: #f0f2f5; 
+            }
+            .ignorebutton:hover{
+                background-color: #caccd0; 
+            }
+        </style>
+
+
+    </div>
+    </div>
+
+</div>
+
+
+
+<script>
+    function changewidth() {
+        if (window.innerWidth <= 1550) {
+            document.getElementById("id2").style.width = `calc((100vw - 790px) / 2)`;
+            document.getElementById("id3").style.width = `calc((100vw - 790px) / 2)`;
+            document.getElementById("id4").style.width = `calc((100vw - 790px) / 2)`;
+            document.getElementById("messagey").style.width = `calc((100vw - 790px) / 2)`;
+
+
+        } else {
+            document.getElementById("id2").style.width = "380px";
+            document.getElementById("id3").style.width = "380px";
+            document.getElementById("id4").style.width = "380px";
+            document.getElementById("messagey").style.width = "380px";
+
+        }
+
+        
+    }
+
+    changewidth();
+
+
+
+
+    window.addEventListener('resize', changewidth);
+
+</script>
+
+
+
+
+
+
+<div class="posts" style="height: calc(100% - 60px); position: absolute; background: #f0f2f5; width: 100vw; overflow: hidden; bottom: 0;">
+    <div style="height: 2px; width: 100vw; background-color: #caccd0; z-index: 9999999999999999 !important;"></div>
+
+        <style>
+            .evenmainerbox2 {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50vw, calc(-50vh + 20px));
+                display: flex;
+                justify-content: center;
+                width: 100vw;
+                
+            }
+        </style>
+
+        <style>
+            hr {  
+                height: 2px;  
+                background-color: #caccd0;  
+                border: none;  
+            }  
+        </style>
+
+        
+        
+
+        <div class="evenmainerbox2" id="thecodewasstolen">
+
+            
+
+                                                                            
+
+            <div class="actualposts" style="transition: transform 0.3s; transform: translate(0, 12px); background-color: #f0f2f5; border-top: 20px solid #f0f2f5; max-width: 750px; height: calc(100vh - 83px);">
+                <div class="actualposts3" style="max-width: 750px; background-color: #f0f2f5; transition: transform 0.3s; border-radius: 10px; height: calc(100vh - 100px); width: 100vw;
+                position: relative; overflow-y: scroll; overflow-x: hidden;">
+
+
+                    <div style="max-width: 720px; width: calc(100% - 30px); background-color: white; float: right; border-radius: 10px; margin-bottom: 15px;
+                    border-bottom: 2px solid #caccd0; padding: 0 15px 0 15px; line-height: 15px; z-index: 999;"><h2 style="float: left;">Your Feed</h2></div>
+                    
+
+                    <!-- <div id="aboutsection" style="width: calc(100% - 770px); position: sticky; top: 0; background-color: #f0f2f5;
+                    transition: transform 0.3s; overflow: hidden; float: left;">
+                        <div style="width: 100%; background-color: white; float: left; border-radius: 10px; max-height: calc(100vh - 190px);
+                        border-bottom: 2px solid #caccd0; line-height: 15px; overflow: hidden;">
+                            <h2 style="padding: 0 15px 0 15px;">Welcome to Friendface</h2>
+                            <hr width="1000px">
+                            <textarea id="homeless" style="
+                                margin-left: 13px; 
+                                border: 0px solid red; color: black;
+                                width: calc(100% - 100px);
+                                resize: none; 
+                                outline: none; 
+                                background-color: white; 
+                                font-family: Arial; 
+                                font-size: 18px;
+                                margin-top: 5px; 
+                                margin-bottom: 12px; 
+                                max-height: calc(100vh - 285px); height: auto;" 
+                                
+                            readonly ></textarea>
+
+                            <style>
+                                hr {  
+                                    height: 2px;  
+                                    background-color: #caccd0;  
+                                    border: none;  
+                                }  
+                            </style>
+
+                            <div id="everyday" onclick="{{ about }}" style="display: none;"></div>
+
+                            <script>
+                                function insertdesc(about) {
+                                    about2 = about.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'");
+
+                                    document.getElementById('homeless').value = about2
+
+
+                                    function loop() {
+                                        var invite_text = document.getElementById("homeless");
+
+                                        invite_text.style.height = (invite_text.scrollHeight - 4) + 'px';
+
+                                        if (invite_text.value.length <= 90) {
+                                            if (invite_text.value.includes("_THISISALINEBREAK_")) {
+                                                console.log("nuh uh");
+                                            } else {
+                                                invite_text.style.height = "22px";
+                                            }
+                                        }
+
+                                        invite_text.value = invite_text.value.replace(/_THISISALINEBREAK_/g, "\n");
+
+                                        invite_text.style.height = 'auto';
+                                        invite_text.style.height = invite_text.scrollHeight - 4 + "px";
+                                    }
+
+                                    setInterval(loop, 1);
+                                    
+                                    
+                                }
+                            </script>
+                            
+                        
+                            
+                    
+                        </div>
+                        <p style="color: #787a80; margin-top: 15px; margin-left: 10px; line-height: 35px;">Copyright © Friendface Corporation 2024</p>
+                        <p style="color: #787a80; margin-top: 15px; margin-left: 10px; line-height: 35px; transform: translate(0, -29px);">"Based" in British Virgin Islands</p>
+                        
+                    </div> -->
+
+                    
+
+
+
+                    <button id="clickme" style="display: none;" onclick="{{ displayposts }}"></button>
+
+                    <div class="actualposts2" style="max-width: 750px; float: right; width: 100vw; height: calc(100vh - 100px); border-radius: 10px;">
+                    </div>
+
+
+                    <div id="everyday" onclick="{{ about }}" style="display: none;"></div>
+
+                   
+                    <div style="display: none;" id="arraylength">11</div>
+
+                    <script>
+                        window.onload = (event) => {
+                            var splashContent = document.getElementById("splash").textContent.trim();
+                            var arraylength = parseInt(document.getElementById("arraylength").textContent)
+                            console.log("SKIBIDI ARRAYLENGTH: " + arraylength)
+    
+                            var string = "github.com/isaacgisby/lan-messager\n"
+                                    if (document.getElementById("splash").textContent == string) {
+                                        document.getElementById("splash").style.cursor = "pointer";
+                                        document.getElementById("splash").onclick = function() {
+                                            window.open("https://github.com/isaacgisby/lan-messager");
+                                }}
+                                if (document.getElementById("splash").textContent == "Now in colour!!!\n") {
+                                    document.getElementById("splash").style.width = "125px";
+                                    document.getElementById("splash").style.background = "linear-gradient(to right, red, orange, yellow, green, blue, indigo, purple)";
+                                    document.getElementById("splash").style.fontWeight = "bold";
+                                    document.getElementById("splash").style.paddingLeft = "none";
+                                    document.getElementById("splash").style.paddingRight = "none";
+                                    document.getElementById("splash").style.webkitBackgroundClip = "text";
+                                    document.getElementById("splash").style.webkitTextFillColor = "transparent";
+                                }
+
+
+
+                            document.getElementById('everyday').click();
+
+                            function getAverageRGB(imgEl) {
+                                var blockSize = 5,
+                                    defaultRGB = {r:0,g:0,b:0}, 
+                                    canvas = document.createElement('canvas'),
+                                    context = canvas.getContext && canvas.getContext('2d'),
+                                    data, width, height,
+                                    i = -4,
+                                    length,
+                                    rgb = {r:0,g:0,b:0},
+                                    count = 0;
+
+                                if (!context) {
+                                    return defaultRGB;
+                                }
+
+                                height = canvas.height = imgEl.naturalHeight || imgEl.offsetHeight || imgEl.height;
+                                width = canvas.width = imgEl.naturalWidth || imgEl.offsetWidth || imgEl.width;
+
+                                context.drawImage(imgEl, 0, 0);
+
+                                try {
+                                    data = context.getImageData(0, 0, width, height);
+                                } catch(e) {
+                                    return defaultRGB;
+                                }
+
+                                length = data.data.length;
+
+                                while ( (i += blockSize * 4) < length ) {
+                                    ++count;
+                                    rgb.r += data.data[i];
+                                    rgb.g += data.data[i+1];
+                                    rgb.b += data.data[i+2];
+                                }
+
+                                rgb.r = ~~(rgb.r/count);
+                                rgb.g = ~~(rgb.g/count);
+                                rgb.b = ~~(rgb.b/count);
+
+                                return rgb;
+
+                            }
+
+
+                            function reload(){
+                                var image = document.getElementById('image');
+                                var average = getAverageRGB(image);
+
+                                var rgb = 'rgb(' + average.r + ',' + average.g + ',' + average.b + ', 0.6)';
+
+                                var colour = document.getElementById('thecodewasstolen');
+                                colour.style.background = 'linear-gradient(to top, white, white, white, white, white, white, ' + rgb + ')';
+                            }
+                            
+
+                            
+                            reload();
+                            
+                                var string = "github.com/isaacgisby/lan-messager\n"
+                                if (document.getElementById("splash").textContent == string) {
+                                    document.getElementById("splash").style.cursor = "pointer";
+                                    document.getElementById("splash").onclick = function() {
+                                        window.open("https://github.com/isaacgisby/lan-messager");
+                            }}
+                            if (document.getElementById("splash").textContent == "Now in colour!!!\n") {
+                                document.getElementById("splash").style.width = "125px";
+                                document.getElementById("splash").style.background = "linear-gradient(to right, red, orange, yellow, green, blue, indigo, purple)";
+                                document.getElementById("splash").style.fontWeight = "bold";
+                                document.getElementById("splash").style.paddingLeft = "none";
+                                document.getElementById("splash").style.paddingRight = "none";
+                                document.getElementById("splash").style.webkitBackgroundClip = "text";
+                                document.getElementById("splash").style.webkitTextFillColor = "transparent";
+                            }
+
+                            document.querySelector(".actualposts3").style.overflowY = "hidden";
+                        };
+
+                        
+
+                        window.onscroll = function(ev) {
+                            if ((window.innerHeight + Math.round(window.scrollY)) >= document.documentElement.scrollHeight) {
+                                document.querySelector(".actualposts3").style.overflowY = "scroll";
+                            } else {
+                                document.querySelector(".actualposts3").style.overflowY = "hidden";
+                            }
+                        };
+                        function repeat() {
+                            if (window.innerWidth < 950) {
+                                document.getElementById('aboutsection').style.transform = 'translate(-500px)';
+                            } else {
+                                document.getElementById('aboutsection').style.transform = 'translate(0px)';
+                            }
+                            
+                        }
+                        setInterval(repeat, 50)
+
+                        var increment = 0;
+
+                        
+
+                        function displayposts(post_ids, names, messages, user_ids, profile_pictures, likes, dislikes, 
+                            comments_amounts, photos, times, likers, dislikers, replying_to, your_id, firsttime, replytext) {
+
+                            
+        
+
+                            var post_ids = post_ids.split("_SEPARATOR_");
+                            var names = names.split("_SEPARATOR_");
+                            var messages = messages.split("_SEPARATOR_");
+                            var user_ids = user_ids.split("_SEPARATOR_");
+                            var profile_pictures = profile_pictures.split("_SEPARATOR_");
+                            var likes = likes.split("_SEPARATOR_");
+                            var dislikes = dislikes.split("_SEPARATOR_");
+                            var comments_amounts = comments_amounts.split("_SEPARATOR_");
+                            var photos = photos.split("_SEPARATOR_");
+                            var times = times.split("_SEPARATOR_");
+                            var likers = likers.split("_SEPARATOR_");
+                            var dislikers = dislikers.split("_SEPARATOR_");
+                            var replying_to = replying_to.split("_SEPARATOR_");
+                            var your_id = your_id
+                            var firsttime = firsttime
+                            var replytext = replytext.split("_SEPARATOR_");
+
+                            console.log("NAMES: " + names[1]);
+
+
+                            if (typeof names[1] === "undefined") {
+                                no_posts();
+                            }; 
+
+                            
+
+
+                            function no_posts() {               
+                                var newDiv2 = document.createElement('div');
+                                var paragr = document.createElement('p');
+
+                                newDiv2.style.backgroundColor = "#f0f2f5";
+                                newDiv2.style.borderRadius = "10px";
+                                newDiv2.style.maxWidth = "746px";
+                                newDiv2.style.width = "100vh";
+                                newDiv2.style.border = "2px solid #caccd0";   
+                                newDiv2.style.height = "100px"; 
+                                newDiv2.style.textAlign = "center"; 
+                                
+                                newDiv2.className = "maggiemae";
+
+                                paragr.textContent = "This one for real ass ogs only";
+                                paragr.style.transform = "translate(0, 30px)"; 
+                                paragr.style.color = "#787a80"; 
+                                paragr.style.lineHeight = "0";
+
+                                document.querySelector(".actualposts2").appendChild(newDiv2);
+                                document.querySelector(".maggiemae").appendChild(paragr);
+                            }
+                            
+        
+                            
+
+                            // arraylength = parseInt(document.getElementById("arraylength").textContent)
+                            arraylength = post_ids.length
+
+
+                            if (firsttime != "yes") {
+                                var arraylength = arraylength - 1
+                                
+                            } else {
+                                var post_ids = post_ids.reverse();
+                                var names = names.reverse();
+                                var messages = messages.reverse();
+                                var user_ids = user_ids.reverse();
+                                var profile_pictures = profile_pictures.reverse();
+                                var likes = likes.reverse();
+                                var dislikes = dislikes.reverse();
+                                var comments_amounts = comments_amounts.reverse();
+                                var photos = photos.reverse();
+                                var times = times.reverse();
+                                var likers = likers.reverse();
+                                var dislikers = dislikers.reverse();
+                                var replying_to = replying_to.reverse();
+                                var replytext = replytext.reverse();
+
+                            }
+
+
+                            for (var i = 0; i < arraylength; i++) {
+                                increment = increment + 1;
+
+                                if (increment != 1) {
+
+                                function advert(increment) {
+                                    var advertreal = document.createElement('div');
+                                    var close = document.createElement('button');
+
+
+                                    close.textContent = "✕"
+                                    close.style.background = "white"
+                                    close.style.fontSize = "10px"
+                                    close.style.padding = "0"
+                                    close.style.margin = "5px"
+                                    close.style.float = "right"
+                                    close.style.width = "20px"
+                                    close.style.height = "20px"
+                                    close.style.border = "1px outset"
+                                    close.style.cursor = "pointer"
+
+                                    
+
+                                    advertreal.className = "advert" + increment;
+
+                                    (function (index) {
+                                        close.onclick = function () {
+                                            document.querySelector(".advert" + index).style.display = "none"; 
+                                        };
+
+                                    })(increment);
+
+                                    advertreal.style.marginBottom = "15px";
+                                    advertreal.style.background = "white";
+                                    advertreal.style.height = "175px";
+                                    advertreal.style.width = "calc(100% - 4px)";
+                                    advertreal.style.maxWidth = "746px"
+                                    advertreal.style.border = "2px outset"
+
+
+                                    
+                                    
+                                    
+
+                                    
+                                    
+                                    document.querySelector(".actualposts2").appendChild(advertreal);
+                                    document.querySelector(".advert" + increment).appendChild(close);
+
+
+                                    fetch('/get_random_advert')
+                                        .then(response => {
+                                            if (!response.ok) {
+                                                throw new Error('Failed to fetch');
+                                            }
+                                            return response.text();
+                                        })
+                                        .then(image => {
+                                            console.log(image)
+                                            advertreal.style.background = "url('data:image/jpeg;base64, " + image + "')"
+
+                                            
+
+                                        })
+                                        .catch(error => {
+                                            console.error('Error fetching advert:', error);
+                                        });
+                                }
+
+
+                                var random = Math.floor(Math.random() * 4) + 1;
+
+                                if (random === 1) {
+                                    if (increment != 2) {
+                                        advert(increment);
+                                    }
+                                }
+        
+                                var newDiv = document.createElement('div');
+                                var invite_text2 = document.createElement("P");
+                                var link = document.createElement("button");
+                                var invite_text = document.createElement("textarea");
+                                var deletebutton = document.createElement("button");
+        
+                                var text = messages[i]
+                                var text2 = names[i]
+                                var time2 = times[i]
+        
+        
+                                newDiv.style.fontSize = "20px";
+                                newDiv.style.backgroundColor = 'white';
+                                newDiv.className = "post" + increment;
+                                newDiv.style.marginBottom = "15px";
+                                newDiv.style.borderRadius = "10px";
+                                newDiv.style.borderBottom = "2px solid #caccd0";
+
+                                
+
+                                newDiv.style.maxWidth = "100%";
+                                newDiv.style.width = "100%";
+
+                                
+                                if (!navigator.userAgent.includes("Firefox")) {
+                                    newDiv.style.maxWidth = "calc(750px - 17px)";
+                                    newDiv.style.transform = "translate(17px)";
+                                } 
+        
+                                
+
+                                function likepost(post_id, likestate) {
+                                    var xhr = new XMLHttpRequest();
+
+                                    var url = '/like/' + likestate + "/" + post_id;
+
+                                    xhr.open('POST', url, true);
+
+                                    xhr.onreadystatechange = function() {
+                                        if (xhr.readyState == 4 && xhr.status == 200) {
+                                            console.log(xhr.responseText);
+                                            
+                                        }
+                                    };
+
+                                    xhr.send("");
+                                }
+
+                                function dislikepost(post_id, likestate) {
+                                    var xhr = new XMLHttpRequest();
+
+                                    var url = '/dislike/' + likestate + "/" + post_id;
+
+                                    xhr.open('POST', url, true);
+
+                                    xhr.onreadystatechange = function() {
+                                        if (xhr.readyState == 4 && xhr.status == 200) {
+                                            console.log(xhr.responseText);
+                                            
+                                        }
+                                    };
+
+                                    xhr.send("");
+                                }
+
+                                function deletepost(post_id, increment) {
+                                    document.querySelector(".post" + increment).style.marginBottom = "0";
+                                    document.querySelector(".post" + increment).style.borderBottom = "none";
+                                    document.querySelector(".post" + increment).style.height = document.querySelector(".post" + increment).scrollHeight + "px";
+                                    document.querySelector(".post" + increment).style.overflow = "hidden";
+                                    document.querySelector(".post" + increment).style.transition = "height 0.2s";
+                                    requestAnimationFrame(() => {
+                                        document.querySelector(".post" + increment).style.height = document.querySelector(".post" + increment).scrollHeight - document.querySelector(".post" + increment).scrollHeight + "0px";
+                                    });
+
+
+                                    console.log(post_ids.length)
+                                    console.log(post_ids)
+                                    console.log(post_id.toString())
+
+                                    post_ids = post_ids.filter(item => item !== post_id);
+
+
+                                    if (post_ids.length == 1) {
+                                        if (document.getElementById("newpostsarea").innerHTML.trim() === '') {
+
+                                            no_posts();
+                                        
+                                        }
+                                        
+                                    }
+
+
+                                    var xhr = new XMLHttpRequest();
+
+                                    var url = '/delete/' + post_id;
+
+                                    xhr.open('POST', url, true);
+
+                                    xhr.onreadystatechange = function() {
+                                        if (xhr.readyState == 4 && xhr.status == 200) {
+                                            console.log(xhr.responseText);
+                                            
+                                        }
+                                    };
+
+                                    xhr.send("");
+
+                                    
+
+
+                                }
+
+                                var div = document.createElement("div");
+                                var image = document.createElement("img");
+                                var time = document.createElement("p");
+                                var actualimage = document.createElement("img");
+                                var deletebutton = document.createElement("button");
+                                var like = document.createElement("button");
+                                var dislike = document.createElement("button");
+
+                                like.className = "like" + increment;
+                                dislike.className = "dislike" + increment;
+
+                                var like2 = document.createElement("div");
+                                var dislike2 = document.createElement("div");
+
+                                var visit = document.createElement("button");
+
+                                (function (index, user_id, photo, post_id, likes, dislikes, likers, dislikers, replying_to) {
+                                    invite_text2.onclick = function () {
+                                        window.location.href = "/users/" + user_id + "/posts";
+                                    };
+
+                                    link.onclick = function () {
+                                        window.location.href = "/posts/" + replying_to
+                                    };
+
+                                    link.onmouseover = function() {
+                                        document.querySelector(".link" + index).style.backgroundColor = "#c9daff";
+                                    };
+
+                                    link.onmouseout = function() {
+                                        document.querySelector(".link" + index).style.backgroundColor = "#ebf1ff";
+                                    };
+
+                                    image.onclick = function () {
+                                        window.location.href = "/users/" + user_id + "/posts";
+                                    };
+
+                                    
+
+                                    visit.onmouseover = function() {
+                                        document.querySelector(".visit" + index).style.backgroundColor = "#caccd0";
+                                    };
+
+                                    visit.onmouseout = function() {
+                                        document.querySelector(".visit" + index).style.backgroundColor = "#f0f2f5";
+                                    };
+
+                                    deletebutton.onclick = function (event) {
+                                            event.stopPropagation(); 
+
+                                            var existingdropdown = document.querySelector('.delete-dropdown');
+                                            if (existingdropdown) {
+                                                document.body.removeChild(existingdropdown);
+                                            }
+
+                                            var confirmdeletebutton = document.createElement("button");
+                                            confirmdeletebutton.textContent = "Are you sure?";
+                                            confirmdeletebutton.style.backgroundColor = "#f0f2f5";
+                                            confirmdeletebutton.style.border = "0px solid white";
+                                            confirmdeletebutton.style.color = "#787a80";
+                                            confirmdeletebutton.style.padding = "5px";
+                                            confirmdeletebutton.style.fontSize = "16px";
+                                            confirmdeletebutton.style.width = "150px";
+                                            confirmdeletebutton.style.borderRadius = "5px";
+                                            confirmdeletebutton.style.cursor = "pointer";
+                                            
+
+                                            var deletedropdown = document.createElement("div");
+                                            deletedropdown.classList.add('delete-dropdown'); 
+                                            deletedropdown.style.position = "absolute";
+                                            deletedropdown.style.top = (event.clientY + window.pageYOffset + 10) + "px"; 
+                                            deletedropdown.style.left = event.clientX - 150 + "px";
+                                            deletedropdown.style.backgroundColor = "white";
+                                            deletedropdown.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.35)";
+                                            deletedropdown.style.borderBottom = "3px solid #caccd0"
+                                            deletedropdown.style.padding = "8px";
+                                            deletedropdown.style.zIndex = "9999999999999999999999999999";
+                                            deletedropdown.style.borderRadius = "8px";
+                                            deletedropdown.appendChild(confirmdeletebutton);
+
+                                            document.body.appendChild(deletedropdown);
+
+                                            deletedropdown.style.overflow = "hidden"
+
+                                            deletedropdown.style.height = "0px"; 
+                                            deletedropdown.style.transition = "height 0.2s"; 
+                                            requestAnimationFrame(() => {
+                                                deletedropdown.style.height = deletedropdown.scrollHeight - 15 + "px";
+                                            });
+
+                                            window.addEventListener('scroll', function () {
+                                                document.body.removeChild(deletedropdown);
+                                                document.removeEventListener('click', handleclickoutside);
+                                            });
+
+                                            try {
+                                            document.querySelector(".actualposts3").addEventListener('scroll', function () {
+                                                document.body.removeChild(deletedropdown);
+                                                document.removeEventListener('click', handleclickoutside);
+                                            });
+                                            } catch {
+                                                console.log("skibidi")
+                                            }
+
+                                            confirmdeletebutton.onclick = function () {
+                                                deletepost(post_id, index);
+                                                document.body.removeChild(deletedropdown);
+                                                window.removeEventListener('scroll');
+                                            };
+
+
+
+                                            confirmdeletebutton.onmouseover = function() {
+                                                confirmdeletebutton.style.backgroundColor = "#de3e3c";
+                                                confirmdeletebutton.style.color = "white";
+                                            };
+
+
+                                            confirmdeletebutton.onmouseout = function() {
+                                                confirmdeletebutton.style.backgroundColor = "#f0f2f5";
+                                                confirmdeletebutton.style.color = "#787a80";
+                                            };
+
+                                            function handleclickoutside(event) {
+                                                if (!deletedropdown.contains(event.target)) {
+                                                    document.body.removeChild(deletedropdown);
+                                                    document.removeEventListener('click', handleclickoutside); 
+                                                }
+                                            }
+
+                                            document.addEventListener('click', handleclickoutside);
+                                        };
+
+                                    deletebutton.onmouseover = function() {
+                                        document.querySelector(".deletebutton" + index).style.backgroundColor = "#caccd0";
+                                    };
+
+                                    deletebutton.onmouseout = function() {
+                                        document.querySelector(".deletebutton" + index).style.backgroundColor = "#f0f2f5";
+                                    };
+
+
+
+                                    if (likers.split("_LIKERS_").includes(String(your_id))) {
+                                        like.onclick = function() { 
+                                            function blue() {
+                                                likepost(post_id, "unlike");
+                                                document.querySelector(".like2" + index).textContent = parseInt(likes) - 1;
+                                                document.querySelector(".like" + index).style.backgroundColor = "#0866ff";
+                                                document.querySelector(".like" + index).style.color = "white";
+
+                                                document.querySelector(".like" + index).onclick = function() {
+                                                    clickdislike();
+                                                    likepost(post_id, "like");
+                                                    document.querySelector(".like2" + index).textContent = parseInt(likes) + 1 - 1;
+                                                    document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
+                                                    document.querySelector(".like" + index).style.color = "#787a80";
+                                                    document.querySelector(".like" + index).onclick = function() {
+                                                        
+                                                        blue();
+                                                    }
+                                                }
+                                            }
+                                            blue();
+                                        };
+                                    } else {
+                                        like.onclick = function() { 
+                                            function grey() {
+                                                clickdislike();
+                                                likepost(post_id, "like");
+                                                document.querySelector(".like2" + index).textContent = parseInt(likes) + 1;
+                                                document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
+                                                document.querySelector(".like" + index).style.color = "#787a80";
+                                                
+                                                document.querySelector(".like" + index).onclick = function() {
+                                                    likepost(post_id, "unlike");
+                                                    document.querySelector(".like2" + index).textContent = parseInt(likes) + 1 - 1;
+                                                    document.querySelector(".like" + index).style.backgroundColor = "#0866ff";
+                                                    document.querySelector(".like" + index).style.color = "white";
+                                                    document.querySelector(".like" + index).onclick = function() {
+                                                        grey();
+                                                    }
+                                                }
+                                            }
+                                            grey();
+                                        };
+                                    }
+
+                                    if (dislikers.split("_DISLIKERS_").includes(String(your_id))) {
+                                        dislike.onclick = function() { 
+                                            function disblue() {
+                                                dislikepost(post_id, "undislike");
+                                                document.querySelector(".dislike2" + index).textContent = parseInt(dislikes) - 1;
+                                                document.querySelector(".dislike" + index).style.backgroundColor = "#0866ff"; 
+                                                document.querySelector(".dislike" + index).style.color = "white";
+
+                                                document.querySelector(".dislike" + index).onclick = function() {
+                                                    clicklike();
+                                                    dislikepost(post_id, "dislike");
+                                                    document.querySelector(".dislike2" + index).textContent = parseInt(dislikes) + 1 - 1;
+                                                    document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
+                                                    document.querySelector(".dislike" + index).style.color = "#787a80";
+                                                    document.querySelector(".dislike" + index).onclick = function() {
+                                                        
+                                                        disblue();
+                                                    }
+                                                }
+                                            }
+                                            disblue();
+                                        };
+                                    } else {
+                                        dislike.onclick = function() { 
+                                            function disgrey() {
+                                                clicklike();
+                                                dislikepost(post_id, "dislike");
+                                                document.querySelector(".dislike2" + index).textContent = parseInt(dislikes) + 1;
+                                                document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5"; 
+                                                document.querySelector(".dislike" + index).style.color = "#787a80";
+
+                                                document.querySelector(".dislike" + index).onclick = function() {
+                                                    
+                                                    dislikepost(post_id, "undislike");
+                                                    document.querySelector(".dislike2" + index).textContent = parseInt(dislikes) + 1 - 1;
+                                                    document.querySelector(".dislike" + index).style.backgroundColor = "#0866ff";
+                                                    document.querySelector(".dislike" + index).style.color = "white";
+                                                    document.querySelector(".dislike" + index).onclick = function() {
+                                                        
+                                                        disgrey();
+                                                    }
+                                                }
+                                            }
+                                            disgrey();
+                                        };
+                                    }
+                                    function clicklike() {
+                                        console.log("LIKE IS CLICKING");
+                                            
+                                            
+                                        var likeElement = document.querySelector(".like" + index);
+                                        var computedStyle = window.getComputedStyle(likeElement);
+                                        var backgroundColor = computedStyle.backgroundColor;
+
+                                        if (backgroundColor === "rgb(240, 242, 245)") {
+                                            console.log("LIKE IS CLICKING");
+                                            likeElement.click();
+                                        }
+                                    }
+
+                                    function clickdislike() {
+                                        console.log("DISLIKE IS CLICKING");
+                                        var dislikeElement = document.querySelector(".dislike" + index);
+                                        var computedStyle = window.getComputedStyle(dislikeElement);
+                                        var backgroundColor = computedStyle.backgroundColor;
+
+                                        if (backgroundColor === "rgb(240, 242, 245)") {
+                                            console.log("DISLIKE IS CLICKING");
+                                            dislikeElement.click();
+                                        }
+                                    }
+                                    visit.onclick = function() { 
+                                        window.location.href = "/posts/" + post_id
+                                        
+                                    };
+                                })(increment, user_ids[i], photos[i], post_ids[i], likes[i], dislikes[i], likers[i], dislikers[i], replying_to[i]);
+        
+                                var user_id = user_ids[i];
+
+                                invite_text2.textContent = text2
+                                invite_text2.style.lineHeight = "0px";
+                                invite_text2.style.transform = "translate(0, 5px)";
+                                invite_text2.style.cursor = "pointer";
+                                invite_text2.style.float = "left";
+                                invite_text2.style.marginLeft = "10px";
+                                invite_text2.style.width = "100%";
+
+                                div.style.float = "left";
+                                div.className = "left" + increment;
+
+
+
+
+
+
+
+
+
+                                time.textContent = time2;
+                                time.style.marginLeft = "10px";
+                                time.style.fontSize = "14px";
+                                time.style.color = "gray";
+                                
+                                function matchAndRemoveYoutubeUrls(text) {
+                                    var p = /(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?/g;
+                                    var matches = [];
+                                    var match;
+                                    while ((match = p.exec(text)) !== null) {
+                                        matches.push(match[1]);
+                                    }
+                                    var cleanedText = text.replace(p, '');
+                                    return { matches: matches.length > 0 ? matches : false, cleanedText: cleanedText };
+                                }
+
+                                var result = matchAndRemoveYoutubeUrls(text);
+
+                                match = result.matches[0]
+
+                                if (match != undefined) {
+                                    var video = document.createElement("iframe");
+
+                                    video.src = "https://www.youtube.com/embed/" + match
+                                    video.width = "750px";
+                                    video.height = "422px"
+                                    video.setAttribute('frameborder', '0');
+                                    video.setAttribute('allowfullscreen', '');
+
+                                }
+
+                                console.log("Cleaned Text:", result.cleanedText);
+                                                                    
+
+                                invite_text.textContent = result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, '');
+                                invite_text.id = "invite_text";
+                                invite_text.style.transform = "translate(0, -7px)";
+                                invite_text.style.backgroundColor = "red";
+                                invite_text.style.rows = "auto";
+                                invite_text.style.marginLeft = "10px";
+                                invite_text.style.border = "0px solid red";
+                                invite_text.style.maxWidth = "100vw";
+                                invite_text.style.width = "calc(100% - 20px)";
+                                invite_text.style.resize = "none";
+                                invite_text.style.outline = "none";
+                                invite_text.style.backgroundColor = "white";
+                                invite_text.readOnly = true;
+                                invite_text.style.position = "relative";
+                                invite_text.style.fontFamily = "Arial";
+                                invite_text.style.fontSize = "16px";
+                                invite_text.style.marginTop = "5px";
+                                invite_text.style.height = "auto";
+                                invite_text.style.maxHeight = "500px";
+
+                                if (text.length <= 90) {
+                                    invite_text.rows = "1";
+                                }
+
+
+
+                                image.style.fontSize = "16px";
+                                image.style.width = "50px";
+                                image.style.height = "50px";
+                                image.style.cursor = "pointer";
+                                image.style.marginLeft = "10px";
+                                image.style.marginTop = "10px";
+                                image.style.objectFit = "cover";
+                                image.style.marginBottom = "10px";
+                                image.style.float = "left";
+                                image.style.borderRadius = "50%";
+                                image.src = "data:image/jpeg;base64," + profile_pictures[i]
+                                image.className = "image" + post_ids[i]
+
+                                
+                                
+                                
+
+                                var icon = document.createElement('i');
+                                icon.classList.add('fas', 'fa-trash-can');
+                                icon.style.paddingRight = "5px";
+                                var text = document.createTextNode('Delete');
+                                deletebutton.appendChild(icon);
+                                deletebutton.appendChild(text);
+                                deletebutton.style.float = "right";
+                                deletebutton.className = "deletebutton" + increment
+                                deletebutton.style.backgroundColor = "#f0f2f5";
+                                deletebutton.style.border = "0px solid white";
+                                deletebutton.style.color = "#787a80";
+                                deletebutton.style.padding = "5px";
+                                deletebutton.style.fontSize = "16px";
+                                deletebutton.style.width = "100px";
+                                deletebutton.style.marginTop = "20px";
+                                deletebutton.style.marginRight = "10px";
+                                deletebutton.style.borderRadius = "5px";
+                                deletebutton.style.cursor = "pointer";
+
+
+                                link.textContent = "Post not found";
+                                link.style.cursor = "pointer";
+                                link.style.color = "#0866ff";
+                                link.style.maxWidth = "calc(100% - 20px)";
+                                link.style.width = "calc(100vw - 20px)";
+                                link.style.background = "#ebf1ff";
+                                link.style.marginBottom = "10px";
+                                link.style.marginLeft = "10px";
+                                link.style.border = "0px solid white";
+                                link.style.borderRadius = "5px";
+                                link.style.fontSize = "16px";
+                                link.style.height = "30px";
+                                link.className = "link" + increment
+
+                                if (firsttime != "yes") {
+                                    if (replytext[i] != ""){
+                                        link.textContent = replytext[i].replace(/_THISISALINEBREAK_/g, " ").replace(/_THISISANAPOSTROPHE_/g, "'").substring(0, 30) + "...";
+                                    }
+                                    
+                                }
+
+                                try {
+                                    (function (index) {
+                                        if (index !== 0) {
+                                            // var replying_to = replying_to[index];
+
+                                            console.log("replying to: " + replying_to[index])
+
+                                            index2 = index + 1
+                                            var rizz = ".link" + index2
+                                            console.log(rizz)
+
+                                            var link = document.querySelector(rizz); 
+                                            var url = '/get/reply_message/' + replying_to[index];
+
+                                            console.log(url)
+
+                                            try {
+                                                fetch(url)
+                                                    .then(response => {
+                                                        if (!response.ok) {
+                                                            throw new Error('you lose');
+                                                        }
+                                                        return response.text();
+                                                    })
+                                                    
+                                                    .then(message => {
+                                                        let message2 = message
+
+                                                        message2 = message2.replace(/_THISISALINEBREAK_/g, " ").replace(/_THISISANAPOSTROPHE_/g, "'").substring(0, 30) + "...";
+                                                        
+                                                        link.textContent = message2
+                                                        
+                                                    })
+                                                    .catch(error => {
+                                                        console.error('error fetching image for post id:', error);
+                                                    });
+                                            } catch {
+                                                console.log("not a reply")
+                                            }
+                                        }
+                                    })(i);
+                                } catch {
+                                    console.log("nahh blkud")
+                                }
+                                
+
+
+                                document.querySelector(".actualposts3").style.overflowX = "hidden";
+
+                                    
+                                var actualimageparent = document.createElement("div");
+                                var actualimagediv = document.createElement("div");
+                                var actualimage = document.createElement("img");
+
+                                
+                                actualimage.style.cursor = "pointer";
+                                actualimage.style.objectFit = "contain";
+                                actualimage.id = "actualimage" + increment;
+                                actualimage.className = "actualimage" + post_ids[i];
+                                actualimage.src = "data:image/jpeg;base64," + photos[i];
+                                actualimage.style.maxWidth = "100%";
+                                actualimage.style.position = "absolute";
+                                actualimage.style.top = "50%";
+                                actualimage.style.left = "50%";
+                                actualimage.style.transform = "translate(-50%, -50%)";
+
+                                
+                                actualimagediv.style.background = "url(data:image/jpeg;base64," + photos[i] + ")";
+                                actualimagediv.style.width = "100%";
+                                actualimagediv.style.height = "100%";
+                                
+                                actualimagediv.style.filter = "blur(15px) brightness(50%)";
+                                actualimagediv.style.backgroundPosition = "center center";
+                                actualimagediv.style.backgroundSize = "cover";
+                                actualimagediv.className = "actualimagediv" + post_ids[i];
+
+                                
+                                actualimageparent.style.marginBottom = "5px";
+                                actualimageparent.style.marginTop = "5px";
+                                actualimageparent.style.position = "relative";
+                                actualimageparent.style.overflow = "hidden";
+                                actualimageparent.style.maxHeight = "500px";
+                                actualimageparent.style.width = "100%";
+
+                                actualimage.alt = "For all intents and purposes this image has loaded"
+                                image.alt = "Profile Picture"
+
+                                
+                                
+                                
+
+
+
+                                var hr = document.createElement("hr");
+                                hr.style.width = "100%";
+
+                                var likesdiv = document.createElement("div");
+                                
+                                likesdiv.className = "likesdiv" + increment
+                                likesdiv.style.height = "45px"
+
+                                
+
+                                var icon = document.createElement('i');
+                                icon.classList.add('fas', 'fa-thumbs-up');
+                                icon.style.paddingRight = "5px";
+                                var text = document.createTextNode('Like');
+                                like.appendChild(icon);
+                                like.appendChild(text);
+                                like.style.float = "left";
+                                like.style.marginLeft = "8px";
+                                like.style.border = "0px solid white";
+                                like.style.color = "white";
+                                like.style.padding = "3px";
+                                like.style.fontSize = "14px";
+                                like.style.borderRadius = "5px";
+                                like.style.backgroundColor = "#0866ff";
+                                like.style.width = "80px";
+                                like.style.cursor = "pointer";
+                                if (likers[i].split("_LIKERS_").includes(String(your_id))) {
+                                    like.style.color = "#787a80";
+                                    like.style.backgroundColor = "#f0f2f5";
+                                } else {
+                                    like.style.color = "white";
+                                    like.style.backgroundColor = "#0866ff";
+
+                                }
+
+
+                                var icon = document.createElement('i');
+                                icon.classList.add('fas', 'fa-thumbs-down', "fa-flip-horizontal");
+                                icon.style.paddingLeft = "5px";
+                                var text = document.createTextNode('Dislike');
+                                dislike.appendChild(icon);
+                                dislike.appendChild(text);
+                                dislike.style.float = "left";
+                                dislike.style.marginLeft = "5px";
+                                dislike.style.border = "0px solid white";
+                                dislike.style.color = "white";
+                                dislike.style.padding = "3px";
+                                dislike.style.fontSize = "14px";
+                                dislike.style.borderRadius = "5px";
+                                dislike.style.backgroundColor = "#0866ff";
+                                dislike.style.width = "80px";
+                                dislike.style.cursor = "pointer";
+                                if (dislikers[i].split("_DISLIKERS_").includes(String(your_id))) {
+                                    dislike.style.color = "#787a80";
+                                    dislike.style.backgroundColor = "#f0f2f5";
+                                } else {
+                                    dislike.style.color = "white";
+                                    dislike.style.backgroundColor = "#0866ff";
+
+                                }
+
+
+                                like2.textContent = likes[i]
+                                like2.style.float = "left";
+                                like2.style.marginLeft = "8px";
+                                like2.style.border = "0px solid white";
+                                like2.style.color = "#787a80";
+                                like2.style.padding = "3px";
+                                like2.style.fontSize = "14px";
+                                like2.style.width = "73px";
+                                like2.className = "like2" + increment
+
+
+                                dislike2.textContent = dislikes[i]
+                                dislike2.style.float = "left";
+                                dislike2.style.marginLeft = "5px";
+                                dislike2.style.border = "0px solid white";
+                                dislike2.style.color = "#787a80";
+                                dislike2.style.padding = "3px";
+                                dislike2.style.fontSize = "14px";
+                                dislike2.style.width = "73px";
+                                dislike2.className = "dislike2" + increment
+
+                                var icon = document.createElement('i');
+                                icon.classList.add('fas', 'fa-reply', "fa-flip-horizontal");
+                                icon.style.paddingLeft = "5px";
+                                var text = document.createTextNode('Go to Post');
+                                visit.appendChild(icon);
+                                visit.appendChild(text);
+                                visit.style.float = "left";
+                                visit.style.marginLeft = "5px";
+                                visit.style.border = "0px solid white";
+                                visit.style.color = "#787a80";
+                                visit.style.padding = "3px";
+                                visit.style.fontSize = "14px";
+                                visit.style.borderRadius = "5px";
+                                visit.style.backgroundColor = "#f0f2f5";
+                                visit.style.width = "calc(100% - 188px)";
+                                visit.style.cursor = "pointer";
+                                visit.className = "visit" + increment
+
+
+                                document.querySelector(".actualposts2").appendChild(newDiv);
+                                
+                                document.querySelector(".post" + increment).appendChild(image);
+
+                                try {
+                                    (function (index) {
+                                        if (index !== 0) {
+                                            var post_id = post_ids[index];
+
+                                            
+
+
+                                            var imagen = document.querySelector(".image" + post_id); 
+                                            var url = '/get/pfp/' + post_id;
+
+                                            fetch(url)
+                                                .then(response => {
+                                                    if (!response.ok) {
+                                                        throw new Error('you lose');
+                                                    }
+                                                    return response.text();
+                                                })
+                                                .then(image => {
+                                                    imagen.src = "data:image/jpeg;base64," + image;
+                                                    
+                                                    
+                                                })
+                                                .catch(error => {
+                                                    console.error('error fetching image for post id:', post_id, error);
+                                                });
+                                        }
+                                    })(i);
+                                } catch {
+                                    console.log("nahh")
+                                }
+
+                                if (parseInt(user_id) == parseInt(your_id)) {
+                                    document.querySelector(".post" + increment).appendChild(deletebutton); 
+                                }
+
+                                document.querySelector(".post" + increment).appendChild(div);
+                                document.querySelector(".left" + increment).appendChild(invite_text2);
+                                document.querySelector(".left" + increment).appendChild(time);
+
+                                if (replying_to[i] != "") {
+                                    document.querySelector(".post" + increment).appendChild(link);
+                                }
+
+                                document.querySelector(".post" + increment).appendChild(invite_text);
+
+                                if (match != undefined) {
+                                    document.querySelector(".post" + increment).appendChild(video);
+
+                                }
+
+                                if (photos[i] != "") {
+                                    document.querySelector(".post" + increment).appendChild(actualimageparent);
+                                    actualimageparent.appendChild(actualimagediv);
+                                    actualimageparent.appendChild(actualimage);
+
+                                    function resize() {
+                                        actualimagediv.style.height = actualimage.offsetHeight + "px";
+                                        actualimagediv.style.maxHeight = "500px";
+                                        actualimage.style.maxHeight = "500px";
+                                    }
+                                    resize();
+
+                                    window.addEventListener('resize', resize);
+                                    window.addEventListener('scroll', resize);
+                                    try {
+                                        (function (index) {
+                                            if (index !== 0) {
+                                                var post_id = post_ids[index];
+
+                                                try {
+                                                    var actualimage = document.querySelector(".actualimage" + post_id); 
+                                                    var actualimagediv = document.querySelector(".actualimagediv" + post_id); 
+                                                } catch {
+                                                    console.log("stoopid")
+                                                }
+
+                                                var url = '/get/image/' + post_id;
+
+                                                fetch(url)
+                                                    .then(response => {
+                                                        if (!response.ok) {
+                                                            throw new Error('you lose');
+                                                        }
+                                                        return response.text();
+                                                    })
+                                                    .then(image => {
+                                                        try {
+                                                        actualimagediv.style.background = "url(data:image/jpeg;base64," + image + ")";
+                                                        actualimage.src = "data:image/jpeg;base64," + image;
+
+                                                        actualimagediv.style.backgroundPosition = "center center";
+                                                        actualimagediv.style.backgroundSize = "cover";
+
+                                                        
+                                                        actualimage.onload = function() {
+                                                            actualimagediv.style.height = actualimage.offsetHeight + "px";
+                                                            actualimagediv.style.maxHeight = "500px";
+                                                            actualimage.style.maxHeight = "500px";
+                                                        };
+
+                                                        
+
+                                                        actualimage.onclick = function () {
+                                                            function displayimage(){
+
+                                                            let scrollPosition = { top: 0, left: 0 };
+
+
+                                                            scrollPosition = {
+                                                                top: window.scrollY,
+                                                                left: window.scrollX
+                                                            };
+
+                                                            document.body.style.overflow = 'hidden';
+                                                            document.documentElement.style.overflow = 'hidden';
+
+                                                            window.scrollTo(scrollPosition.left, scrollPosition.top);
+
+
+
+
+
+
+                                                            event.stopPropagation();
+
+                                                            var existingdropdown = document.querySelector('.delete-dropdown');
+                                                            if (existingdropdown) {
+                                                                document.body.removeChild(existingdropdown);
+                                                            }
+
+
+
+
+                                                            var image = document.createElement("img");
+                                                            image.src = actualimage.src
+                                                            image.style.maxHeight = "calc(100vh - 214px)";
+                                                            image.style.maxWidth = "calc(100vw - 214px)";
+                                                            image.style.alignSelf = "center";
+                                                            image.style.objectFit = "cover";
+                                                            image.style.transform = "translate(calc(50vw - 50%))"
+
+
+                                                            var button = document.createElement("button");
+                                                            button.style.borderRadius = "50%";
+                                                            button.style.backgroundColor = "white";
+                                                            button.style.border = "none";
+                                                            button.style.width = "50px";
+                                                            button.style.height = "50px";
+                                                            button.textContent = "✖";
+                                                            button.style.fontSize = "20px";
+                                                            button.style.paddingBottom = "3px";
+                                                            button.style.position = "absolute";
+                                                            button.style.margin = "25px";
+                                                            button.style.marginTop = "25px";
+
+                                                            button.onmouseout = function () {
+                                                                button.style.backgroundColor = "white";
+                                                            };
+
+                                                            button.onmouseover = function() {
+                                                                button.style.backgroundColor = "#caccd0";
+                                                            };
+
+
+                                                            var deletedropdown = document.createElement("div");
+                                                            deletedropdown.classList.add('delete-dropdown');
+                                                            deletedropdown.id = "deletedropdown"
+                                                            deletedropdown.style.position = "absolute";
+                                                            deletedropdown.style.top = window.pageYOffset + 64 + "px";
+                                                            deletedropdown.style.backgroundColor = "rgba(0, 0, 0, 0.75)";
+                                                            deletedropdown.style.zIndex = "9999";
+                                                            deletedropdown.style.height = "calc(100vh - 64px)";
+                                                            deletedropdown.style.width = "100vw";
+                                                            deletedropdown.style.backdropFilter = "blur(75px)"
+
+                                                            deletedropdown.style.display = "flex";
+
+
+
+                                                            document.body.appendChild(deletedropdown);
+
+                                                            deletedropdown.appendChild(image);
+                                                            deletedropdown.appendChild(button);
+
+
+
+
+
+
+
+                                                            deletedropdown.addEventListener('click', handleclickoutside);
+                                                            image.addEventListener('click', displayimage);
+
+
+
+
+                                                            function handleclickoutside(event) {
+                                                                let scrollPosition = { top: 0, left: 0 };
+
+                                                                document.body.style.overflow = '';
+                                                                document.documentElement.style.overflow = '';
+
+
+
+
+                                                                console.log("giggle")
+                                                                //if (!deletedropdown.contains(image)) {
+                                                                    document.body.removeChild(deletedropdown);
+                                                                    document.removeEventListener('click', handleclickoutside);
+                                                                //}
+                                                            }
+
+                                                            function handleclickoutside2(event) {
+                                                                actualimage.click()
+                                                            }
+
+                                                            document.addEventListener('click', handleclickoutside);
+                                                            }
+                                                            displayimage();
+
+                                                        };
+                                                        
+                                                        } catch {
+                                                            console.error("stoopid")
+                                                        }
+                                                        
+                                                        
+
+                                                    })
+                                                    .catch(error => {
+                                                        console.error('error fetching imageERFFRRFRF for post id:', post_id, error);
+                                                    });
+
+                                                    
+                                                
+
+
+                                                
+                                            }
+                                        })(i);
+                                    } catch {
+                                        console.log("nahh")
+                                    }
+
+                                    try {
+                                        (function (index) {
+                                            if (1==1) {
+                                                var post_id = post_ids[index];
+
+                                                try {
+
+                                                        actualimage.onclick = function () {
+                                                            function displayimage(){
+
+                                                            let scrollPosition = { top: 0, left: 0 };
+
+
+                                                            scrollPosition = {
+                                                                top: window.scrollY,
+                                                                left: window.scrollX
+                                                            };
+
+                                                            document.body.style.overflow = 'hidden';
+                                                            document.documentElement.style.overflow = 'hidden';
+
+                                                            window.scrollTo(scrollPosition.left, scrollPosition.top);
+
+
+
+
+
+
+                                                            event.stopPropagation();
+
+                                                            var existingdropdown = document.querySelector('.delete-dropdown');
+                                                            if (existingdropdown) {
+                                                                document.body.removeChild(existingdropdown);
+                                                            }
+
+
+
+
+                                                            var image = document.createElement("img");
+                                                            image.src = document.querySelector(".actualimage" + post_id).src
+                                                            image.style.maxHeight = "calc(100vh - 214px)";
+                                                            image.style.maxWidth = "calc(100vw - 214px)";
+                                                            image.style.alignSelf = "center";
+                                                            image.style.objectFit = "cover";
+                                                            image.style.transform = "translate(calc(50vw - 50%))"
+
+
+                                                            var button = document.createElement("button");
+                                                            button.style.borderRadius = "50%";
+                                                            button.style.backgroundColor = "white";
+                                                            button.style.border = "none";
+                                                            button.style.width = "50px";
+                                                            button.style.height = "50px";
+                                                            button.textContent = "✖";
+                                                            button.style.fontSize = "20px";
+                                                            button.style.paddingBottom = "3px";
+                                                            button.style.position = "absolute";
+                                                            button.style.margin = "25px";
+                                                            button.style.marginTop = "25px";
+
+                                                            button.onmouseout = function () {
+                                                                button.style.backgroundColor = "white";
+                                                            };
+
+                                                            button.onmouseover = function() {
+                                                                button.style.backgroundColor = "#caccd0";
+                                                            };
+
+
+                                                            var deletedropdown = document.createElement("div");
+                                                            deletedropdown.classList.add('delete-dropdown');
+                                                            deletedropdown.id = "deletedropdown"
+                                                            deletedropdown.style.position = "absolute";
+                                                            deletedropdown.style.top = window.pageYOffset + 64 + "px";
+                                                            deletedropdown.style.backgroundColor = "rgba(0, 0, 0, 0.75)";
+                                                            deletedropdown.style.zIndex = "9999";
+                                                            deletedropdown.style.height = "calc(100vh - 64px)";
+                                                            deletedropdown.style.width = "100vw";
+                                                            deletedropdown.style.backdropFilter = "blur(75px)"
+
+                                                            deletedropdown.style.display = "flex";
+
+
+
+                                                            document.body.appendChild(deletedropdown);
+
+                                                            deletedropdown.appendChild(image);
+                                                            deletedropdown.appendChild(button);
+
+
+
+
+
+
+
+                                                            deletedropdown.addEventListener('click', handleclickoutside);
+                                                            image.addEventListener('click', displayimage);
+
+
+
+
+                                                            function handleclickoutside(event) {
+                                                                let scrollPosition = { top: 0, left: 0 };
+
+                                                                document.body.style.overflow = '';
+                                                                document.documentElement.style.overflow = '';
+
+
+
+
+                                                                console.log("giggle")
+                                                                //if (!deletedropdown.contains(image)) {
+                                                                    document.body.removeChild(deletedropdown);
+                                                                    document.removeEventListener('click', handleclickoutside);
+                                                                //}
+                                                            }
+
+                                                            function handleclickoutside2(event) {
+                                                                actualimage.click()
+                                                            }
+
+                                                            document.addEventListener('click', handleclickoutside);
+                                                            }
+                                                            displayimage();
+
+                                                        };
+                                                        
+                                                        } catch {
+                                                            console.error("stoopid")
+                                                        }
+                                                        
+
+                                                    
+                                                
+
+
+                                                
+                                            }
+                                        })(i);
+                                    } catch {
+                                        console.log("nahh")
+                                    }
+
+                                }
+
+                                if (photos[i] == "" && match == undefined) {
+                                    document.querySelector(".post" + increment).appendChild(hr);
+                                }
+                                document.querySelector(".post" + increment).appendChild(likesdiv);
+                                document.querySelector(".likesdiv" + increment).appendChild(like);
+                                document.querySelector(".likesdiv" + increment).appendChild(dislike);
+                                document.querySelector(".likesdiv" + increment).appendChild(visit);
+                                document.querySelector(".likesdiv" + increment).appendChild(like2);
+                                document.querySelector(".likesdiv" + increment).appendChild(dislike2);
+                                
+                                
+                                invite_text.style.height = (invite_text.scrollHeight) + 'px';
+
+
+
+                                }
+                            }
+                            for (var i = 0; i < arraylength; i++) {
+                                    
+                                (function (index) {
+                                    if (index !== 0) {
+                                        // var replying_to = replying_to[index];
+
+                                        console.log("replying to: " + replying_to[index])
+
+                                        index2 = index + 1
+                                        var rizz = ".link" + index2
+                                        console.log(rizz)
+
+                                        var link = document.querySelector(rizz); 
+                                        var url = '/get/reply_message/' + replying_to[index];
+
+                                        console.log(url)
+
+                                        try {
+                                            fetch(url)
+                                                .then(response => {
+                                                    if (!response.ok) {
+                                                        throw new Error('you lose');
+                                                    }
+                                                    return response.text();
+                                                })
+                                                
+                                                .then(message => {
+                                                    let message2 = message
+
+                                                    message2 = message2.replace(/_THISISALINEBREAK_/g, " ").replace(/_THISISANAPOSTROPHE_/g, "'").substring(0, 30) + "...";
+                                                    
+                                                    link.textContent = message2
+                                                    
+                                                })
+                                                .catch(error => {
+                                                    console.error('error fetching image for post id:', error);
+                                                });
+                                        } catch {
+                                            console.log("not a reply")
+                                        }
+                                    }
+                                })(i);
+                            }
+
+
+                                
+                        }
+                        
+
+                        
+                            
+                        document.getElementById("clickme").click()
+
+                        var showmorebutton = document.createElement("button");
+
+                        showmorebutton.onmouseover = function() {
+                            showmorebutton.style.color = "#caccd0";
+                        };
+
+                        showmorebutton.onmouseout = function() {
+                            showmorebutton.style.color = "#787a80";
+                        };
+
+                        showmorebutton.onclick = function () {
+
+                            arraylength = document.getElementById("arraylength").textContent
+                            arraylength = parseInt(arraylength)
+                            arraylength = arraylength + 10
+                            
+                            document.getElementById("arraylength").textContent = arraylength
+
+                            fetch('/get_more_posts')
+                                .then(response => {
+                                    if (!response.ok) {
+                                    throw new Error('womp womp error not good');
+                                    }
+                                    return response.text();
+                                })
+                                .then(posts => {
+
+                                    
+
+                                    var dynamicFunction = new Function("displayposts(" + posts + ")");
+
+                                    dynamicFunction();
+
+                                    document.querySelector(".actualposts2").appendChild(document.getElementById("sharebutton2"));
+                                    document.getElementById("sharebutton2").appendChild(document.getElementById("showmorebutton"));
+                                    document.getElementById("showmorebutton").onmouseout();
+                                    
+
+                                })
+                                .catch(error => {
+                                    console.error('womp womp:', error);
+                                });
+
+                        };
+
+                        var sharebutton2 = document.createElement("div");
+                        sharebutton2.id = "sharebutton2"
+                        sharebutton2.style.paddingBottom = "120px"
+
+                        showmorebutton.textContent = "Feed me more content"
+                        showmorebutton.id = "showmorebutton"
+                        showmorebutton.style.fontSize = "20px";
+                        showmorebutton.style.backgroundColor = 'white';
+                        showmorebutton.style.borderRadius = "10px";
+                        showmorebutton.style.height = "40px";
+                        showmorebutton.style.border = "0px solid #caccd0";
+                        showmorebutton.style.borderBottom = "2px solid #caccd0";
+                        showmorebutton.style.cursor = "pointer";
+                        showmorebutton.style.color = "#787a80";
+                        showmorebutton.style.fontSize = "16px";
+                        showmorebutton.style.marginBottom = "120px";
+
+                        showmorebutton.style.maxWidth = "100%";
+                        showmorebutton.style.width = "100vw";
+
+                        
+                        showmorebutton.style.float = "right";
+
+                        if (!navigator.userAgent.includes("Firefox")) {
+                            showmorebutton.style.maxWidth = "calc(750px - 17px)";
+                        }
+
+                        
+                        document.querySelector(".actualposts2").appendChild(sharebutton2);
+                        document.getElementById("sharebutton2").appendChild(showmorebutton);
+        
+                    </script>
+
+                    
+
+                </div>
+            </div>
+        </div>
+
+    
+    
+</div>
+
+
+<script>
+    function updateposition() {
+      const div1 = document.querySelector(".mainbox");
+      const div2 = document.querySelector(".posts");
+  
+      const position = div1.getBoundingClientRect();
+      const scrolltop = window.scrollY || document.documentElement.scrollTop;
+  
+      div2.style.top = `${position.bottom + scrolltop}px`;
+    }
+  
+    updateposition();
+  
+    setInterval(updateposition, 0);
+</script>
+
+
+</body>
+</html>
+
+
+
+</body>
+
+
+
+
+
+
+</html>
