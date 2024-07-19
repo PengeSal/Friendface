@@ -98,15 +98,18 @@ def get_more_posts():
     conn2 = sqlite3.connect(db_path)
     cursor2 = conn2.cursor()
 
-    cursor2.execute("""SELECT * FROM posts WHERE dislikers NOT LIKE ?""", (f"%{current_user.id}%",))
+    # Fetch 10 random posts that the current user hasn't disliked
+    cursor2.execute("""
+        SELECT * FROM posts 
+        WHERE dislikers NOT LIKE ? 
+        ORDER BY RANDOM() 
+        LIMIT 2
+    """, (f"%{current_user.id}%",))
     posts = cursor2.fetchall()
 
     columns = {description[0]: index for index, description in enumerate(cursor2.description)}
 
-    random.shuffle(posts)
-    selected_posts = posts[:10]
-
-    for post in selected_posts:
+    for post in posts:
         post_id = post[columns['post_id']]
         name = post[columns['name']]
         message = post[columns['message']]
@@ -143,17 +146,16 @@ def get_more_posts():
             print(f"Error fetching profile picture for user_id {user_id}: {e}")
             profile_pictures.append("default_picture")
 
-
         try:
             cursor2.execute("""SELECT message FROM posts WHERE post_id=?""", (reply_to,))
             replytexta = cursor2.fetchone()
             if replytexta:
                 replytext.append(replytexta[0])
             else:
-                replytext.append("default_picture")
+                replytext.append("No reply text")
         except Exception as e:
-            print(f"Error fetching profile picture for user_id {post_id}: {e}")
-            replytext.append("default_picture")
+            print(f"Error fetching reply text for post_id {post_id}: {e}")
+            replytext.append("No reply text")
 
     print("Post IDs:", post_ids)
     print("User IDs:", user_ids)
@@ -1669,7 +1671,9 @@ def home(mode):
         recommended_surname = ""
         recommended_pfp = ""
 
-        
+        cursor.execute("""SELECT dark_mode FROM users WHERE user_id =?""", (user_id,))
+        dark_mode = cursor.fetchone()
+        dark_mode = dark_mode[0]
 
         if recommended_user_id:
             recommended_user = get_user_details(recommended_user_id)
@@ -1852,21 +1856,22 @@ def home(mode):
                 posts = f"displayposts('{post_ids}', '{names}', '{messages}', '{user_ids}', '{profile_pictures}', '{likes}', '{dislikes}', '{comments_amounts}', '{photos}', '{times}', '{likers}', '{dislikers}', '{replying_to}', {current_user.id}, 'yes', '')"
 
                 conn2.close()
- 
+
+            
 
             if mode == "feed":
                 return render_template('index_feed.html', profile_picture=user_data, profile_text=name, recommended_user_id=recommended_user_id, num_mutuals=num_mutuals,
-                                    recommended_forename=recommended_forename, recommended_surname=recommended_surname, recommended_pfp=recommended_pfp,
+                                    recommended_forename=recommended_forename, recommended_surname=recommended_surname, recommended_pfp=recommended_pfp, dark_mode = dark_mode,
                                        logo=logo, user_id = user_id, splashmessage=splash, displayposts = posts, forename = current_user.forename)
 
             elif mode == "liked":
                 return render_template('index_liked.html', profile_picture=user_data, profile_text=name, recommended_user_id=recommended_user_id, num_mutuals=num_mutuals,
-                                    recommended_forename=recommended_forename, recommended_surname=recommended_surname, recommended_pfp=recommended_pfp,
+                                    recommended_forename=recommended_forename, recommended_surname=recommended_surname, recommended_pfp=recommended_pfp, dark_mode = dark_mode,
                                        logo=logo, user_id = user_id, splashmessage=splash, displayposts = posts, forename = current_user.forename)
 
             elif mode == "most_viewed":
                 return render_template('index_most_viewed.html', profile_picture=user_data, profile_text=name, recommended_user_id=recommended_user_id, num_mutuals=num_mutuals,
-                                    recommended_forename=recommended_forename, recommended_surname=recommended_surname, recommended_pfp=recommended_pfp,
+                                    recommended_forename=recommended_forename, recommended_surname=recommended_surname, recommended_pfp=recommended_pfp, dark_mode = dark_mode,
                                        logo=logo, user_id = user_id, splashmessage=splash, displayposts = posts, forename = current_user.forename)
 
 
@@ -2272,17 +2277,6 @@ def user_profile(user_id, typeofthing):
                     conn2.close()
 
                 elif typeofthing == "photos":
-                    print("CENTER")
-                    print("CENTER")
-                    print("CENTER")
-                    print("CENTER")
-                    print("CENTER")
-                    print("CENTER")
-                    print("CENTER")
-                    print("CENTER")
-                    print("CENTER")
-                    print("CENTER")
-                    print("CENTER")
 
                     post_ids = ""
                     names = ""
