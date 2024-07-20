@@ -19,6 +19,21 @@
 
         }
 
+        ::-webkit-scrollbar {
+            width: 17px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f0f2f5;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #caccd0;
+            border-radius: 10px;
+            border: 5px solid #f0f2f5;
+        }
+
         .icon-small {
             font-size: 16px; 
         }
@@ -121,8 +136,213 @@
         }
 
     </style>
+
+    <script>
+
+        
+
+        //addEventListener("DOMContentLoaded", (event) => {
+        (function (){
+            function swapElementColors(element, mouseover) {
+                    const computedStyle = getComputedStyle(element);
+                    let color = computedStyle.color;
+
+                    mouseover2 = mouseover
+
+                    if (mouseover2 == "yes"){
+                        var transition = computedStyle.transition;
+                        element.style.transition = "none"
+                    }
+                    
+
+                    if (color === 'rgb(255, 255, 255)') { 
+                        element.style.color = 'rgb(33, 33, 33)';
+                    } else if (color === 'rgb(0, 0, 0)') {
+                        element.style.color = 'rgb(254, 254, 254)';
+                    } else if (color === 'rgb(240, 242, 245)') {
+                        element.style.color = 'rgb(23, 23, 23)';
+                    } else if (color === 'rgb(202, 204, 208)') {
+                        element.style.color = 'rgb(55, 55, 55)';
+                    } else if (color === 'rgb(120, 122, 128)') {
+                        element.style.color = 'rgb(180, 180, 180)';
+                    }
+
+                    let backgroundColor = computedStyle.backgroundColor;
+
+                    if (backgroundColor === 'rgb(255, 255, 255)') { 
+                        element.style.backgroundColor = 'rgb(33, 33, 33)';
+                    } else if (backgroundColor === 'rgb(0, 0, 0)') { 
+                        element.style.backgroundColor = 'rgb(254, 254, 254)';
+                    } else if (backgroundColor === 'rgb(8, 102, 255)' || backgroundColor === 'rgb(57, 105, 251)') {
+                        element.style.color = 'rgb(255, 255, 255)';
+                    } else if (backgroundColor === 'rgb(240, 242, 245)') {
+                        element.style.backgroundColor = 'rgb(23, 23, 23)';
+                    } else if (backgroundColor === 'rgb(202, 204, 208)') {
+                        element.style.backgroundColor = 'rgb(55, 55, 55)';
+                    } else if (backgroundColor === 'rgb(120, 122, 128)') {
+                        element.style.backgroundColor = 'rgb(180, 180, 180)';
+                    }
+
+                    let borderColor = computedStyle.borderColor;
+                    let borderBottomColor = computedStyle.borderBottomColor;
+                    let borderTopColor = computedStyle.borderTopColor;
+
+                    if (borderColor === 'rgb(255, 255, 255)') { 
+                        element.style.borderColor = 'rgb(33, 33, 33)';
+                    } else if (borderColor === 'rgb(0, 0, 0)') { 
+                        element.style.borderColor = 'rgb(254, 254, 254)';
+                    } else if (borderColor === 'rgb(240, 242, 245)') {
+                        element.style.borderColor = 'rgb(23, 23, 23)';
+                    } else if (borderColor === 'rgb(202, 204, 208)') {
+                        element.style.borderColor = 'rgb(55, 55, 55)';
+                    } else if (borderBottomColor === 'rgb(202, 204, 208)') {
+                        element.style.borderBottomColor = 'rgb(55, 55, 55)';
+                    } else if (borderColor === 'rgb(120, 122, 128)') {
+                        element.style.borderColor = 'rgb(180, 180, 180)';
+                    } else if (borderBottomColor === 'rgb(240, 242, 245)') { 
+                        element.style.borderBottomColor = 'rgb(23, 23, 23)';
+                    } else if (borderTopColor === 'rgb(240, 242, 245)') { 
+                        element.style.borderTopColor = 'rgb(23, 23, 23)';
+                    }
+
+                    let boxShadow = computedStyle.boxShadow;
+
+                    if (boxShadow === 'rgb(255, 255, 255)') { 
+                        element.style.boxShadow = 'rgb(33, 33, 33)';
+                    } else if (boxShadow === 'rgb(0, 0, 0)') { 
+                        element.style.boxShadow = 'rgb(254, 254, 254)';
+                    } else if (boxShadow === 'rgb(240, 242, 245)') {
+                        element.style.boxShadow = 'rgb(23, 23, 23)';
+                    } else if (boxShadow === 'rgb(202, 204, 208)') {
+                        element.style.boxShadow = 'rgb(55, 55, 55)';
+                    } else if (boxShadow === 'rgb(120, 122, 128)') {
+                        element.style.boxShadow = 'rgb(180, 180, 180)';
+                    }
+
+                    if (mouseover2 == "yes"){
+                        element.style.transition = transition
+                    }
+                    
+                    
+
+                }
+            function swapColorsInDocumentDark() {
+                
+
+                const allElements = document.querySelectorAll('*');
+
+
+                allElements.forEach(element => {
+                    swapElementColors(element, "yes");
+                    
+                });
+
+
+                
+
+
+                var style = document.createElement('style');
+
+                style.innerHTML = `
+                ::-webkit-scrollbar {
+                    width: 17px;
+                }
+
+                ::-webkit-scrollbar-track {
+                    background: rgb(23, 23, 23);
+                    border-radius: 10px;
+                }
+
+                ::-webkit-scrollbar-thumb {
+                    background-color: rgb(55, 55, 55);
+                    border-radius: 10px;
+                    border: 5px solid rgb(23, 23, 23);
+                }
+                `;
+
+                document.head.appendChild(style);
+
+                
+            }
+
+
+            document.addEventListener('mousedown', function(event) {
+                if (document.getElementById("darkmode").textContent == "yes") {
+                    swapColorsInDocumentDark();
+                }
+
+            });
+
+            document.addEventListener('mouseover', function(event) {
+                if (document.getElementById("darkmode").textContent == "yes") {
+                    swapColorsInDocumentDark();
+                }
+                document.removeEventListener('mouseover', arguments.callee); // Remove the current listener
+                document.addEventListener('mouseover', function(event) {
+                    if (document.getElementById("darkmode").textContent == "yes") {
+                        var element = event.target;
+                        var parentElement = element.parentElement;
+                        swapElementColors(element, "no");
+                        swapElementColors(parentElement, "no");
+                        swapElementColors(element, "no");
+                        swapElementColors(parentElement, "no");
+                        swapElementColors(element, "no");
+                        swapElementColors(parentElement, "no");
+                    }
+                });
+            });
+
+            document.addEventListener('mouseout', function(event) {
+                if (document.getElementById("darkmode").textContent == "yes") {
+                    swapColorsInDocumentDark();
+                }
+                document.removeEventListener('mouseout', arguments.callee); // Remove the current listener
+                document.addEventListener('mouseout', function(event) {
+                    if (document.getElementById("darkmode").textContent == "yes") {
+                        var element = event.target;
+                        var parentElement = element.parentElement;
+                        swapElementColors(element, "no");
+                        swapElementColors(parentElement, "no");
+                        swapElementColors(element, "no");
+                        swapElementColors(parentElement, "no");
+                        swapElementColors(element, "no");
+                        swapElementColors(parentElement, "no");
+                    }
+                });
+            });
+
+            document.addEventListener('DOMContentLoaded', (event) => {
+                if (document.getElementById("darkmode").textContent == "yes") {
+                    swapColorsInDocumentDark();
+                }
+
+                var observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                        mutation.addedNodes.forEach(function(node) {
+                            if (node.nodeType === Node.ELEMENT_NODE) {
+                                console.log("blue swade shosw");
+                                if (document.getElementById("darkmode").textContent == "yes") {
+                                    swapColorsInDocumentDark();
+                                }
+                            }
+                        });
+                    });
+                });
+
+                observer.observe(document.body, { childList: true, subtree: true });
+            });
+
+            
+        })();
+
+
+    </script>
 </head>
 <body loading="lazy">
+    
+
+    <div id="darkmode" style="display: none;">{{ dark_mode }}</div>
+
     <div style="width: 100vw; justify-content: center; display: flex; background-color: blue; height: 0px;">
         <div id="splash" style="float: right; z-index: 999999999999; background-color: white;
         text-align: center; cursor: default; transition: transform 0.3s; width: 375px; border-radius: 15px; position: fixed; top: 0;
@@ -879,13 +1099,19 @@
                     function reload(){
                         var image = document.getElementById('image');
                         var average = getAverageRGB(image);
-    
+
                         var rgb = 'rgb(' + average.r + ',' + average.g + ',' + average.b + ', 0.6)';
-    
+
                         var colour = document.getElementById('thecodewasstolen');
-                        colour.style.background = 'linear-gradient(to top, white, white, white, white, white, white, ' + rgb + ')';
+
+                        if (document.getElementById("darkmode").textContent == "yes"){
+                            colour.style.background = 'linear-gradient(to top, rgb(33, 33, 33), rgb(33, 33, 33), rgb(33, 33, 33), rgb(33, 33, 33), rgb(33, 33, 33), rgb(33, 33, 33), ' + rgb + ')';
+                    
+                        } else { 
+                            colour.style.background = 'linear-gradient(to top, white, white, white, white, white, white, ' + rgb + ')';
+                        }
                     }
-    
+
                     reload();
     
                     var string = "github.com/isaacgisby/lan-messager\n"

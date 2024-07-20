@@ -28,7 +28,20 @@ s
             z-index: 999999999;
         }
 
+        ::-webkit-scrollbar {
+            width: 17px;
+        }
 
+        ::-webkit-scrollbar-track {
+            background: #f0f2f5;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #caccd0;
+            border-radius: 10px;
+            border: 5px solid #f0f2f5;
+        }
 
         #search-form {
             display: flex;
@@ -739,16 +752,30 @@ position: absolute;  z-index: 99 !important;">
         const allElements = document.querySelectorAll('*');
         allElements.forEach(element => {
             swapElementColors(element);
-            if (element.tagName == "I"){
-                console.log("ICON HERE!!!")
-                const computedStyle = getComputedStyle(element);
-                let backgroundColor = computedStyle.backgroundColor;
-
-                if (backgroundColor === 'rgb(8, 102, 255)' || backgroundColor === 'rgb(57, 105, 251)') {
-                    element.style.color = 'rgb(255, 255, 255)';
-                }
-            }
+            
         });
+
+
+        var style = document.createElement('style');
+
+        style.innerHTML = `
+        ::-webkit-scrollbar {
+            width: 17px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgb(23, 23, 23);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: rgb(55, 55, 55);
+            border-radius: 10px;
+            border: 5px solid rgb(23, 23, 23);
+        }
+        `;
+
+        document.head.appendChild(style);
     }
 
 
@@ -1178,9 +1205,16 @@ position: absolute;  z-index: 99 !important;">
                                     advertreal.style.marginBottom = "15px";
                                     advertreal.style.background = "white";
                                     advertreal.style.height = "175px";
-                                    advertreal.style.width = "calc(100% - 4px)";
+                                    if (!navigator.userAgent.includes("Firefox")) {
+                                        advertreal.style.width = "calc(100% - 21px)";
+                                        advertreal.style.transform = "translate(17px)"
+                                    } else {
+                                        advertreal.style.width = "calc(100% - 4px)";
+                                    }
                                     advertreal.style.maxWidth = "746px"
                                     advertreal.style.border = "2px outset"
+                                    advertreal.style.backgroundPosition = "center center"
+                                    advertreal.style.backgroundSize = "cover"
 
 
                                     
@@ -1458,8 +1492,8 @@ position: absolute;  z-index: 99 !important;">
                                             }
 
                                             confirmdeletebutton.onclick = function () {
-                                                deletepost(post_id, index);
                                                 document.body.removeChild(deletedropdown);
+                                                deletepost(post_id, index);
                                                 window.removeEventListener('scroll');
                                             };
 
