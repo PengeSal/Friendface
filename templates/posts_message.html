@@ -3484,14 +3484,14 @@
                                     dislike.onclick = function() {
                                         function disblue() {
                                             dislikepost(post_id, "undislike");
-                                            document.querySelector(".dislike2" + index).textContent = parseInt(document.querySelector(".dislike2" + index.textContent)) - 1;
+                                            document.querySelector(".dislike2" + index).textContent = parseInt(document.querySelector(".dislike2" + index).textContent) - 1;
                                             document.querySelector(".dislike" + index).style.backgroundColor = "#0866ff";
                                             document.querySelector(".dislike" + index).style.color = "white";
 
                                             document.querySelector(".dislike" + index).onclick = function() {
                                                 clicklike();
                                                 dislikepost(post_id, "dislike");
-                                                document.querySelector(".dislike2" + index).textContent = parseInt(document.querySelector(".dislike2" + index.textContent)) + 1;
+                                                document.querySelector(".dislike2" + index).textContent = parseInt(document.querySelector(".dislike2" + index).textContent) + 1;
                                                 document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
                                                 document.querySelector(".dislike" + index).style.color = "#787a80";
                                                 document.querySelector(".dislike" + index).onclick = function() {

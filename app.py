@@ -34,7 +34,7 @@ def get_post_id():
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    return str(get_max_post_id(cursor) + 1)
+    return str(get_max_post_id(cursor))
 
 
 def resize(image, targetwidth, formatstate):
@@ -98,7 +98,6 @@ def get_more_posts():
     conn2 = sqlite3.connect(db_path)
     cursor2 = conn2.cursor()
 
-    # Fetch 10 random posts that the current user hasn't disliked
     cursor2.execute("""
         SELECT * FROM posts 
         WHERE dislikers NOT LIKE ? 
@@ -221,13 +220,15 @@ def register2():
 
 
 def get_max_post_id(cursor):
-    cursor.execute("SELECT MAX(post_id) FROM posts WHERE deleted = 0")
+    cursor.execute("SELECT MAX(post_id) FROM posts")
     result = cursor.fetchone()[0]
     return result if result is not None else 0
 
 @app.route('/createpost/<isreply>/<replying_to>', methods=['POST'])
 def create_post(isreply, replying_to):
     data = request.form.get('imageData')
+
+    print("POST HAS BEEN CREATED")
 
     try:
         photo = data.split("_SEPARATINGIMAGEDATAFROMMESSAGEDATA_")[1]
@@ -292,7 +293,6 @@ def create_post(isreply, replying_to):
             likers TEXT,
             dislikers TEXT,
             replying_to TEXT,
-            deleted INTEGER DEFAULT 0,
             views INTEGER)""")
 
     try:
@@ -321,6 +321,17 @@ def like(likestate, post_id):
     db_path = os.path.join(os.getcwd(), 'friendface.db')
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
+
+    print(f"/like/{likestate}/{post_id}")
+    print(f"/like/{likestate}/{post_id}")
+    print(f"/like/{likestate}/{post_id}")
+    print(f"/like/{likestate}/{post_id}")
+    print(f"/like/{likestate}/{post_id}")
+    print(f"/like/{likestate}/{post_id}")
+    print(f"/like/{likestate}/{post_id}")
+    print(f"/like/{likestate}/{post_id}")
+    print(f"/like/{likestate}/{post_id}")
+    print(f"/like/{likestate}/{post_id}")
 
     cursor.execute("SELECT likers, likes FROM posts WHERE post_id=?", (post_id,))
     row = cursor.fetchone()
@@ -918,11 +929,14 @@ def search_users():
     displaymatches = f"displaymatches('{names}', '{pfps}', '{user_ids}', '{descriptions}')"
 
 
+    cursor.execute("""SELECT dark_mode FROM users WHERE user_id =?""", (user_id,))
+    dark_mode = cursor.fetchone()
+    dark_mode = dark_mode[0]
 
 
 
-
-    return render_template('search_users.html', profile_picture=user_data[0], profile_text=name, logo=logo, user_id = user_id, splashmessage=splash, searchterm = searchterm, displaymatches = displaymatches)
+    return render_template('search_users.html', profile_picture=user_data[0], profile_text=name, logo=logo, dark_mode=dark_mode,
+                            user_id = user_id, splashmessage=splash, searchterm = searchterm, displaymatches = displaymatches)
 
 
 
@@ -1150,9 +1164,7 @@ def posts(post_id):
                             photos = f"{photos}image_SEPARATOR_"
                         else:
                             photos = f"{photos}_SEPARATOR_"
-                            print("THIS IS NOT NOT NOT A PHOTO")
-                            print("THIS IS NOT NOT NOT A PHOTO")
-                            print("THIS IS NOT NOT NOT A PHOTO")
+
 
 
                     if column_name[0] == "time":
@@ -1242,7 +1254,11 @@ def post_not_found(error):
         splash = f"Established {random.randint(1997, 2009)}"
 
 
-    return render_template('post_not_found.html', profile_picture=user_data[0], profile_text=name,
+    cursor.execute("""SELECT dark_mode FROM users WHERE user_id =?""", (user_id,))
+    dark_mode = cursor.fetchone()
+    dark_mode = dark_mode[0]
+
+    return render_template('post_not_found.html', profile_picture=user_data[0], profile_text=name, dark_mode=dark_mode,
                            logo=logo, user_id = user_id, splashmessage=splash, dead_body=dead_body, error=error)
 
 
@@ -1512,19 +1528,6 @@ def home(mode):
         conn.commit()
         conn.close()
 
-        try:
-            db_path = os.path.join(os.getcwd(), 'friendface.db')
-            conn = sqlite3.connect(db_path)
-            cursor = conn.cursor()
-
-            cursor.execute("""UPDATE posts SET profile_picture=? WHERE user_id=?""", (image_data, current_user.id))
-
-
-
-            conn.commit()
-            conn.close()
-        except:
-            pass
 
         return "biggle"
 
@@ -1762,9 +1765,7 @@ def home(mode):
                                 photos = f"{photos}image_SEPARATOR_"
                             else:
                                 photos = f"{photos}_SEPARATOR_"
-                                print("THIS IS NOT NOT NOT A PHOTO")
-                                print("THIS IS NOT NOT NOT A PHOTO")
-                                print("THIS IS NOT NOT NOT A PHOTO")
+
 
 
                         if column_name[0] == "time":
@@ -1839,9 +1840,7 @@ def home(mode):
                                 photos = f"{photos}image_SEPARATOR_"
                             else:
                                 photos = f"{photos}_SEPARATOR_"
-                                print("THIS IS NOT NOT NOT A PHOTO")
-                                print("THIS IS NOT NOT NOT A PHOTO")
-                                print("THIS IS NOT NOT NOT A PHOTO")
+
 
 
                         if column_name[0] == "time":
@@ -2186,6 +2185,12 @@ def user_profile(user_id, typeofthing):
 
             friendlist = f"displayfriends('{user_ids}', '{forenames}', '{surnames}', '{pfps}', '{descriptions}')"
 
+
+            cursor.execute("""SELECT dark_mode FROM users WHERE user_id =?""", (user_id,))
+            dark_mode = cursor.fetchone()
+            dark_mode = dark_mode[0]
+
+
             conn.close()
 
             photoalbum = ""
@@ -2249,9 +2254,7 @@ def user_profile(user_id, typeofthing):
                                     photos = f"{photos}image_SEPARATOR_"
                                 else:
                                     photos = f"{photos}_SEPARATOR_"
-                                    print("THIS IS NOT NOT NOT A PHOTO")
-                                    print("THIS IS NOT NOT NOT A PHOTO")
-                                    print("THIS IS NOT NOT NOT A PHOTO")
+
 
 
                             if column_name[0] == "time":
@@ -2370,7 +2373,7 @@ def user_profile(user_id, typeofthing):
 
             def user_profile2(filename):
                 return render_template(filename, theirname=name, theirid = user_id, forename = current_user.forename, surname = current_user.surname,
-                                        theirpicture=profile_picture, profile_picture=userdata,
+                                        theirpicture=profile_picture, profile_picture=userdata, dark_mode=dark_mode,
                                         profile_text=name2, logo=logo, theirbanner=banner,
                                         user_id = user_id1, splashmessage = splash, followers = followers, friends = friends, onclick = onclick,
                                         pendingfriendlist = pendingfriendlist, friendlist = friendlist, about = about, displayposts = posts, followbuttonmessage = followbuttonmessage,
@@ -2379,7 +2382,7 @@ def user_profile(user_id, typeofthing):
 
             def your_user_profile(filename):
                 return render_template(filename, theirname=name, theirid = user_id, forename = current_user.forename, surname = current_user.surname, about = about,
-                                        theirpicture=profile_picture, profile_picture=userdata,
+                                        theirpicture=profile_picture, profile_picture=userdata, dark_mode=dark_mode,
                                         profile_text=name2, logo=logo, theirbanner=banner,
                                         user_id = user_id1, splashmessage = splash, followers = followers, friends = friends,
                                         pendingfriendlist = pendingfriendlist, friendlist = friendlist, displayposts = posts, newposts = newposts, photoalbum = photoalbum)

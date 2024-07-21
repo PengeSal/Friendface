@@ -29,7 +29,20 @@
             z-index: 999999999;
         }
 
+        ::-webkit-scrollbar {
+            width: 17px;
+        }
 
+        ::-webkit-scrollbar-track {
+            background: #f0f2f5;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #caccd0;
+            border-radius: 10px;
+            border: 5px solid #f0f2f5;
+        }
 
         #search-form {
             display: flex;
@@ -820,6 +833,27 @@
                                                 swapElementColors(element);
                                             });
 
+                                            var style = document.createElement('style');
+
+                                            style.innerHTML = `
+                                            ::-webkit-scrollbar {
+                                                width: 17px;
+                                            }
+
+                                            ::-webkit-scrollbar-track {
+                                                background: rgb(23, 23, 23);
+                                                border-radius: 10px;
+                                            }
+
+                                            ::-webkit-scrollbar-thumb {
+                                                background-color: rgb(55, 55, 55);
+                                                border-radius: 10px;
+                                                border: 5px solid rgb(23, 23, 23);
+                                            }
+                                            `;
+
+                                            document.head.appendChild(style);
+
                                             document.getElementById("toggle1").style.backgroundColor = "rgb(57, 105, 251)";
                                             document.querySelector(".whitetext").style.color = "white"; document.querySelector(".whitetext2").style.color = "white";
                                         }
@@ -922,6 +956,27 @@
                                                 allElements.forEach(element => {
                                                     swapElementColors(element);
                                                 });
+
+                                                var style = document.createElement('style');
+
+                                                style.innerHTML = `
+                                                ::-webkit-scrollbar {
+                                                    width: 17px;
+                                                }
+
+                                                ::-webkit-scrollbar-track {
+                                                    background: #f0f2f5;
+                                                    border-radius: 10px;
+                                                }
+
+                                                ::-webkit-scrollbar-thumb {
+                                                    background-color: #caccd0;
+                                                    border-radius: 10px;
+                                                    border: 5px solid #f0f2f5;
+                                                }
+                                                `;
+
+                                                document.head.appendChild(style);
 
                                                 document.querySelector(".whitetext").style.color = "white"; document.querySelector(".whitetext2").style.color = "white";
                                                 document.getElementById("toggle1").style.backgroundColor = "#caccd0";
@@ -1036,6 +1091,27 @@
                                         allElements.forEach(element => {
                                             swapElementColors(element);
                                         });
+                                        
+                                        var style = document.createElement('style');
+
+                                        style.innerHTML = `
+                                        ::-webkit-scrollbar {
+                                            width: 17px;
+                                        }
+
+                                        ::-webkit-scrollbar-track {
+                                            background: #f0f2f5;
+                                            border-radius: 10px;
+                                        }
+
+                                        ::-webkit-scrollbar-thumb {
+                                            background-color: #caccd0;
+                                            border-radius: 10px;
+                                            border: 5px solid #f0f2f5;
+                                        }
+                                        `;
+
+                                        document.head.appendChild(style);
 
                                         document.querySelector(".whitetext").style.color = "white"; document.querySelector(".whitetext2").style.color = "white";
                                         document.getElementById("toggle1").style.backgroundColor = "#caccd0";
@@ -1121,6 +1197,27 @@
                                         allElements.forEach(element => {
                                             swapElementColors(element);
                                         });
+
+                                        var style = document.createElement('style');
+
+                                        style.innerHTML = `
+                                        ::-webkit-scrollbar {
+                                            width: 17px;
+                                        }
+
+                                        ::-webkit-scrollbar-track {
+                                            background: rgb(23, 23, 23);
+                                            border-radius: 10px;
+                                        }
+
+                                        ::-webkit-scrollbar-thumb {
+                                            background-color: rgb(55, 55, 55);
+                                            border-radius: 10px;
+                                            border: 5px solid rgb(23, 23, 23);
+                                        }
+                                        `;
+
+                                        document.head.appendChild(style);
 
                                         document.getElementById("toggle1").style.backgroundColor = "rgb(57, 105, 251)";
                                         document.querySelector(".whitetext").style.color = "white"; document.querySelector(".whitetext2").style.color = "white";

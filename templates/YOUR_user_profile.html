@@ -266,7 +266,10 @@
 
             document.addEventListener('mousedown', function(event) {
                 if (document.getElementById("darkmode").textContent == "yes") {
-                    swapColorsInDocumentDark();
+                    var element = event.target;
+                    var parentElement = element.parentElement;
+                    swapElementColors(element, "no");
+                    swapElementColors(parentElement, "no");
                 }
 
             });
@@ -280,10 +283,6 @@
                     if (document.getElementById("darkmode").textContent == "yes") {
                         var element = event.target;
                         var parentElement = element.parentElement;
-                        swapElementColors(element, "no");
-                        swapElementColors(parentElement, "no");
-                        swapElementColors(element, "no");
-                        swapElementColors(parentElement, "no");
                         swapElementColors(element, "no");
                         swapElementColors(parentElement, "no");
                     }
@@ -301,10 +300,6 @@
                         var parentElement = element.parentElement;
                         swapElementColors(element, "no");
                         swapElementColors(parentElement, "no");
-                        swapElementColors(element, "no");
-                        swapElementColors(parentElement, "no");
-                        swapElementColors(element, "no");
-                        swapElementColors(parentElement, "no");
                     }
                 });
             });
@@ -320,7 +315,11 @@
                             if (node.nodeType === Node.ELEMENT_NODE) {
                                 console.log("blue swade shosw");
                                 if (document.getElementById("darkmode").textContent == "yes") {
-                                    swapColorsInDocumentDark();
+
+                                    swapElementColors(node, "no");
+                                    node.querySelectorAll('*').forEach(function(child) {
+                                        swapElementColors(child, "no");
+                                    });
                                 }
                             }
                         });
@@ -1590,18 +1589,22 @@
                                             if (xhr.readyState == 4 && xhr.status == 200) {
                                                 console.log(xhr.responseText);
 
+                                                document.getElementById("newpost").click()
 
+                                                document.getElementById("aboutsectionedit2").value = "";
+                                                document.getElementById("imageinput").value = "";
+                                                if (document.getElementById("darkmode").textContent == "no"){
+                                                    document.getElementById("choosephotobutton").style.background = "white";
+                                                } else {
+                                                    document.getElementById("choosephotobutton").style.background = "rgb(33, 33, 33)";
+                                                }
+                                                document.getElementById('p').style.mixBlendMode = "normal";
                                             }
                                         };
 
                                         xhr.send(data);
 
-                                        document.getElementById("newpost").click()
-
-                                        document.getElementById("aboutsectionedit2").value = "";
-                                        document.getElementById("imageinput").value = "";
-                                        document.getElementById("choosephotobutton").style.background = "white";
-                                        document.getElementById('p').style.mixBlendMode = "normal";
+                                        
 
 
 
@@ -2873,7 +2876,13 @@
 
                                 
                             }
-                            document.getElementById("clickme").click()
+                            
+                            setTimeout(() => {
+                                document.getElementById("clickme").click()
+                            }, 100);
+
+                            
+                            
 
                             console.log(document.getElementById("clickme").textContent)
 
@@ -2942,6 +2951,12 @@
 
                     like.className = "like" + increment;
                     dislike.className = "dislike" + increment;
+
+                    var dislikeicon = document.createElement("i");
+                    dislikeicon.className = "dislikeicon" + increment
+
+                    var likeicon = document.createElement("i");
+                    likeicon.className = "likeicon" + increment
 
                     var like2 = document.createElement("div");
                     var dislike2 = document.createElement("div");
@@ -3164,21 +3179,37 @@
 
 
                                 if ("".split("_LIKERS_").includes(String(your_id))) {
-                                    like.onclick = function() {
+                                    like.onclick = function() { 
                                         function blue() {
                                             likepost(post_id, "unlike");
                                             document.querySelector(".like2" + index).textContent = parseInt(document.querySelector(".like2" + index).textContent) - 1;
                                             document.querySelector(".like" + index).style.backgroundColor = "#0866ff";
+                                            document.querySelector(".likeicon" + index).style.backgroundColor = "#0866ff";
+
                                             document.querySelector(".like" + index).style.color = "white";
+                                            document.querySelector(".likeicon" + index).style.color = "white";
 
                                             document.querySelector(".like" + index).onclick = function() {
                                                 clickdislike();
                                                 likepost(post_id, "like");
                                                 document.querySelector(".like2" + index).textContent = parseInt(document.querySelector(".like2" + index).textContent) + 1;
-                                                document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
-                                                document.querySelector(".like" + index).style.color = "#787a80";
-                                                document.querySelector(".like" + index).onclick = function() {
+                                                if (document.getElementById("darkmode").textContent == "no") {
+                                                    document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
+                                                    document.querySelector(".likeicon" + index).style.backgroundColor = "#f0f2f5";
+                                                } else {
+                                                    document.querySelector(".like" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                    document.querySelector(".likeicon" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                }
 
+                                                if (document.getElementById("darkmode").textContent == "no") {
+                                                    document.querySelector(".like" + index).style.color = "#787a80";
+                                                    document.querySelector(".likeicon" + index).style.color = "#787a80";
+                                                } else {
+                                                    document.querySelector(".like" + index).style.color = "rgb(180, 180, 180)";
+                                                    document.querySelector(".likeicon" + index).style.color = "rgb(180, 180, 180)";
+                                                }
+                                                document.querySelector(".like" + index).onclick = function() {
+                                                    
                                                     blue();
                                                 }
                                             }
@@ -3186,19 +3217,35 @@
                                         blue();
                                     };
                                 } else {
-                                    like.onclick = function() {
+                                    like.onclick = function() { 
                                         function grey() {
                                             clickdislike();
                                             likepost(post_id, "like");
                                             document.querySelector(".like2" + index).textContent = parseInt(document.querySelector(".like2" + index).textContent) + 1;
-                                            document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
-                                            document.querySelector(".like" + index).style.color = "#787a80";
+                                            if (document.getElementById("darkmode").textContent == "no") {
+                                                document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
+                                                document.querySelector(".likeicon" + index).style.backgroundColor = "#f0f2f5";
+                                            } else {
+                                                document.querySelector(".like" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                document.querySelector(".likeicon" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                            }
 
+                                            if (document.getElementById("darkmode").textContent == "no") {
+                                                document.querySelector(".like" + index).style.color = "#787a80";
+                                                document.querySelector(".likeicon" + index).style.color = "#787a80";
+                                            } else {
+                                                document.querySelector(".like" + index).style.color = "rgb(180, 180, 180)";
+                                                document.querySelector(".likeicon" + index).style.color = "rgb(180, 180, 180)";
+                                            }
+                                            
                                             document.querySelector(".like" + index).onclick = function() {
                                                 likepost(post_id, "unlike");
                                                 document.querySelector(".like2" + index).textContent = parseInt(document.querySelector(".like2" + index).textContent) - 1;
                                                 document.querySelector(".like" + index).style.backgroundColor = "#0866ff";
+                                                document.querySelector(".likeicon" + index).style.backgroundColor = "#0866ff";
+
                                                 document.querySelector(".like" + index).style.color = "white";
+                                                document.querySelector(".likeicon" + index).style.color = "white";
                                                 document.querySelector(".like" + index).onclick = function() {
                                                     grey();
                                                 }
@@ -3209,21 +3256,38 @@
                                 }
 
                                 if ("".split("_DISLIKERS_").includes(String(your_id))) {
-                                    dislike.onclick = function() {
+                                    dislike.onclick = function() { 
                                         function disblue() {
                                             dislikepost(post_id, "undislike");
-                                            document.querySelector(".dislike2" + index).textContent = parseInt(document.querySelector(".dislike2" + index.textContent)) - 1;
+                                            document.querySelector(".dislike2" + index).textContent = parseInt(document.querySelector(".dislike2" + index).textContent) - 1;
+
                                             document.querySelector(".dislike" + index).style.backgroundColor = "#0866ff";
+                                            document.querySelector(".dislikeicon" + index).style.backgroundColor = "#0866ff";
+
                                             document.querySelector(".dislike" + index).style.color = "white";
+                                            document.querySelector(".dislikeicon" + index).style.color = "white";
 
                                             document.querySelector(".dislike" + index).onclick = function() {
                                                 clicklike();
                                                 dislikepost(post_id, "dislike");
-                                                document.querySelector(".dislike2" + index).textContent = parseInt(document.querySelector(".dislike2" + index.textContent)) + 1;
-                                                document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
-                                                document.querySelector(".dislike" + index).style.color = "#787a80";
-                                                document.querySelector(".dislike" + index).onclick = function() {
+                                                document.querySelector(".dislike2" + index).textContent = parseInt(document.querySelector(".dislike2" + index).textContent) + 1;
+                                                if (document.getElementById("darkmode").textContent == "no") {
+                                                    document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
+                                                    document.querySelector(".dislikeicon" + index).style.backgroundColor = "#f0f2f5";
+                                                } else {
+                                                    document.querySelector(".dislike" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                    document.querySelector(".dislikeicon" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                }
 
+                                                if (document.getElementById("darkmode").textContent == "no") {
+                                                    document.querySelector(".dislike" + index).style.color = "#787a80";
+                                                    document.querySelector(".dislikeicon" + index).style.color = "#787a80";
+                                                } else {
+                                                    document.querySelector(".dislike" + index).style.color = "rgb(180, 180, 180)";
+                                                    document.querySelector(".dislikeicon" + index).style.color = "rgb(180, 180, 180)";
+                                                }
+                                                document.querySelector(".dislike" + index).onclick = function() {
+                                                    
                                                     disblue();
                                                 }
                                             }
@@ -3231,22 +3295,43 @@
                                         disblue();
                                     };
                                 } else {
-                                    dislike.onclick = function() {
+                                    dislike.onclick = function() { 
                                         function disgrey() {
                                             clicklike();
                                             dislikepost(post_id, "dislike");
                                             document.querySelector(".dislike2" + index).textContent = parseInt(document.querySelector(".dislike2" + index).textContent) + 1;
-                                            document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
-                                            document.querySelector(".dislike" + index).style.color = "#787a80";
+                                            if (document.getElementById("darkmode").textContent == "no") {
+                                                document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
+                                                document.querySelector(".dislikeicon" + index).style.backgroundColor = "#f0f2f5";
+                                            } else {
+                                                document.querySelector(".dislike" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                document.querySelector(".dislikeicon" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                            }
+
+                                            if (document.getElementById("darkmode").textContent == "no") {
+                                                document.querySelector(".dislike" + index).style.color = "#787a80";
+                                                document.querySelector(".dislikeicon" + index).style.color = "#787a80";
+                                            } else {
+                                                document.querySelector(".dislike" + index).style.color = "rgb(180, 180, 180)";
+                                                document.querySelector(".dislikeicon" + index).style.color = "rgb(180, 180, 180)";
+                                            }
+                                            
 
                                             document.querySelector(".dislike" + index).onclick = function() {
-
+                                                
                                                 dislikepost(post_id, "undislike");
                                                 document.querySelector(".dislike2" + index).textContent = parseInt(document.querySelector(".dislike2" + index).textContent) - 1;
+                                                
+                                            
                                                 document.querySelector(".dislike" + index).style.backgroundColor = "#0866ff";
-                                                document.querySelector(".dislike" + index).style.color = "white";
-                                                document.querySelector(".dislike" + index).onclick = function() {
+                                                document.querySelector(".dislikeicon" + index).style.backgroundColor = "#0866ff";
 
+                                                document.querySelector(".dislike" + index).style.color = "white";
+                                                document.querySelector(".dislikeicon" + index).style.color = "white";
+
+
+                                                document.querySelector(".dislike" + index).onclick = function() {
+                                                    
                                                     disgrey();
                                                 }
                                             }
@@ -3256,13 +3341,13 @@
                                 }
                                 function clicklike() {
                                     console.log("LIKE IS CLICKING");
-
-
+                                        
+                                        
                                     var likeElement = document.querySelector(".like" + index);
                                     var computedStyle = window.getComputedStyle(likeElement);
                                     var backgroundColor = computedStyle.backgroundColor;
 
-                                    if (backgroundColor === "rgb(240, 242, 245)") {
+                                    if (backgroundColor === "rgb(240, 242, 245)" || backgroundColor === "rgb(23, 23, 23)") {
                                         console.log("LIKE IS CLICKING");
                                         likeElement.click();
                                     }
@@ -3274,7 +3359,7 @@
                                     var computedStyle = window.getComputedStyle(dislikeElement);
                                     var backgroundColor = computedStyle.backgroundColor;
 
-                                    if (backgroundColor === "rgb(240, 242, 245)") {
+                                    if (backgroundColor === "rgb(240, 242, 245)" || backgroundColor === "rgb(23, 23, 23)") {
                                         console.log("DISLIKE IS CLICKING");
                                         dislikeElement.click();
                                     }
@@ -3421,11 +3506,10 @@
 
 
 
-                    var icon = document.createElement('i');
-                    icon.classList.add('fas', 'fa-thumbs-up');
-                    icon.style.paddingRight = "5px";
+                    likeicon.classList.add('fas', 'fa-thumbs-up');
+                    likeicon.style.paddingRight = "5px";
                     var text = document.createTextNode('Like');
-                    like.appendChild(icon);
+                    like.appendChild(likeicon);
                     like.appendChild(text);
                     like.style.float = "left";
                     like.style.marginLeft = "8px";
@@ -3437,14 +3521,17 @@
                     like.style.backgroundColor = "#0866ff";
                     like.style.width = "80px";
                     like.style.cursor = "pointer";
+                    like.style.color = "white";
+                    like.style.backgroundColor = "#0866ff";
+                    likeicon.style.backgroundColor = "#0866ff";
+                    likeicon.style.color = "white";
 
 
 
-                    var icon = document.createElement('i');
-                    icon.classList.add('fas', 'fa-thumbs-down', "fa-flip-horizontal");
-                    icon.style.paddingLeft = "5px";
+                    dislikeicon.classList.add('fas', 'fa-thumbs-down', "fa-flip-horizontal");
+                    dislikeicon.style.paddingLeft = "5px";
                     var text = document.createTextNode('Dislike');
-                    dislike.appendChild(icon);
+                    dislike.appendChild(dislikeicon);
                     dislike.appendChild(text);
                     dislike.style.float = "left";
                     dislike.style.marginLeft = "5px";
@@ -3456,6 +3543,10 @@
                     dislike.style.backgroundColor = "#0866ff";
                     dislike.style.width = "80px";
                     dislike.style.cursor = "pointer";
+                    dislike.style.color = "white";
+                    dislike.style.backgroundColor = "#0866ff";
+                    dislikeicon.style.backgroundColor = "#0866ff";
+                    dislikeicon.style.color = "white";
 
 
 
