@@ -30,7 +30,20 @@
             z-index: 999999999;
         }
 
+        ::-webkit-scrollbar {
+            width: 17px;
+        }
 
+        ::-webkit-scrollbar-track {
+            background: #f0f2f5;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #caccd0;
+            border-radius: 10px;
+            border: 5px solid #f0f2f5;
+        }
 
 
         #search-form {
@@ -242,7 +255,10 @@
 
         document.addEventListener('mousedown', function(event) {
             if (document.getElementById("darkmode").textContent == "yes") {
-                swapColorsInDocumentDark();
+                var element = event.target;
+                var parentElement = element.parentElement;
+                swapElementColors(element, "no");
+                swapElementColors(parentElement, "no");
             }
 
         });
@@ -256,10 +272,6 @@
                 if (document.getElementById("darkmode").textContent == "yes") {
                     var element = event.target;
                     var parentElement = element.parentElement;
-                    swapElementColors(element, "no");
-                    swapElementColors(parentElement, "no");
-                    swapElementColors(element, "no");
-                    swapElementColors(parentElement, "no");
                     swapElementColors(element, "no");
                     swapElementColors(parentElement, "no");
                 }
@@ -277,10 +289,6 @@
                     var parentElement = element.parentElement;
                     swapElementColors(element, "no");
                     swapElementColors(parentElement, "no");
-                    swapElementColors(element, "no");
-                    swapElementColors(parentElement, "no");
-                    swapElementColors(element, "no");
-                    swapElementColors(parentElement, "no");
                 }
             });
         });
@@ -296,7 +304,11 @@
                         if (node.nodeType === Node.ELEMENT_NODE) {
                             console.log("blue swade shosw");
                             if (document.getElementById("darkmode").textContent == "yes") {
-                                swapColorsInDocumentDark();
+
+                                swapElementColors(node, "no");
+                                node.querySelectorAll('*').forEach(function(child) {
+                                    swapElementColors(child, "no");
+                                });
                             }
                         }
                     });
@@ -704,7 +716,7 @@
                                             type="submit" 
                                             onclick="{{ onclick }}">
 
-                                            <i class="fa-solid fa-cross" style="padding-right: 8px;"></i>{{ followbuttonmessage }}
+                                            <i class="fa-solid fa-cross" style="padding-right: 8px; background: #0866ff;"></i>{{ followbuttonmessage }}
 
                                         <script>
                                             async function follow(state) {
@@ -764,6 +776,7 @@
                                                         var icon = document.createElement('i');
                                                         icon.classList.add('fas', 'fa-cross');
                                                         icon.style.paddingRight = "8px";
+                                                        icon.style.background = "#0866ff";
                                                         var text = document.createTextNode('Become a Disciple');
                                                         document.querySelector(".friendbutton").appendChild(icon);
                                                         document.querySelector(".friendbutton").appendChild(text);
@@ -782,6 +795,7 @@
                                                     var icon = document.createElement('i');
                                                     icon.classList.add('fas', 'fa-cross');
                                                     icon.style.paddingRight = "8px";
+                                                    icon.style.background = "#0866ff";
                                                     var text = document.createTextNode('Become a Disciple');
                                                     document.querySelector(".friendbutton").appendChild(icon);
                                                     document.querySelector(".friendbutton").appendChild(text);
@@ -855,7 +869,7 @@
                                             }
                                         </style>
 
-                                        <i class="fa-solid fa-user-plus" style="padding-right: 5px;"></i>{{ friendbuttonmessage }}
+                                        <i id="kitchen_nightmares" class="fa-solid fa-user-plus" style="padding-right: 5px; background-color: #0866ff;"></i>{{ friendbuttonmessage }}
 
                                         <script>
                                             function friend(state) {
@@ -895,6 +909,7 @@
                                             document.getElementById("friendbutton").style.color = "#787a80";
                                             document.getElementById("friendbutton").style.backgroundColor = "#f0f2f5";
                                             document.getElementById("friendbutton").style.cursor = "default";
+                                            document.getElementById("kitchen_nightmares").style.backgroundColor = "#f0f2f5";
                                         }
                                     </script>
                                 </div>
@@ -1377,7 +1392,12 @@
                                     var rgb = 'rgb(' + average.r + ',' + average.g + ',' + average.b + ', 0.6)';
 
                                     var colour = document.getElementById('thecodewasstolen');
-                                    colour.style.background = 'linear-gradient(to top, white, white, white, white, white, white, ' + rgb + ')';
+                                    if (document.getElementById("darkmode").textContent == "yes"){
+                                        colour.style.background = 'linear-gradient(to top, rgb(33, 33, 33), rgb(33, 33, 33), rgb(33, 33, 33), rgb(33, 33, 33), rgb(33, 33, 33), rgb(33, 33, 33), ' + rgb + ')';
+                                
+                                    } else { 
+                                        colour.style.background = 'linear-gradient(to top, white, white, white, white, white, white, ' + rgb + ')';
+                                    }
                                 }
                                 
 
@@ -1627,6 +1647,12 @@
                                     like.className = "like" + increment;
                                     dislike.className = "dislike" + increment;
 
+                                    var dislikeicon = document.createElement("i");
+                                    dislikeicon.className = "dislikeicon" + increment
+
+                                    var likeicon = document.createElement("i");
+                                    likeicon.className = "likeicon" + increment
+
                                     var like2 = document.createElement("div");
                                     var dislike2 = document.createElement("div");
 
@@ -1665,21 +1691,37 @@
                                         };
 
                                         if (likers.split("_LIKERS_").includes(String(your_id))) {
-                                            like.onclick = function() {
+                                            like.onclick = function() { 
                                                 function blue() {
                                                     likepost(post_id, "unlike");
-                                                    document.querySelector(".like2" + index).textContent = parseInt(likes) - 1;
+                                                    document.querySelector(".like02" + index).textContent = parseInt(likes) - 1;
                                                     document.querySelector(".like" + index).style.backgroundColor = "#0866ff";
+                                                    document.querySelector(".likeicon" + index).style.backgroundColor = "#0866ff";
+
                                                     document.querySelector(".like" + index).style.color = "white";
+                                                    document.querySelector(".likeicon" + index).style.color = "white";
 
                                                     document.querySelector(".like" + index).onclick = function() {
                                                         clickdislike();
                                                         likepost(post_id, "like");
-                                                        document.querySelector(".like2" + index).textContent = parseInt(likes) + 1 - 1;
-                                                        document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
-                                                        document.querySelector(".like" + index).style.color = "#787a80";
-                                                        document.querySelector(".like" + index).onclick = function() {
+                                                        document.querySelector(".like02" + index).textContent = parseInt(likes) + 1 - 1;
+                                                        if (document.getElementById("darkmode").textContent == "no") {
+                                                            document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
+                                                            document.querySelector(".likeicon" + index).style.backgroundColor = "#f0f2f5";
+                                                        } else {
+                                                            document.querySelector(".like" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                            document.querySelector(".likeicon" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                        }
 
+                                                        if (document.getElementById("darkmode").textContent == "no") {
+                                                            document.querySelector(".like" + index).style.color = "#787a80";
+                                                            document.querySelector(".likeicon" + index).style.color = "#787a80";
+                                                        } else {
+                                                            document.querySelector(".like" + index).style.color = "rgb(180, 180, 180)";
+                                                            document.querySelector(".likeicon" + index).style.color = "rgb(180, 180, 180)";
+                                                        }
+                                                        document.querySelector(".like" + index).onclick = function() {
+                                                            
                                                             blue();
                                                         }
                                                     }
@@ -1687,19 +1729,35 @@
                                                 blue();
                                             };
                                         } else {
-                                            like.onclick = function() {
+                                            like.onclick = function() { 
                                                 function grey() {
                                                     clickdislike();
                                                     likepost(post_id, "like");
-                                                    document.querySelector(".like2" + index).textContent = parseInt(likes) + 1;
-                                                    document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
-                                                    document.querySelector(".like" + index).style.color = "#787a80";
+                                                    document.querySelector(".like02" + index).textContent = parseInt(likes) + 1;
+                                                    if (document.getElementById("darkmode").textContent == "no") {
+                                                        document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
+                                                        document.querySelector(".likeicon" + index).style.backgroundColor = "#f0f2f5";
+                                                    } else {
+                                                        document.querySelector(".like" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                        document.querySelector(".likeicon" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                    }
 
+                                                    if (document.getElementById("darkmode").textContent == "no") {
+                                                        document.querySelector(".like" + index).style.color = "#787a80";
+                                                        document.querySelector(".likeicon" + index).style.color = "#787a80";
+                                                    } else {
+                                                        document.querySelector(".like" + index).style.color = "rgb(180, 180, 180)";
+                                                        document.querySelector(".likeicon" + index).style.color = "rgb(180, 180, 180)";
+                                                    }
+                                                    
                                                     document.querySelector(".like" + index).onclick = function() {
                                                         likepost(post_id, "unlike");
-                                                        document.querySelector(".like2" + index).textContent = parseInt(likes) + 1 - 1;
+                                                        document.querySelector(".like02" + index).textContent = parseInt(likes) + 1 - 1;
                                                         document.querySelector(".like" + index).style.backgroundColor = "#0866ff";
+                                                        document.querySelector(".likeicon" + index).style.backgroundColor = "#0866ff";
+
                                                         document.querySelector(".like" + index).style.color = "white";
+                                                        document.querySelector(".likeicon" + index).style.color = "white";
                                                         document.querySelector(".like" + index).onclick = function() {
                                                             grey();
                                                         }
@@ -1710,21 +1768,38 @@
                                         }
 
                                         if (dislikers.split("_DISLIKERS_").includes(String(your_id))) {
-                                            dislike.onclick = function() {
+                                            dislike.onclick = function() { 
                                                 function disblue() {
                                                     dislikepost(post_id, "undislike");
-                                                    document.querySelector(".dislike2" + index).textContent = parseInt(dislikes) - 1;
+                                                    document.querySelector(".dislike02" + index).textContent = parseInt(dislikes) - 1;
+
                                                     document.querySelector(".dislike" + index).style.backgroundColor = "#0866ff";
+                                                    document.querySelector(".dislikeicon" + index).style.backgroundColor = "#0866ff";
+
                                                     document.querySelector(".dislike" + index).style.color = "white";
+                                                    document.querySelector(".dislikeicon" + index).style.color = "white";
 
                                                     document.querySelector(".dislike" + index).onclick = function() {
                                                         clicklike();
                                                         dislikepost(post_id, "dislike");
-                                                        document.querySelector(".dislike2" + index).textContent = parseInt(dislikes) + 1 - 1;
-                                                        document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
-                                                        document.querySelector(".dislike" + index).style.color = "#787a80";
-                                                        document.querySelector(".dislike" + index).onclick = function() {
+                                                        document.querySelector(".dislike02" + index).textContent = parseInt(dislikes) + 1 - 1;
+                                                        if (document.getElementById("darkmode").textContent == "no") {
+                                                            document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
+                                                            document.querySelector(".dislikeicon" + index).style.backgroundColor = "#f0f2f5";
+                                                        } else {
+                                                            document.querySelector(".dislike" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                            document.querySelector(".dislikeicon" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                        }
 
+                                                        if (document.getElementById("darkmode").textContent == "no") {
+                                                            document.querySelector(".dislike" + index).style.color = "#787a80";
+                                                            document.querySelector(".dislikeicon" + index).style.color = "#787a80";
+                                                        } else {
+                                                            document.querySelector(".dislike" + index).style.color = "rgb(180, 180, 180)";
+                                                            document.querySelector(".dislikeicon" + index).style.color = "rgb(180, 180, 180)";
+                                                        }
+                                                        document.querySelector(".dislike" + index).onclick = function() {
+                                                            
                                                             disblue();
                                                         }
                                                     }
@@ -1732,22 +1807,43 @@
                                                 disblue();
                                             };
                                         } else {
-                                            dislike.onclick = function() {
+                                            dislike.onclick = function() { 
                                                 function disgrey() {
                                                     clicklike();
                                                     dislikepost(post_id, "dislike");
-                                                    document.querySelector(".dislike2" + index).textContent = parseInt(dislikes) + 1;
-                                                    document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
-                                                    document.querySelector(".dislike" + index).style.color = "#787a80";
+                                                    document.querySelector(".dislike02" + index).textContent = parseInt(dislikes) + 1;
+                                                    if (document.getElementById("darkmode").textContent == "no") {
+                                                        document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
+                                                        document.querySelector(".dislikeicon" + index).style.backgroundColor = "#f0f2f5";
+                                                    } else {
+                                                        document.querySelector(".dislike" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                        document.querySelector(".dislikeicon" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                    }
+
+                                                    if (document.getElementById("darkmode").textContent == "no") {
+                                                        document.querySelector(".dislike" + index).style.color = "#787a80";
+                                                        document.querySelector(".dislikeicon" + index).style.color = "#787a80";
+                                                    } else {
+                                                        document.querySelector(".dislike" + index).style.color = "rgb(180, 180, 180)";
+                                                        document.querySelector(".dislikeicon" + index).style.color = "rgb(180, 180, 180)";
+                                                    }
+                                                    
 
                                                     document.querySelector(".dislike" + index).onclick = function() {
-
+                                                        
                                                         dislikepost(post_id, "undislike");
-                                                        document.querySelector(".dislike2" + index).textContent = parseInt(dislikes) + 1 - 1;
+                                                        document.querySelector(".dislike02" + index).textContent = parseInt(dislikes) + 1 - 1;
+                                                        
+                                                    
                                                         document.querySelector(".dislike" + index).style.backgroundColor = "#0866ff";
-                                                        document.querySelector(".dislike" + index).style.color = "white";
-                                                        document.querySelector(".dislike" + index).onclick = function() {
+                                                        document.querySelector(".dislikeicon" + index).style.backgroundColor = "#0866ff";
 
+                                                        document.querySelector(".dislike" + index).style.color = "white";
+                                                        document.querySelector(".dislikeicon" + index).style.color = "white";
+
+
+                                                        document.querySelector(".dislike" + index).onclick = function() {
+                                                            
                                                             disgrey();
                                                         }
                                                     }
@@ -1757,13 +1853,13 @@
                                         }
                                         function clicklike() {
                                             console.log("LIKE IS CLICKING");
-
-
+                                                
+                                                
                                             var likeElement = document.querySelector(".like" + index);
                                             var computedStyle = window.getComputedStyle(likeElement);
                                             var backgroundColor = computedStyle.backgroundColor;
 
-                                            if (backgroundColor === "rgb(240, 242, 245)") {
+                                            if (backgroundColor === "rgb(240, 242, 245)" || backgroundColor === "rgb(23, 23, 23)") {
                                                 console.log("LIKE IS CLICKING");
                                                 likeElement.click();
                                             }
@@ -1775,7 +1871,7 @@
                                             var computedStyle = window.getComputedStyle(dislikeElement);
                                             var backgroundColor = computedStyle.backgroundColor;
 
-                                            if (backgroundColor === "rgb(240, 242, 245)") {
+                                            if (backgroundColor === "rgb(240, 242, 245)" || backgroundColor === "rgb(23, 23, 23)") {
                                                 console.log("DISLIKE IS CLICKING");
                                                 dislikeElement.click();
                                             }
@@ -1963,11 +2059,10 @@
 
 
 
-                                    var icon = document.createElement('i');
-                                    icon.classList.add('fas', 'fa-thumbs-up');
-                                    icon.style.paddingRight = "5px";
+                                    likeicon.classList.add('fas', 'fa-thumbs-up');
+                                    likeicon.style.paddingRight = "5px";
                                     var text = document.createTextNode('Like');
-                                    like.appendChild(icon);
+                                    like.appendChild(likeicon);
                                     like.appendChild(text);
                                     like.style.float = "left";
                                     like.style.marginLeft = "8px";
@@ -1982,18 +2077,21 @@
                                     if (likers[i].split("_LIKERS_").includes(String(your_id))) {
                                         like.style.color = "#787a80";
                                         like.style.backgroundColor = "#f0f2f5";
+                                        likeicon.style.backgroundColor = "#f0f2f5";
+                                        likeicon.style.color = "#787a80";
                                     } else {
                                         like.style.color = "white";
                                         like.style.backgroundColor = "#0866ff";
+                                        likeicon.style.backgroundColor = "#0866ff";
+                                        likeicon.style.color = "white";
 
                                     }
 
 
-                                    var icon = document.createElement('i');
-                                    icon.classList.add('fas', 'fa-thumbs-down', "fa-flip-horizontal");
-                                    icon.style.paddingLeft = "5px";
+                                    dislikeicon.classList.add('fas', 'fa-thumbs-down', "fa-flip-horizontal");
+                                    dislikeicon.style.paddingLeft = "5px";
                                     var text = document.createTextNode('Dislike');
-                                    dislike.appendChild(icon);
+                                    dislike.appendChild(dislikeicon);
                                     dislike.appendChild(text);
                                     dislike.style.float = "left";
                                     dislike.style.marginLeft = "5px";
@@ -2008,10 +2106,13 @@
                                     if (dislikers[i].split("_DISLIKERS_").includes(String(your_id))) {
                                         dislike.style.color = "#787a80";
                                         dislike.style.backgroundColor = "#f0f2f5";
+                                        dislikeicon.style.backgroundColor = "#f0f2f5";
+                                        dislikeicon.style.color = "#787a80";
                                     } else {
                                         dislike.style.color = "white";
                                         dislike.style.backgroundColor = "#0866ff";
-
+                                        dislikeicon.style.backgroundColor = "#0866ff";
+                                        dislikeicon.style.color = "white";
                                     }
 
 
@@ -2023,7 +2124,7 @@
                                     like2.style.padding = "3px";
                                     like2.style.fontSize = "14px";
                                     like2.style.width = "73px";
-                                    like2.className = "like2" + increment
+                                    like2.className = "like02" + increment
 
 
                                     dislike2.textContent = dislikes[i]
@@ -2034,7 +2135,7 @@
                                     dislike2.style.padding = "3px";
                                     dislike2.style.fontSize = "14px";
                                     dislike2.style.width = "73px";
-                                    dislike2.className = "dislike2" + increment
+                                    dislike2.className = "dislike02" + increment
 
                                     var icon = document.createElement('i');
                                     icon.classList.add('fas', 'fa-reply', "fa-flip-horizontal");
@@ -2366,7 +2467,9 @@
 
                                 
                             }
-                            document.getElementById("clickme").click()
+                            setTimeout(() => {
+                                document.getElementById("clickme").click()
+                            }, 100);
 
                             console.log(document.getElementById("clickme").textContent)
             

@@ -30,7 +30,20 @@
             z-index: 999999999;
         }
 
+        ::-webkit-scrollbar {
+            width: 17px;
+        }
 
+        ::-webkit-scrollbar-track {
+            background: #f0f2f5;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #caccd0;
+            border-radius: 10px;
+            border: 5px solid #f0f2f5;
+        }
 
         #search-form {
             display: flex;
@@ -110,8 +123,243 @@
         }
 
     </style>
+    <script>
+
+    
+
+        //addEventListener("DOMContentLoaded", (event) => {
+        (function (){
+            function swapElementColors(element, mouseover) {
+                    const computedStyle = getComputedStyle(element);
+                    let color = computedStyle.color;
+    
+                    mouseover2 = mouseover
+    
+                    if (mouseover2 == "yes"){
+                        var transition = computedStyle.transition;
+                        element.style.transition = "none"
+                    }
+                    
+    
+                    if (color === 'rgb(255, 255, 255)') { 
+                        element.style.color = 'rgb(33, 33, 33)';
+                    } else if (color === 'rgb(0, 0, 0)') {
+                        element.style.color = 'rgb(254, 254, 254)';
+                    } else if (color === 'rgb(240, 242, 245)') {
+                        element.style.color = 'rgb(23, 23, 23)';
+                    } else if (color === 'rgb(202, 204, 208)') {
+                        element.style.color = 'rgb(55, 55, 55)';
+                    } else if (color === 'rgb(120, 122, 128)') {
+                        element.style.color = 'rgb(180, 180, 180)';
+                    }
+    
+                    let backgroundColor = computedStyle.backgroundColor;
+    
+                    if (backgroundColor === 'rgb(255, 255, 255)') { 
+                        element.style.backgroundColor = 'rgb(33, 33, 33)';
+                    } else if (backgroundColor === 'rgb(0, 0, 0)') { 
+                        element.style.backgroundColor = 'rgb(254, 254, 254)';
+                    } else if (backgroundColor === 'rgb(8, 102, 255)' || backgroundColor === 'rgb(57, 105, 251)') {
+                        element.style.color = 'rgb(255, 255, 255)';
+                    } else if (backgroundColor === 'rgb(240, 242, 245)') {
+                        element.style.backgroundColor = 'rgb(23, 23, 23)';
+                    } else if (backgroundColor === 'rgb(202, 204, 208)') {
+                        element.style.backgroundColor = 'rgb(55, 55, 55)';
+                    } else if (backgroundColor === 'rgb(120, 122, 128)') {
+                        element.style.backgroundColor = 'rgb(180, 180, 180)';
+                    }
+    
+                    let borderColor = computedStyle.borderColor;
+                    let borderBottomColor = computedStyle.borderBottomColor;
+                    let borderTopColor = computedStyle.borderTopColor;
+                    let borderLeftColor = computedStyle.borderLeftColor;
+                    let borderRightColor = computedStyle.borderRightColor;
+    
+                    if (borderColor === 'rgb(255, 255, 255)') { 
+                        element.style.borderColor = 'rgb(33, 33, 33)';
+                    } else if (borderColor === 'rgb(0, 0, 0)') { 
+                        element.style.borderColor = 'rgb(254, 254, 254)';
+                    } else if (borderColor === 'rgb(240, 242, 245)') {
+                        element.style.borderColor = 'rgb(23, 23, 23)';
+                    } else if (borderColor === 'rgb(202, 204, 208)') {
+                        element.style.borderColor = 'rgb(55, 55, 55)';
+                    } else if (borderBottomColor === 'rgb(202, 204, 208)') {
+                        element.style.borderBottomColor = 'rgb(55, 55, 55)';
+                    } else if (borderColor === 'rgb(120, 122, 128)') {
+                        element.style.borderColor = 'rgb(180, 180, 180)';
+                    } else if (borderBottomColor === 'rgb(240, 242, 245)') { 
+                        element.style.borderBottomColor = 'rgb(23, 23, 23)';
+                    } else if (borderTopColor === 'rgb(240, 242, 245)') { 
+                        element.style.borderTopColor = 'rgb(23, 23, 23)';
+                    } else if (borderBottomColor === 'rgb(255, 255, 255)') { 
+                        element.style.borderBottomColor = 'rgb(33, 33, 33)';
+                    } if (borderTopColor === 'rgb(240, 242, 245)') { 
+                        element.style.borderTopColor = 'rgb(23, 23, 23)';
+                    } if (borderRightColor === 'rgb(240, 242, 245)') { 
+                        element.style.borderRightColor = 'rgb(23, 23, 23)';
+                    } if (borderLeftColor === 'rgb(240, 242, 245)') { 
+                        element.style.borderLeftColor = 'rgb(23, 23, 23)';
+                    }
+    
+                    let boxShadow = computedStyle.boxShadow;
+    
+                    if (boxShadow === 'rgb(255, 255, 255)') { 
+                        element.style.boxShadow = 'rgb(33, 33, 33)';
+                    } else if (boxShadow === 'rgb(0, 0, 0)') { 
+                        element.style.boxShadow = 'rgb(254, 254, 254)';
+                    } else if (boxShadow === 'rgb(240, 242, 245)') {
+                        element.style.boxShadow = 'rgb(23, 23, 23)';
+                    } else if (boxShadow === 'rgb(202, 204, 208)') {
+                        element.style.boxShadow = 'rgb(55, 55, 55)';
+                    } else if (boxShadow === 'rgb(120, 122, 128)') {
+                        element.style.boxShadow = 'rgb(180, 180, 180)';
+                    }
+    
+                    if (mouseover2 == "yes"){
+                        element.style.transition = transition
+                    }
+                    
+                    
+    
+                }
+            function swapColorsInDocumentDark() {
+                
+    
+                const allElements = document.querySelectorAll('*');
+    
+    
+                allElements.forEach(element => {
+                    swapElementColors(element, "yes");
+                    
+                });
+    
+    
+                
+    
+    
+                var style = document.createElement('style');
+    
+                style.innerHTML = `
+                ::-webkit-scrollbar {
+                    width: 17px;
+                }
+    
+                ::-webkit-scrollbar-track {
+                    background: rgb(23, 23, 23);
+                    border-radius: 10px;
+                }
+    
+                ::-webkit-scrollbar-thumb {
+                    background-color: rgb(55, 55, 55);
+                    border-radius: 10px;
+                    border: 5px solid rgb(23, 23, 23);
+                }
+                `;
+    
+                document.head.appendChild(style);
+    
+                
+            }
+    
+    
+            document.addEventListener('mousedown', function(event) {
+                if (document.getElementById("darkmode").textContent == "yes") {
+                    var element = event.target;
+                    var parentElement = element.parentElement;
+                    swapElementColors(element, "no");
+                    swapElementColors(parentElement, "no");
+                }
+    
+            });
+    
+            document.addEventListener('mouseover', function(event) {
+                if (document.getElementById("darkmode").textContent == "yes") {
+                    swapColorsInDocumentDark();
+                }
+                document.removeEventListener('mouseover', arguments.callee);
+                document.addEventListener('mouseover', function(event) {
+                    if (document.getElementById("darkmode").textContent == "yes") {
+                        var element = event.target;
+                        var parentElement = element.parentElement;
+                        swapElementColors(element, "no");
+                        swapElementColors(parentElement, "no");
+                        swapElementColors(parentElement.parentElement, "no");
+                        swapElementColors(parentElement.parentElement.parentElement, "no");
+                        swapElementColors(parentElement.parentElement.parentElement.parentElement, "no");
+                        element.querySelectorAll('*').forEach(function(child) {
+                            swapElementColors(child, "no");
+                        });
+                        
+                    }
+                });
+            });
+    
+            document.addEventListener('mouseout', function(event) {
+                if (document.getElementById("darkmode").textContent == "yes") {
+                    swapColorsInDocumentDark();
+                }
+                document.removeEventListener('mouseout', arguments.callee); 
+                document.addEventListener('mouseout', function(event) {
+                    if (document.getElementById("darkmode").textContent == "yes") {
+                        var element = event.target;
+                        var parentElement = element.parentElement;
+                        swapElementColors(element, "no");
+                        swapElementColors(parentElement, "no");
+                        swapElementColors(parentElement.parentElement, "no");
+                        swapElementColors(parentElement.parentElement.parentElement, "no");
+                        swapElementColors(parentElement.parentElement.parentElement.parentElement, "no");
+                        element.querySelectorAll('*').forEach(function(child) {
+                            swapElementColors(child, "no");
+    
+                        });
+                    }
+                });
+            });
+    
+            document.addEventListener('DOMContentLoaded', (event) => {
+                if (document.getElementById("darkmode").textContent == "yes") {
+                    swapColorsInDocumentDark();
+                }
+                if (document.getElementById("darkmode").textContent == "no") {
+                    document.getElementById("link").style.background = "#ebf1ff";
+                } else {
+                    document.getElementById("link").style.background = "#1b2745";
+                }
+    
+    
+                var observer = new MutationObserver(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                        mutation.addedNodes.forEach(function(node) {
+                            if (node.nodeType === Node.ELEMENT_NODE) {
+                                console.log("blue swade shosw");
+                                if (document.getElementById("darkmode").textContent == "yes") {
+    
+                                    swapElementColors(node, "no");
+                                    node.querySelectorAll('*').forEach(function(child) {
+                                        swapElementColors(child, "no");
+                                    });
+                                }
+                            }
+                        });
+                    });
+                });
+    
+                observer.observe(document.body, { childList: true, subtree: true });
+            });
+    
+    
+            
+    
+            
+        })();
+    
+    
+    </script>
+
 </head>
 <body>
+    <div id="darkmode" style="display: none;">{{ dark_mode }}</div>
+
     <div style="width: 100vw; justify-content: center; display: flex; background-color: blue; height: 0px;">
         <div id="splash" style="float: right; z-index: 999999999999; background-color: white; 
         text-align: center; cursor: default; transition: transform 0.3s; width: 375px; border-radius: 15px; position: fixed; top: 0;
@@ -475,11 +723,19 @@
                         
 
                         document.getElementById("link").onmouseover = function() {
-                            document.getElementById("link").style.backgroundColor = "#c9daff";
+                            if (document.getElementById("darkmode").textContent == "no") {
+                                this.style.background = "#c9daff";
+                            } else {
+                                this.style.background = "#273c6b";
+                            }
                         };
 
                         document.getElementById("link").onmouseout = function() {
-                            document.getElementById("link").style.backgroundColor = "#ebf1ff";
+                            if (document.getElementById("darkmode").textContent == "no") {
+                                this.style.background = "#ebf1ff";
+                            } else {
+                                this.style.background = "#1b2745";
+                            }
                         };
 
 
@@ -532,10 +788,10 @@
                         <p style="float: right; height: 0; transform: translate(-25px, -25px); font-size: 18px; color: #787a80;">{{ views }} Views</p>
 
                         <button class="like" style="float: left; margin: 0px 0px 0px 20px; border: 0px solid white; color: white; padding: 3px;
-                        font-size: 14px; border-radius: 5px; background-color: #0866ff; width: 80px; cursor: pointer;"><i class="fa-solid fa-thumbs-up" style="padding-right: 5px;"></i>Like</button>
+                        font-size: 14px; border-radius: 5px; background-color: #0866ff; width: 80px; cursor: pointer;"><i id="likeicon" class="fa-solid fa-thumbs-up" style="padding-right: 5px;"></i>Like</button>
 
                         <button class="dislike" style="float: left; margin: 0px calc(100% - 350px) 0px 7px; border: 0px solid white; color: white; padding: 3px;
-                        font-size: 14px; border-radius: 5px; background-color: #0866ff; width: 80px; cursor: pointer;"><i class="fa-solid fa-thumbs-down fa-flip-horizontal" style="padding-left: 5px;"></i>Dislike</button>
+                        font-size: 14px; border-radius: 5px; background-color: #0866ff; width: 80px; cursor: pointer;"><i id="dislikeicon" class="fa-solid fa-thumbs-down fa-flip-horizontal" style="padding-left: 5px;"></i>Dislike</button>
 
 
                         <p class="like02" style="width: 79px; margin: 0px 0px 2px 23px; float: left; line-height: 18px; font-size: 14px; color: #787a80;">{{ likes }}</p>
@@ -824,33 +1080,87 @@
                         }
 
 
+                        function clicklike() {
+                            console.log("LIKE IS CLICKING");
+
+                            var likeElement = document.querySelector(".like");
+                            var computedStyle = window.getComputedStyle(likeElement);
+                            var backgroundColor = computedStyle.backgroundColor;
+
+                            if (backgroundColor === "rgb(240, 242, 245)" || backgroundColor === "rgb(23, 23, 23)") {
+                                console.log("LIKE IS CLICKING");
+                                likeElement.click();
+                            }
+                        }
+
+                        function clickdislike() {
+                            console.log("DISLIKE IS CLICKING");
+
+                            var dislikeElement = document.querySelector(".dislike");
+                            var computedStyle = window.getComputedStyle(dislikeElement);
+                            var backgroundColor = computedStyle.backgroundColor;
+
+                            if (backgroundColor === "rgb(240, 242, 245)" || backgroundColor === "rgb(23, 23, 23)") {
+                                console.log("DISLIKE IS CLICKING");
+                                dislikeElement.click();
+                            }
+                        }
+
+
                         function likebutton(likers, your_id, post_id, likes){
                             console.log("SOMETHING IS HAPPENING?!?!?!")
                             var like = document.querySelector(".like");
+                            var likeicon = document.getElementById("likeicon");
                             if (likers.split("_LIKERS_").includes(String(your_id))) {
-                                like.style.color = "#787a80";
-                                like.style.backgroundColor = "#f0f2f5";
+                                if (document.getElementById("darkmode").textContent == "yes"){
+                                    like.style.color = "rgb(180, 180, 180)";
+                                    like.style.backgroundColor = "rgb(23, 23, 23)";
+                                    likeicon.style.backgroundColor = "rgb(23, 23, 23)";
+                                    likeicon.style.color = "rgb(180, 180, 180)";
+                                } else {
+                                    like.style.color = "#787a80";
+                                    like.style.backgroundColor = "#f0f2f5";
+                                    likeicon.style.backgroundColor = "#f0f2f5";
+                                    likeicon.style.color = "#787a80";
+                                }
                             } else {
                                 like.style.color = "white";
                                 like.style.backgroundColor = "#0866ff";
-                            
+                                likeicon.style.backgroundColor = "#0866ff";
+                                likeicon.style.color = "white";
+
                             }
 
                             if (likers.split("_LIKERS_").includes(String(your_id))) {
                                 like.onclick = function() { 
                                     function blue() {
-                                        console.log("SOMETHING IS HAPPENING?!?!?!")
                                         likepost(post_id, "unlike");
                                         document.querySelector(".like02").textContent = parseInt(likes) - 1;
-                                        document.querySelector(".like").style.backgroundColor = "#0866ff";
-                                        document.querySelector(".like").style.color = "white";
+                                        document.querySelector(".like" ).style.backgroundColor = "#0866ff";
+                                        document.getElementById("likeicon").style.backgroundColor = "#0866ff";
+
+                                        document.querySelector(".like" ).style.color = "white";
+                                        document.getElementById("likeicon").style.color = "white";
 
                                         document.querySelector(".like").onclick = function() {
                                             clickdislike();
                                             likepost(post_id, "like");
                                             document.querySelector(".like02").textContent = parseInt(likes) + 1 - 1;
-                                            document.querySelector(".like").style.backgroundColor = "#f0f2f5";
-                                            document.querySelector(".like").style.color = "#787a80";
+                                            if (document.getElementById("darkmode").textContent == "no") {
+                                                document.querySelector(".like").style.backgroundColor = "#f0f2f5";
+                                                document.getElementById("likeicon").style.backgroundColor = "#f0f2f5";
+                                            } else {
+                                                document.querySelector(".like").style.backgroundColor = "rgb(23, 23, 23)";
+                                                document.getElementById("likeicon").style.backgroundColor = "rgb(23, 23, 23)";
+                                            }
+
+                                            if (document.getElementById("darkmode").textContent == "no") {
+                                                document.querySelector(".like").style.color = "#787a80";
+                                                document.getElementById("likeicon").style.color = "#787a80";
+                                            } else {
+                                                document.querySelector(".like").style.color = "rgb(180, 180, 180)";
+                                                document.getElementById("likeicon").style.color = "rgb(180, 180, 180)";
+                                            }
                                             document.querySelector(".like").onclick = function() {
                                                 
                                                 blue();
@@ -861,19 +1171,34 @@
                                 };
                             } else {
                                 like.onclick = function() { 
-                                    console.log("SOMETHING IS HAPPENING?!?!?!")
                                     function grey() {
                                         clickdislike();
                                         likepost(post_id, "like");
                                         document.querySelector(".like02").textContent = parseInt(likes) + 1;
-                                        document.querySelector(".like").style.backgroundColor = "#f0f2f5";
-                                        document.querySelector(".like").style.color = "#787a80";
+                                        if (document.getElementById("darkmode").textContent == "no") {
+                                            document.querySelector(".like").style.backgroundColor = "#f0f2f5";
+                                            document.getElementById("likeicon").style.backgroundColor = "#f0f2f5";
+                                        } else {
+                                            document.querySelector(".like").style.backgroundColor = "rgb(23, 23, 23)";
+                                            document.getElementById("likeicon").style.backgroundColor = "rgb(23, 23, 23)";
+                                        }
+
+                                        if (document.getElementById("darkmode").textContent == "no") {
+                                            document.querySelector(".like" ).style.color = "#787a80";
+                                            document.getElementById("likeicon").style.color = "#787a80";
+                                        } else {
+                                            document.querySelector(".like" ).style.color = "rgb(180, 180, 180)";
+                                            document.getElementById("likeicon").style.color = "rgb(180, 180, 180)";
+                                        }
                                         
                                         document.querySelector(".like").onclick = function() {
                                             likepost(post_id, "unlike");
-                                            document.querySelector(".like02").textContent = parseInt(likes) + 1 - 1;
+                                            document.querySelector(".like02" ).textContent = parseInt(likes) + 1 - 1;
                                             document.querySelector(".like").style.backgroundColor = "#0866ff";
+                                            document.getElementById("likeicon").style.backgroundColor = "#0866ff";
+
                                             document.querySelector(".like").style.color = "white";
+                                            document.getElementById("likeicon").style.color = "white";
                                             document.querySelector(".like").onclick = function() {
                                                 grey();
                                             }
@@ -887,30 +1212,60 @@
                         function dislikebutton(dislikers, your_id, post_id, dislikes){
                             console.log("SOMETHING IS HAPPENING?!?!?!")
                             var dislike = document.querySelector(".dislike");
+                            var dislikeicon = document.getElementById("dislikeicon");
                             if (dislikers.split("_DISLIKERS_").includes(String(your_id))) {
-                                dislike.style.color = "#787a80";
-                                dislike.style.backgroundColor = "#f0f2f5";
+                                if (document.getElementById("darkmode").textContent == "yes"){
+                                    dislike.style.color = "rgb(180, 180, 180)";
+                                    dislike.style.backgroundColor = "rgb(23, 23, 23)";
+                                    dislikeicon.style.backgroundColor = "rgb(23, 23, 23)";
+                                    dislikeicon.style.color = "rgb(180, 180, 180)";
+                                } else {
+                                    dislike.style.color = "#787a80";
+                                    dislike.style.backgroundColor = "#f0f2f5";
+                                    dislikeicon.style.backgroundColor = "#f0f2f5";
+                                    dislikeicon.style.color = "#787a80";
+                                }
                             } else {
                                 dislike.style.color = "white";
                                 dislike.style.backgroundColor = "#0866ff";
-                            
+                                dislikeicon.style.backgroundColor = "#0866ff";
+                                dislikeicon.style.color = "white";
+
                             }
+
+
 
                             if (dislikers.split("_DISLIKERS_").includes(String(your_id))) {
                                 dislike.onclick = function() { 
                                     function disblue() {
-                                        console.log("SOMETHING IS HAPPENING?!?!?!")
                                         dislikepost(post_id, "undislike");
                                         document.querySelector(".dislike02").textContent = parseInt(dislikes) - 1;
-                                        document.querySelector(".dislike").style.backgroundColor = "#0866ff";
-                                        document.querySelector(".dislike").style.color = "white";
 
-                                        document.querySelector(".dislike").onclick = function() {
+                                        document.querySelector(".dislike").style.backgroundColor = "#0866ff";
+                                        document.getElementById("dislikeicon").style.backgroundColor = "#0866ff";
+
+                                        document.querySelector(".dislike").style.color = "white";
+                                        document.getElementById("dislikeicon").style.color = "white";
+
+                                        document.querySelector(".dislike" ).onclick = function() {
                                             clicklike();
                                             dislikepost(post_id, "dislike");
                                             document.querySelector(".dislike02").textContent = parseInt(dislikes) + 1 - 1;
-                                            document.querySelector(".dislike").style.backgroundColor = "#f0f2f5";
-                                            document.querySelector(".dislike").style.color = "#787a80";
+                                            if (document.getElementById("darkmode").textContent == "no") {
+                                                document.querySelector(".dislike").style.backgroundColor = "#f0f2f5";
+                                                document.getElementById("dislikeicon").style.backgroundColor = "#f0f2f5";
+                                            } else {
+                                                document.querySelector(".dislike").style.backgroundColor = "rgb(23, 23, 23)";
+                                                document.getElementById("dislikeicon").style.backgroundColor = "rgb(23, 23, 23)";
+                                            }
+
+                                            if (document.getElementById("darkmode").textContent == "no") {
+                                                document.querySelector(".dislike").style.color = "#787a80";
+                                                document.getElementById("dislikeicon").style.color = "#787a80";
+                                            } else {
+                                                document.querySelector(".dislike").style.color = "rgb(180, 180, 180)";
+                                                document.getElementById("dislikeicon").style.color = "rgb(180, 180, 180)";
+                                            }
                                             document.querySelector(".dislike").onclick = function() {
                                                 
                                                 disblue();
@@ -922,19 +1277,41 @@
                             } else {
                                 dislike.onclick = function() { 
                                     function disgrey() {
-                                        console.log("SOMETHING IS HAPPENING?!?!?!")
                                         clicklike();
                                         dislikepost(post_id, "dislike");
                                         document.querySelector(".dislike02").textContent = parseInt(dislikes) + 1;
-                                        document.querySelector(".dislike").style.backgroundColor = "#f0f2f5";
-                                        document.querySelector(".dislike").style.color = "#787a80";
+                                        if (document.getElementById("darkmode").textContent == "no") {
+                                            document.querySelector(".dislike").style.backgroundColor = "#f0f2f5";
+                                            document.getElementById("dislikeicon").style.backgroundColor = "#f0f2f5";
+                                        } else {
+                                            document.querySelector(".dislike").style.backgroundColor = "rgb(23, 23, 23)";
+                                            document.getElementById("dislikeicon").style.backgroundColor = "rgb(23, 23, 23)";
+                                        }
+
+                                        if (document.getElementById("darkmode").textContent == "no") {
+                                            document.querySelector(".dislike").style.color = "#787a80";
+                                            document.getElementById("dislikeicon").style.color = "#787a80";
+                                        } else {
+                                            document.querySelector(".dislike").style.color = "rgb(180, 180, 180)";
+                                            document.getElementById("dislikeicon").style.color = "rgb(180, 180, 180)";
+                                        }
                                         
+
                                         document.querySelector(".dislike").onclick = function() {
+                                            
                                             dislikepost(post_id, "undislike");
                                             document.querySelector(".dislike02").textContent = parseInt(dislikes) + 1 - 1;
+                                            
+                                        
                                             document.querySelector(".dislike").style.backgroundColor = "#0866ff";
+                                            document.getElementById("dislikeicon").style.backgroundColor = "#0866ff";
+
                                             document.querySelector(".dislike").style.color = "white";
+                                            document.getElementById("dislikeicon").style.color = "white";
+
+
                                             document.querySelector(".dislike").onclick = function() {
+                                                
                                                 disgrey();
                                             }
                                         }
@@ -1237,14 +1614,14 @@
                 
 
                 <div style="max-width: 1280px; width: 100vw; background-color: white;">
-                    <button class="sharebutton" id="sharebutton" style="width: calc(100% / 3);
-                    float: right; font-size: 18px; cursor: pointer;"><i class="fa-solid fa-share-from-square" style="padding-right: 5px;"></i>Share</button>
+                    <button class="actionbutton sharebutton" style="width: calc(100% / 3);background-color: white; color: #787a80; border: none; border-bottom: none; height: 35px; border-bottom: 2px solid white; float: right; font-size: 18px; cursor: pointer;">
+                        <i id="shareicon" class="fa-solid fa-share-from-square" style="padding-right: 5px;"></i>Share
+                    </button>
                     <script>
                         document.querySelector('.sharebutton').onclick = function() {
-
-                            var url = window.location.href
+                            var url = window.location.href;
                             console.log(url);
-
+                
                             var input = document.createElement('input');
                             input.style.position = 'fixed';
                             input.style.opacity = 0;
@@ -1253,50 +1630,65 @@
                             input.select();
                             document.execCommand('copy');
                             document.body.removeChild(input);
-
-                            // document.querySelector('.sharebutton').textContent = "Copied Link!"
-
+                
                             document.querySelector('.sharebutton').innerHTML = '';
                             var icon = document.createElement('i');
                             icon.classList.add('fa-solid', 'fa-square-check');
                             icon.style.paddingRight = "5px";
                             document.querySelector('.sharebutton').appendChild(icon);
-
+                
                             var text = document.createTextNode('Copied Link!');
                             document.querySelector('.sharebutton').appendChild(text);
-
+                
                             function delay() {
                                 document.querySelector('.sharebutton').innerHTML = '';
                                 var icon = document.createElement('i');
                                 icon.classList.add('fa-solid', 'fa-share-from-square');
                                 icon.style.paddingRight = "5px";
                                 document.querySelector('.sharebutton').appendChild(icon);
-
+                
                                 var text = document.createTextNode('Share');
                                 document.querySelector('.sharebutton').appendChild(text);
                             }
-
+                
                             setTimeout(delay, 1000);
                         };
                     </script>
+                
+                    <button class="actionbutton commentbutton" style="width: calc(100% / 3);background-color: white; color: #787a80; border: none; border-bottom: none; height: 35px; border-bottom: 2px solid white; float: right; font-size: 18px; cursor: pointer;" onclick="revealcomments()">
+                        <i id="commenticon" class="fa-solid fa-comment-dots" style="padding-right: 5px;"></i>Comments
+                    </button>
+                
+                    <button class="actionbutton replybutton" style="width: calc(100% / 3);background-color: white; color: #787a80; border: none; border-bottom: none; height: 35px; border-bottom: 2px solid white; float: right; font-size: 18px; cursor: pointer;" onclick="createpost()">
+                        <i id="replyicon" class="fa-solid fa-reply fa-flip-horizontal" style="padding-left: 5px;"></i>Reply
+                    </button>
+                
+                    <script>
+                        document.querySelectorAll('.actionbutton').forEach(button => {
+                            button.onmouseover = function() {
+                                this.style.color = "#0866ff";
+                                this.style.borderBottom = "2px solid #0866ff";
+                                this.firstElementChild.style.color = "#0866ff";
+                            }
+                            button.onmouseout = function() {
+                                this.style.color = "#787a80";
+                                this.style.borderBottom = "2px solid white";
+                                this.firstElementChild.style.color = "#787a80";
+                                
+                            }
+                        });
 
-                    <button class="commentbutton" id="sharebutton" style="width: calc(100% / 3);
-                    float: right; font-size: 18px; cursor: pointer;" onclick="revealcomments()"><i class="fa-solid fa-comment-dots" style="padding-right: 5px;"></i>Comments</button>
 
-
-                    <button class="replybutton" id="sharebutton" style="width: calc(100% / 3);
-                    float: right; font-size: 18px; cursor: pointer;" onclick="createpost()"><i class="fa-solid fa-reply fa-flip-horizontal" style="padding-left: 5px;"></i>Reply</button>
-
-
+                    </script>
                 </div>
                 
-                
+
                 <style>
                     #search-input2 {
                         font-family: Helvetica, Arial, sans-serif;
                         font-size: 16px;
                         background: #f0f2f5;
-                        width: 200px; 
+                        width: 200px;
                         padding: 10px 10px 10px 15px;
                         border: 2px solid #f0f2f5;
                         color: black;
@@ -1307,19 +1699,8 @@
                         color: #787a80;
                     }
 
-                    #sharebutton {
-                        background-color: white;
-                        color: #787a80;
-                        border: none;
-                        border-bottom: none;
-                        height: 35px;
-                        border-bottom: 2px solid white;
-                    }
-                    #sharebutton:hover {
-                        color: #0866ff;
-                        border-bottom: 2px solid #0866ff;
 
-                    }
+
 
                 </style>
 
@@ -1330,7 +1711,12 @@
 
                         document.getElementById("shame2").style.width = "calc(50% - 1px)";
                         document.getElementById("mormonsbelike").style.width = "calc(50% - 1px)";
-                        document.getElementById("mormonsbelike").style.borderLeft = "2px solid #f0f2f5";
+                        if (document.getElementById("darkmode").textContent == "yes") {
+                            document.getElementById("mormonsbelike").style.borderLeft = "2px solid rgb(23, 23, 23)";
+                        } else {
+                            document.getElementById("mormonsbelike").style.borderLeft = "2px solid #f0f2f5";
+                        }
+                        
                         document.getElementById("mormonsbelike").style.height = "50vh";
 
                         document.getElementById("shame").style.height = "0px"
@@ -1543,7 +1929,11 @@
                                     newDiv.onmouseover = function() {
                                         this.style.backgroundColor = "#f0f2f5";
                                         if (user_id == String(your_id)) {
-                                            document.querySelector(".decline" + index).style.backgroundColor = "#caccd0";
+                                            if (document.getElementById("darkmode").textContent == "yes"){
+                                                document.querySelector(".decline" + index).style.backgroundColor = "rgb(55, 55, 55)";
+                                            } else {
+                                                document.querySelector(".decline" + index).style.backgroundColor = "#caccd0";
+                                            }
                                         }
                                     };
 
@@ -1713,19 +2103,22 @@
                                             xhr.onreadystatechange = function() {
                                                 if (xhr.readyState == 4 && xhr.status == 200) {
                                                     console.log(xhr.responseText);
-                                                    
-                                                    
+
+                                                    document.getElementById("newpost").click()
+
+                                                    document.getElementById("aboutsectionedit2").value = "";
+                                                    document.getElementById("imageinput").value = "";
+                                                    if (document.getElementById("darkmode").textContent == "no"){
+                                                        document.getElementById("choosephotobutton").style.background = "white";
+                                                    } else {
+                                                        document.getElementById("choosephotobutton").style.background = "rgb(33, 33, 33)";
+                                                    }
+                                                    document.getElementById('p').style.mixBlendMode = "normal";
+
                                                 }
                                             };
-            
+
                                             xhr.send(data);
-
-                                            document.getElementById("newpost").click()
-
-                                            document.getElementById("aboutsectionedit2").value = "";
-                                            document.getElementById("imageinput").value = "";
-                                            document.getElementById("choosephotobutton").style.background = "white";
-                                            document.getElementById('p').style.mixBlendMode = "normal";
 
                                             
 
@@ -2266,6 +2659,12 @@
                                     like.className = "like" + increment;
                                     dislike.className = "dislike" + increment;
 
+                                    var dislikeicon = document.createElement("i");
+                                    dislikeicon.className = "dislikeicon" + increment
+
+                                    var likeicon = document.createElement("i");
+                                    likeicon.className = "likeicon" + increment
+
                                     var like2 = document.createElement("div");
                                     var dislike2 = document.createElement("div");
 
@@ -2281,11 +2680,19 @@
                                         };
 
                                         link.onmouseover = function() {
-                                            document.querySelector(".link" + index).style.backgroundColor = "#c9daff";
+                                            if (document.getElementById("darkmode").textContent == "no") {
+                                                this.style.background = "#c9daff";
+                                            } else {
+                                                this.style.background = "#273c6b";
+                                            }
                                         };
 
                                         link.onmouseout = function() {
-                                            document.querySelector(".link" + index).style.backgroundColor = "#ebf1ff";
+                                            if (document.getElementById("darkmode").textContent == "no") {
+                                                this.style.background = "#ebf1ff";
+                                            } else {
+                                                this.style.background = "#1b2745";
+                                            }
                                         };
 
                                         image.onclick = function () {
@@ -2362,7 +2769,7 @@
 
                                             confirmdeletebutton.onmouseover = function() {
                                                 confirmdeletebutton.style.backgroundColor = "#de3e3c";
-                                                confirmdeletebutton.style.color = "white";
+                                                confirmdeletebutton.style.color = "rgb(254, 254, 254)";
                                             };
 
 
@@ -2408,21 +2815,37 @@
                                         };
 
                                         if (likers.split("_LIKERS_").includes(String(your_id))) {
-                                            like.onclick = function() {
+                                            like.onclick = function() { 
                                                 function blue() {
                                                     likepost(post_id, "unlike");
-                                                    document.querySelector(".like2" + index).textContent = parseInt(likes) - 1;
+                                                    document.querySelector(".like02" + index).textContent = parseInt(likes) - 1;
                                                     document.querySelector(".like" + index).style.backgroundColor = "#0866ff";
+                                                    document.querySelector(".likeicon" + index).style.backgroundColor = "#0866ff";
+
                                                     document.querySelector(".like" + index).style.color = "white";
+                                                    document.querySelector(".likeicon" + index).style.color = "white";
 
                                                     document.querySelector(".like" + index).onclick = function() {
                                                         clickdislike();
                                                         likepost(post_id, "like");
-                                                        document.querySelector(".like2" + index).textContent = parseInt(likes) + 1 - 1;
-                                                        document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
-                                                        document.querySelector(".like" + index).style.color = "#787a80";
-                                                        document.querySelector(".like" + index).onclick = function() {
+                                                        document.querySelector(".like02" + index).textContent = parseInt(likes) + 1 - 1;
+                                                        if (document.getElementById("darkmode").textContent == "no") {
+                                                            document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
+                                                            document.querySelector(".likeicon" + index).style.backgroundColor = "#f0f2f5";
+                                                        } else {
+                                                            document.querySelector(".like" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                            document.querySelector(".likeicon" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                        }
 
+                                                        if (document.getElementById("darkmode").textContent == "no") {
+                                                            document.querySelector(".like" + index).style.color = "#787a80";
+                                                            document.querySelector(".likeicon" + index).style.color = "#787a80";
+                                                        } else {
+                                                            document.querySelector(".like" + index).style.color = "rgb(180, 180, 180)";
+                                                            document.querySelector(".likeicon" + index).style.color = "rgb(180, 180, 180)";
+                                                        }
+                                                        document.querySelector(".like" + index).onclick = function() {
+                                                            
                                                             blue();
                                                         }
                                                     }
@@ -2430,19 +2853,35 @@
                                                 blue();
                                             };
                                         } else {
-                                            like.onclick = function() {
+                                            like.onclick = function() { 
                                                 function grey() {
                                                     clickdislike();
                                                     likepost(post_id, "like");
-                                                    document.querySelector(".like2" + index).textContent = parseInt(likes) + 1;
-                                                    document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
-                                                    document.querySelector(".like" + index).style.color = "#787a80";
+                                                    document.querySelector(".like02" + index).textContent = parseInt(likes) + 1;
+                                                    if (document.getElementById("darkmode").textContent == "no") {
+                                                        document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
+                                                        document.querySelector(".likeicon" + index).style.backgroundColor = "#f0f2f5";
+                                                    } else {
+                                                        document.querySelector(".like" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                        document.querySelector(".likeicon" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                    }
 
+                                                    if (document.getElementById("darkmode").textContent == "no") {
+                                                        document.querySelector(".like" + index).style.color = "#787a80";
+                                                        document.querySelector(".likeicon" + index).style.color = "#787a80";
+                                                    } else {
+                                                        document.querySelector(".like" + index).style.color = "rgb(180, 180, 180)";
+                                                        document.querySelector(".likeicon" + index).style.color = "rgb(180, 180, 180)";
+                                                    }
+                                                    
                                                     document.querySelector(".like" + index).onclick = function() {
                                                         likepost(post_id, "unlike");
-                                                        document.querySelector(".like2" + index).textContent = parseInt(likes) + 1 - 1;
+                                                        document.querySelector(".like02" + index).textContent = parseInt(likes) + 1 - 1;
                                                         document.querySelector(".like" + index).style.backgroundColor = "#0866ff";
+                                                        document.querySelector(".likeicon" + index).style.backgroundColor = "#0866ff";
+
                                                         document.querySelector(".like" + index).style.color = "white";
+                                                        document.querySelector(".likeicon" + index).style.color = "white";
                                                         document.querySelector(".like" + index).onclick = function() {
                                                             grey();
                                                         }
@@ -2453,21 +2892,38 @@
                                         }
 
                                         if (dislikers.split("_DISLIKERS_").includes(String(your_id))) {
-                                            dislike.onclick = function() {
+                                            dislike.onclick = function() { 
                                                 function disblue() {
                                                     dislikepost(post_id, "undislike");
-                                                    document.querySelector(".dislike2" + index).textContent = parseInt(dislikes) - 1;
+                                                    document.querySelector(".dislike02" + index).textContent = parseInt(dislikes) - 1;
+
                                                     document.querySelector(".dislike" + index).style.backgroundColor = "#0866ff";
+                                                    document.querySelector(".dislikeicon" + index).style.backgroundColor = "#0866ff";
+
                                                     document.querySelector(".dislike" + index).style.color = "white";
+                                                    document.querySelector(".dislikeicon" + index).style.color = "white";
 
                                                     document.querySelector(".dislike" + index).onclick = function() {
                                                         clicklike();
                                                         dislikepost(post_id, "dislike");
-                                                        document.querySelector(".dislike2" + index).textContent = parseInt(dislikes) + 1 - 1;
-                                                        document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
-                                                        document.querySelector(".dislike" + index).style.color = "#787a80";
-                                                        document.querySelector(".dislike" + index).onclick = function() {
+                                                        document.querySelector(".dislike02" + index).textContent = parseInt(dislikes) + 1 - 1;
+                                                        if (document.getElementById("darkmode").textContent == "no") {
+                                                            document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
+                                                            document.querySelector(".dislikeicon" + index).style.backgroundColor = "#f0f2f5";
+                                                        } else {
+                                                            document.querySelector(".dislike" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                            document.querySelector(".dislikeicon" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                        }
 
+                                                        if (document.getElementById("darkmode").textContent == "no") {
+                                                            document.querySelector(".dislike" + index).style.color = "#787a80";
+                                                            document.querySelector(".dislikeicon" + index).style.color = "#787a80";
+                                                        } else {
+                                                            document.querySelector(".dislike" + index).style.color = "rgb(180, 180, 180)";
+                                                            document.querySelector(".dislikeicon" + index).style.color = "rgb(180, 180, 180)";
+                                                        }
+                                                        document.querySelector(".dislike" + index).onclick = function() {
+                                                            
                                                             disblue();
                                                         }
                                                     }
@@ -2475,22 +2931,43 @@
                                                 disblue();
                                             };
                                         } else {
-                                            dislike.onclick = function() {
+                                            dislike.onclick = function() { 
                                                 function disgrey() {
                                                     clicklike();
                                                     dislikepost(post_id, "dislike");
-                                                    document.querySelector(".dislike2" + index).textContent = parseInt(dislikes) + 1;
-                                                    document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
-                                                    document.querySelector(".dislike" + index).style.color = "#787a80";
+                                                    document.querySelector(".dislike02" + index).textContent = parseInt(dislikes) + 1;
+                                                    if (document.getElementById("darkmode").textContent == "no") {
+                                                        document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
+                                                        document.querySelector(".dislikeicon" + index).style.backgroundColor = "#f0f2f5";
+                                                    } else {
+                                                        document.querySelector(".dislike" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                        document.querySelector(".dislikeicon" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                    }
+
+                                                    if (document.getElementById("darkmode").textContent == "no") {
+                                                        document.querySelector(".dislike" + index).style.color = "#787a80";
+                                                        document.querySelector(".dislikeicon" + index).style.color = "#787a80";
+                                                    } else {
+                                                        document.querySelector(".dislike" + index).style.color = "rgb(180, 180, 180)";
+                                                        document.querySelector(".dislikeicon" + index).style.color = "rgb(180, 180, 180)";
+                                                    }
+                                                    
 
                                                     document.querySelector(".dislike" + index).onclick = function() {
-
+                                                        
                                                         dislikepost(post_id, "undislike");
-                                                        document.querySelector(".dislike2" + index).textContent = parseInt(dislikes) + 1 - 1;
+                                                        document.querySelector(".dislike02" + index).textContent = parseInt(dislikes) + 1 - 1;
+                                                        
+                                                    
                                                         document.querySelector(".dislike" + index).style.backgroundColor = "#0866ff";
-                                                        document.querySelector(".dislike" + index).style.color = "white";
-                                                        document.querySelector(".dislike" + index).onclick = function() {
+                                                        document.querySelector(".dislikeicon" + index).style.backgroundColor = "#0866ff";
 
+                                                        document.querySelector(".dislike" + index).style.color = "white";
+                                                        document.querySelector(".dislikeicon" + index).style.color = "white";
+
+
+                                                        document.querySelector(".dislike" + index).onclick = function() {
+                                                            
                                                             disgrey();
                                                         }
                                                     }
@@ -2500,13 +2977,13 @@
                                         }
                                         function clicklike() {
                                             console.log("LIKE IS CLICKING");
-
-
+                                                
+                                                
                                             var likeElement = document.querySelector(".like" + index);
                                             var computedStyle = window.getComputedStyle(likeElement);
                                             var backgroundColor = computedStyle.backgroundColor;
 
-                                            if (backgroundColor === "rgb(240, 242, 245)") {
+                                            if (backgroundColor === "rgb(240, 242, 245)" || backgroundColor === "rgb(23, 23, 23)") {
                                                 console.log("LIKE IS CLICKING");
                                                 likeElement.click();
                                             }
@@ -2518,7 +2995,7 @@
                                             var computedStyle = window.getComputedStyle(dislikeElement);
                                             var backgroundColor = computedStyle.backgroundColor;
 
-                                            if (backgroundColor === "rgb(240, 242, 245)") {
+                                            if (backgroundColor === "rgb(240, 242, 245)" || backgroundColor === "rgb(23, 23, 23)") {
                                                 console.log("DISLIKE IS CLICKING");
                                                 dislikeElement.click();
                                             }
@@ -2643,9 +3120,13 @@
                                     link.textContent = "Post not found";
                                     link.style.cursor = "pointer";
                                     link.style.color = "#0866ff";
-                                    link.style.maxWidth = "730px";
+                                    link.style.maxWidth = "calc(100% - 20px)";
                                     link.style.width = "calc(100vw - 20px)";
-                                    link.style.background = "#ebf1ff";
+                                    if (document.getElementById("darkmode").textContent == "no") {
+                                        link.style.background = "#ebf1ff";
+                                    } else {
+                                        link.style.background = "#1b2745";
+                                    }
                                     link.style.marginBottom = "10px";
                                     link.style.marginLeft = "10px";
                                     link.style.border = "0px solid white";
@@ -2725,11 +3206,10 @@
 
 
 
-                                    var icon = document.createElement('i');
-                                    icon.classList.add('fas', 'fa-thumbs-up');
-                                    icon.style.paddingRight = "5px";
+                                    likeicon.classList.add('fas', 'fa-thumbs-up');
+                                    likeicon.style.paddingRight = "5px";
                                     var text = document.createTextNode('Like');
-                                    like.appendChild(icon);
+                                    like.appendChild(likeicon);
                                     like.appendChild(text);
                                     like.style.float = "left";
                                     like.style.marginLeft = "8px";
@@ -2744,18 +3224,21 @@
                                     if (likers[i].split("_LIKERS_").includes(String(your_id))) {
                                         like.style.color = "#787a80";
                                         like.style.backgroundColor = "#f0f2f5";
+                                        likeicon.style.backgroundColor = "#f0f2f5";
+                                        likeicon.style.color = "#787a80";
                                     } else {
                                         like.style.color = "white";
                                         like.style.backgroundColor = "#0866ff";
+                                        likeicon.style.backgroundColor = "#0866ff";
+                                        likeicon.style.color = "white";
 
                                     }
 
 
-                                    var icon = document.createElement('i');
-                                    icon.classList.add('fas', 'fa-thumbs-down', "fa-flip-horizontal");
-                                    icon.style.paddingLeft = "5px";
+                                    dislikeicon.classList.add('fas', 'fa-thumbs-down', "fa-flip-horizontal");
+                                    dislikeicon.style.paddingLeft = "5px";
                                     var text = document.createTextNode('Dislike');
-                                    dislike.appendChild(icon);
+                                    dislike.appendChild(dislikeicon);
                                     dislike.appendChild(text);
                                     dislike.style.float = "left";
                                     dislike.style.marginLeft = "5px";
@@ -2770,10 +3253,13 @@
                                     if (dislikers[i].split("_DISLIKERS_").includes(String(your_id))) {
                                         dislike.style.color = "#787a80";
                                         dislike.style.backgroundColor = "#f0f2f5";
+                                        dislikeicon.style.backgroundColor = "#f0f2f5";
+                                        dislikeicon.style.color = "#787a80";
                                     } else {
                                         dislike.style.color = "white";
                                         dislike.style.backgroundColor = "#0866ff";
-
+                                        dislikeicon.style.backgroundColor = "#0866ff";
+                                        dislikeicon.style.color = "white";
                                     }
 
 
@@ -2785,7 +3271,7 @@
                                     like2.style.padding = "3px";
                                     like2.style.fontSize = "14px";
                                     like2.style.width = "73px";
-                                    like2.className = "like2" + increment
+                                    like2.className = "like02" + increment
 
 
                                     dislike2.textContent = dislikes[i]
@@ -2796,7 +3282,7 @@
                                     dislike2.style.padding = "3px";
                                     dislike2.style.fontSize = "14px";
                                     dislike2.style.width = "73px";
-                                    dislike2.className = "dislike2" + increment
+                                    dislike2.className = "dislike02" + increment
 
                                     var icon = document.createElement('i');
                                     icon.classList.add('fas', 'fa-reply', "fa-flip-horizontal");
@@ -3203,6 +3689,12 @@
                     like.className = "like" + increment;
                     dislike.className = "dislike" + increment;
 
+                    var dislikeicon = document.createElement("i");
+                    dislikeicon.className = "dislikeicon" + increment
+
+                    var likeicon = document.createElement("i");
+                    likeicon.className = "likeicon" + increment
+
                     var like2 = document.createElement("div");
                     var dislike2 = document.createElement("div");
 
@@ -3295,11 +3787,19 @@
                                 };
 
                                 link.onmouseover = function() {
-                                    document.querySelector(".link" + index).style.backgroundColor = "#c9daff";
+                                    if (document.getElementById("darkmode").textContent == "no") {
+                                        this.style.background = "#c9daff";
+                                    } else {
+                                        this.style.background = "#273c6b";
+                                    }
                                 };
 
                                 link.onmouseout = function() {
-                                    document.querySelector(".link" + index).style.backgroundColor = "#ebf1ff";
+                                    if (document.getElementById("darkmode").textContent == "no") {
+                                        this.style.background = "#ebf1ff";
+                                    } else {
+                                        this.style.background = "#1b2745";
+                                    }
                                 };
 
                                 image.onclick = function () {
@@ -3436,21 +3936,37 @@
 
 
                                 if ("".split("_LIKERS_").includes(String(your_id))) {
-                                    like.onclick = function() {
+                                    like.onclick = function() { 
                                         function blue() {
                                             likepost(post_id, "unlike");
-                                            document.querySelector(".like2" + index).textContent = parseInt(document.querySelector(".like2" + index).textContent) - 1;
+                                            document.querySelector(".like02" + index).textContent = parseInt(document.querySelector(".like02" + index).textContent) - 1;
                                             document.querySelector(".like" + index).style.backgroundColor = "#0866ff";
+                                            document.querySelector(".likeicon" + index).style.backgroundColor = "#0866ff";
+
                                             document.querySelector(".like" + index).style.color = "white";
+                                            document.querySelector(".likeicon" + index).style.color = "white";
 
                                             document.querySelector(".like" + index).onclick = function() {
                                                 clickdislike();
                                                 likepost(post_id, "like");
-                                                document.querySelector(".like2" + index).textContent = parseInt(document.querySelector(".like2" + index).textContent) + 1;
-                                                document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
-                                                document.querySelector(".like" + index).style.color = "#787a80";
-                                                document.querySelector(".like" + index).onclick = function() {
+                                                document.querySelector(".like02" + index).textContent = parseInt(document.querySelector(".like02" + index).textContent) + 1;
+                                                if (document.getElementById("darkmode").textContent == "no") {
+                                                    document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
+                                                    document.querySelector(".likeicon" + index).style.backgroundColor = "#f0f2f5";
+                                                } else {
+                                                    document.querySelector(".like" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                    document.querySelector(".likeicon" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                }
 
+                                                if (document.getElementById("darkmode").textContent == "no") {
+                                                    document.querySelector(".like" + index).style.color = "#787a80";
+                                                    document.querySelector(".likeicon" + index).style.color = "#787a80";
+                                                } else {
+                                                    document.querySelector(".like" + index).style.color = "rgb(180, 180, 180)";
+                                                    document.querySelector(".likeicon" + index).style.color = "rgb(180, 180, 180)";
+                                                }
+                                                document.querySelector(".like" + index).onclick = function() {
+                                                    
                                                     blue();
                                                 }
                                             }
@@ -3458,19 +3974,35 @@
                                         blue();
                                     };
                                 } else {
-                                    like.onclick = function() {
+                                    like.onclick = function() { 
                                         function grey() {
                                             clickdislike();
                                             likepost(post_id, "like");
-                                            document.querySelector(".like2" + index).textContent = parseInt(document.querySelector(".like2" + index).textContent) + 1;
-                                            document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
-                                            document.querySelector(".like" + index).style.color = "#787a80";
+                                            document.querySelector(".like02" + index).textContent = parseInt(document.querySelector(".like02" + index).textContent) + 1;
+                                            if (document.getElementById("darkmode").textContent == "no") {
+                                                document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
+                                                document.querySelector(".likeicon" + index).style.backgroundColor = "#f0f2f5";
+                                            } else {
+                                                document.querySelector(".like" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                document.querySelector(".likeicon" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                            }
 
+                                            if (document.getElementById("darkmode").textContent == "no") {
+                                                document.querySelector(".like" + index).style.color = "#787a80";
+                                                document.querySelector(".likeicon" + index).style.color = "#787a80";
+                                            } else {
+                                                document.querySelector(".like" + index).style.color = "rgb(180, 180, 180)";
+                                                document.querySelector(".likeicon" + index).style.color = "rgb(180, 180, 180)";
+                                            }
+                                            
                                             document.querySelector(".like" + index).onclick = function() {
                                                 likepost(post_id, "unlike");
-                                                document.querySelector(".like2" + index).textContent = parseInt(document.querySelector(".like2" + index).textContent) - 1;
+                                                document.querySelector(".like02" + index).textContent = parseInt(document.querySelector(".like02" + index).textContent) - 1;
                                                 document.querySelector(".like" + index).style.backgroundColor = "#0866ff";
+                                                document.querySelector(".likeicon" + index).style.backgroundColor = "#0866ff";
+
                                                 document.querySelector(".like" + index).style.color = "white";
+                                                document.querySelector(".likeicon" + index).style.color = "white";
                                                 document.querySelector(".like" + index).onclick = function() {
                                                     grey();
                                                 }
@@ -3481,21 +4013,38 @@
                                 }
 
                                 if ("".split("_DISLIKERS_").includes(String(your_id))) {
-                                    dislike.onclick = function() {
+                                    dislike.onclick = function() { 
                                         function disblue() {
                                             dislikepost(post_id, "undislike");
-                                            document.querySelector(".dislike2" + index).textContent = parseInt(document.querySelector(".dislike2" + index).textContent) - 1;
+                                            document.querySelector(".dislike02" + index).textContent = parseInt(document.querySelector(".dislike02" + index).textContent) - 1;
+
                                             document.querySelector(".dislike" + index).style.backgroundColor = "#0866ff";
+                                            document.querySelector(".dislikeicon" + index).style.backgroundColor = "#0866ff";
+
                                             document.querySelector(".dislike" + index).style.color = "white";
+                                            document.querySelector(".dislikeicon" + index).style.color = "white";
 
                                             document.querySelector(".dislike" + index).onclick = function() {
                                                 clicklike();
                                                 dislikepost(post_id, "dislike");
-                                                document.querySelector(".dislike2" + index).textContent = parseInt(document.querySelector(".dislike2" + index).textContent) + 1;
-                                                document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
-                                                document.querySelector(".dislike" + index).style.color = "#787a80";
-                                                document.querySelector(".dislike" + index).onclick = function() {
+                                                document.querySelector(".dislike02" + index).textContent = parseInt(document.querySelector(".dislike02" + index).textContent) + 1;
+                                                if (document.getElementById("darkmode").textContent == "no") {
+                                                    document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
+                                                    document.querySelector(".dislikeicon" + index).style.backgroundColor = "#f0f2f5";
+                                                } else {
+                                                    document.querySelector(".dislike" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                    document.querySelector(".dislikeicon" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                }
 
+                                                if (document.getElementById("darkmode").textContent == "no") {
+                                                    document.querySelector(".dislike" + index).style.color = "#787a80";
+                                                    document.querySelector(".dislikeicon" + index).style.color = "#787a80";
+                                                } else {
+                                                    document.querySelector(".dislike" + index).style.color = "rgb(180, 180, 180)";
+                                                    document.querySelector(".dislikeicon" + index).style.color = "rgb(180, 180, 180)";
+                                                }
+                                                document.querySelector(".dislike" + index).onclick = function() {
+                                                    
                                                     disblue();
                                                 }
                                             }
@@ -3503,22 +4052,43 @@
                                         disblue();
                                     };
                                 } else {
-                                    dislike.onclick = function() {
+                                    dislike.onclick = function() { 
                                         function disgrey() {
                                             clicklike();
                                             dislikepost(post_id, "dislike");
-                                            document.querySelector(".dislike2" + index).textContent = parseInt(document.querySelector(".dislike2" + index).textContent) + 1;
-                                            document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
-                                            document.querySelector(".dislike" + index).style.color = "#787a80";
+                                            document.querySelector(".dislike02" + index).textContent = parseInt(document.querySelector(".dislike02" + index).textContent) + 1;
+                                            if (document.getElementById("darkmode").textContent == "no") {
+                                                document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
+                                                document.querySelector(".dislikeicon" + index).style.backgroundColor = "#f0f2f5";
+                                            } else {
+                                                document.querySelector(".dislike" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                                document.querySelector(".dislikeicon" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                            }
+
+                                            if (document.getElementById("darkmode").textContent == "no") {
+                                                document.querySelector(".dislike" + index).style.color = "#787a80";
+                                                document.querySelector(".dislikeicon" + index).style.color = "#787a80";
+                                            } else {
+                                                document.querySelector(".dislike" + index).style.color = "rgb(180, 180, 180)";
+                                                document.querySelector(".dislikeicon" + index).style.color = "rgb(180, 180, 180)";
+                                            }
+                                            
 
                                             document.querySelector(".dislike" + index).onclick = function() {
-
+                                                
                                                 dislikepost(post_id, "undislike");
-                                                document.querySelector(".dislike2" + index).textContent = parseInt(document.querySelector(".dislike2" + index).textContent) - 1;
+                                                document.querySelector(".dislike02" + index).textContent = parseInt(document.querySelector(".dislike02" + index).textContent) - 1;
+                                                
+                                            
                                                 document.querySelector(".dislike" + index).style.backgroundColor = "#0866ff";
-                                                document.querySelector(".dislike" + index).style.color = "white";
-                                                document.querySelector(".dislike" + index).onclick = function() {
+                                                document.querySelector(".dislikeicon" + index).style.backgroundColor = "#0866ff";
 
+                                                document.querySelector(".dislike" + index).style.color = "white";
+                                                document.querySelector(".dislikeicon" + index).style.color = "white";
+
+
+                                                document.querySelector(".dislike" + index).onclick = function() {
+                                                    
                                                     disgrey();
                                                 }
                                             }
@@ -3528,13 +4098,13 @@
                                 }
                                 function clicklike() {
                                     console.log("LIKE IS CLICKING");
-
-
+                                        
+                                        
                                     var likeElement = document.querySelector(".like" + index);
                                     var computedStyle = window.getComputedStyle(likeElement);
                                     var backgroundColor = computedStyle.backgroundColor;
 
-                                    if (backgroundColor === "rgb(240, 242, 245)") {
+                                    if (backgroundColor === "rgb(240, 242, 245)" || backgroundColor === "rgb(23, 23, 23)") {
                                         console.log("LIKE IS CLICKING");
                                         likeElement.click();
                                     }
@@ -3546,7 +4116,7 @@
                                     var computedStyle = window.getComputedStyle(dislikeElement);
                                     var backgroundColor = computedStyle.backgroundColor;
 
-                                    if (backgroundColor === "rgb(240, 242, 245)") {
+                                    if (backgroundColor === "rgb(240, 242, 245)" || backgroundColor === "rgb(23, 23, 23)") {
                                         console.log("DISLIKE IS CLICKING");
                                         dislikeElement.click();
                                     }
@@ -3692,11 +4262,10 @@
 
 
 
-                    var icon = document.createElement('i');
-                    icon.classList.add('fas', 'fa-thumbs-up');
-                    icon.style.paddingRight = "5px";
+                    likeicon.classList.add('fas', 'fa-thumbs-up');
+                    likeicon.style.paddingRight = "5px";
                     var text = document.createTextNode('Like');
-                    like.appendChild(icon);
+                    like.appendChild(likeicon);
                     like.appendChild(text);
                     like.style.float = "left";
                     like.style.marginLeft = "8px";
@@ -3708,14 +4277,17 @@
                     like.style.backgroundColor = "#0866ff";
                     like.style.width = "80px";
                     like.style.cursor = "pointer";
+                    like.style.color = "white";
+                    like.style.backgroundColor = "#0866ff";
+                    likeicon.style.backgroundColor = "#0866ff";
+                    likeicon.style.color = "white";
 
 
 
-                    var icon = document.createElement('i');
-                    icon.classList.add('fas', 'fa-thumbs-down', "fa-flip-horizontal");
-                    icon.style.paddingLeft = "5px";
+                    dislikeicon.classList.add('fas', 'fa-thumbs-down', "fa-flip-horizontal");
+                    dislikeicon.style.paddingLeft = "5px";
                     var text = document.createTextNode('Dislike');
-                    dislike.appendChild(icon);
+                    dislike.appendChild(dislikeicon);
                     dislike.appendChild(text);
                     dislike.style.float = "left";
                     dislike.style.marginLeft = "5px";
@@ -3727,13 +4299,21 @@
                     dislike.style.backgroundColor = "#0866ff";
                     dislike.style.width = "80px";
                     dislike.style.cursor = "pointer";
+                    dislike.style.color = "white";
+                    dislike.style.backgroundColor = "#0866ff";
+                    dislikeicon.style.backgroundColor = "#0866ff";
+                    dislikeicon.style.color = "white";
 
                     link.textContent = document.getElementById("shame").value.replace(/_THISISALINEBREAK_/g, " ").replace(/_THISISANAPOSTROPHE_/g, "'").substring(0, 30) + "..."
                     link.style.cursor = "pointer";
                     link.style.color = "#0866ff";
-                    link.style.maxWidth = "730px";
+                    link.style.maxWidth = "calc(100% - 20px)";
                     link.style.width = "calc(100vw - 20px)";
-                    link.style.background = "#ebf1ff";
+                    if (document.getElementById("darkmode").textContent == "no") {
+                        link.style.background = "#ebf1ff";
+                    } else {
+                        link.style.background = "#1b2745";
+                    }
                     link.style.marginBottom = "10px";
                     link.style.marginLeft = "10px";
                     link.style.border = "0px solid white";
@@ -3753,7 +4333,7 @@
                     like2.style.padding = "3px";
                     like2.style.fontSize = "14px";
                     like2.style.width = "73px";
-                    like2.className = "like2" + increment
+                    like2.className = "like02" + increment
 
 
                     dislike2.textContent = "0"
@@ -3764,7 +4344,7 @@
                     dislike2.style.padding = "3px";
                     dislike2.style.fontSize = "14px";
                     dislike2.style.width = "73px";
-                    dislike2.className = "dislike2" + increment
+                    dislike2.className = "dislike02" + increment
 
                     var icon = document.createElement('i');
                     icon.classList.add('fas', 'fa-reply', "fa-flip-horizontal");

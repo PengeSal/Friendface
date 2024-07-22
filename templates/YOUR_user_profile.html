@@ -138,7 +138,7 @@
     <script>
 
     
-
+        
         //addEventListener("DOMContentLoaded", (event) => {
         (function (){
             function swapElementColors(element, mouseover) {
@@ -334,6 +334,7 @@
 
             
         })();
+        
 
 
     </script>
@@ -2075,7 +2076,7 @@
                                             like.onclick = function() { 
                                                 function blue() {
                                                     likepost(post_id, "unlike");
-                                                    document.querySelector(".like2" + index).textContent = parseInt(likes) - 1;
+                                                    document.querySelector(".like02" + index).textContent = parseInt(likes) - 1;
                                                     document.querySelector(".like" + index).style.backgroundColor = "#0866ff";
                                                     document.querySelector(".likeicon" + index).style.backgroundColor = "#0866ff";
 
@@ -2085,7 +2086,7 @@
                                                     document.querySelector(".like" + index).onclick = function() {
                                                         clickdislike();
                                                         likepost(post_id, "like");
-                                                        document.querySelector(".like2" + index).textContent = parseInt(likes) + 1 - 1;
+                                                        document.querySelector(".like02" + index).textContent = parseInt(likes) + 1 - 1;
                                                         if (document.getElementById("darkmode").textContent == "no") {
                                                             document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
                                                             document.querySelector(".likeicon" + index).style.backgroundColor = "#f0f2f5";
@@ -2114,7 +2115,7 @@
                                                 function grey() {
                                                     clickdislike();
                                                     likepost(post_id, "like");
-                                                    document.querySelector(".like2" + index).textContent = parseInt(likes) + 1;
+                                                    document.querySelector(".like02" + index).textContent = parseInt(likes) + 1;
                                                     if (document.getElementById("darkmode").textContent == "no") {
                                                         document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
                                                         document.querySelector(".likeicon" + index).style.backgroundColor = "#f0f2f5";
@@ -2133,7 +2134,7 @@
                                                     
                                                     document.querySelector(".like" + index).onclick = function() {
                                                         likepost(post_id, "unlike");
-                                                        document.querySelector(".like2" + index).textContent = parseInt(likes) + 1 - 1;
+                                                        document.querySelector(".like02" + index).textContent = parseInt(likes) + 1 - 1;
                                                         document.querySelector(".like" + index).style.backgroundColor = "#0866ff";
                                                         document.querySelector(".likeicon" + index).style.backgroundColor = "#0866ff";
 
@@ -2152,7 +2153,7 @@
                                             dislike.onclick = function() { 
                                                 function disblue() {
                                                     dislikepost(post_id, "undislike");
-                                                    document.querySelector(".dislike2" + index).textContent = parseInt(dislikes) - 1;
+                                                    document.querySelector(".dislike02" + index).textContent = parseInt(dislikes) - 1;
 
                                                     document.querySelector(".dislike" + index).style.backgroundColor = "#0866ff";
                                                     document.querySelector(".dislikeicon" + index).style.backgroundColor = "#0866ff";
@@ -2163,7 +2164,7 @@
                                                     document.querySelector(".dislike" + index).onclick = function() {
                                                         clicklike();
                                                         dislikepost(post_id, "dislike");
-                                                        document.querySelector(".dislike2" + index).textContent = parseInt(dislikes) + 1 - 1;
+                                                        document.querySelector(".dislike02" + index).textContent = parseInt(dislikes) + 1 - 1;
                                                         if (document.getElementById("darkmode").textContent == "no") {
                                                             document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
                                                             document.querySelector(".dislikeicon" + index).style.backgroundColor = "#f0f2f5";
@@ -2192,7 +2193,7 @@
                                                 function disgrey() {
                                                     clicklike();
                                                     dislikepost(post_id, "dislike");
-                                                    document.querySelector(".dislike2" + index).textContent = parseInt(dislikes) + 1;
+                                                    document.querySelector(".dislike02" + index).textContent = parseInt(dislikes) + 1;
                                                     if (document.getElementById("darkmode").textContent == "no") {
                                                         document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
                                                         document.querySelector(".dislikeicon" + index).style.backgroundColor = "#f0f2f5";
@@ -2213,7 +2214,7 @@
                                                     document.querySelector(".dislike" + index).onclick = function() {
                                                         
                                                         dislikepost(post_id, "undislike");
-                                                        document.querySelector(".dislike2" + index).textContent = parseInt(dislikes) + 1 - 1;
+                                                        document.querySelector(".dislike02" + index).textContent = parseInt(dislikes) + 1 - 1;
                                                         
                                                     
                                                         document.querySelector(".dislike" + index).style.backgroundColor = "#0866ff";
@@ -2483,8 +2484,8 @@
                                     if (likers[i].split("_LIKERS_").includes(String(your_id))) {
                                         like.style.color = "#787a80";
                                         like.style.backgroundColor = "#f0f2f5";
-                                        icon.style.backgroundColor = "#f0f2f5";
-                                        icon.style.color = "#787a80";
+                                        likeicon.style.backgroundColor = "#f0f2f5";
+                                        likeicon.style.color = "#787a80";
                                     } else {
                                         like.style.color = "white";
                                         like.style.backgroundColor = "#0866ff";
@@ -2530,7 +2531,7 @@
                                     like2.style.padding = "3px";
                                     like2.style.fontSize = "14px";
                                     like2.style.width = "73px";
-                                    like2.className = "like2" + increment
+                                    like2.className = "like02" + increment
 
 
                                     dislike2.textContent = dislikes[i]
@@ -2541,7 +2542,7 @@
                                     dislike2.style.padding = "3px";
                                     dislike2.style.fontSize = "14px";
                                     dislike2.style.width = "73px";
-                                    dislike2.className = "dislike2" + increment
+                                    dislike2.className = "dislike02" + increment
 
                                     var icon = document.createElement('i');
                                     icon.classList.add('fas', 'fa-reply', "fa-flip-horizontal");
@@ -3182,7 +3183,7 @@
                                     like.onclick = function() { 
                                         function blue() {
                                             likepost(post_id, "unlike");
-                                            document.querySelector(".like2" + index).textContent = parseInt(document.querySelector(".like2" + index).textContent) - 1;
+                                            document.querySelector(".like02" + index).textContent = parseInt(document.querySelector(".like02" + index).textContent) - 1;
                                             document.querySelector(".like" + index).style.backgroundColor = "#0866ff";
                                             document.querySelector(".likeicon" + index).style.backgroundColor = "#0866ff";
 
@@ -3192,7 +3193,7 @@
                                             document.querySelector(".like" + index).onclick = function() {
                                                 clickdislike();
                                                 likepost(post_id, "like");
-                                                document.querySelector(".like2" + index).textContent = parseInt(document.querySelector(".like2" + index).textContent) + 1;
+                                                document.querySelector(".like02" + index).textContent = parseInt(document.querySelector(".like02" + index).textContent) + 1;
                                                 if (document.getElementById("darkmode").textContent == "no") {
                                                     document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
                                                     document.querySelector(".likeicon" + index).style.backgroundColor = "#f0f2f5";
@@ -3221,7 +3222,7 @@
                                         function grey() {
                                             clickdislike();
                                             likepost(post_id, "like");
-                                            document.querySelector(".like2" + index).textContent = parseInt(document.querySelector(".like2" + index).textContent) + 1;
+                                            document.querySelector(".like02" + index).textContent = parseInt(document.querySelector(".like02" + index).textContent) + 1;
                                             if (document.getElementById("darkmode").textContent == "no") {
                                                 document.querySelector(".like" + index).style.backgroundColor = "#f0f2f5";
                                                 document.querySelector(".likeicon" + index).style.backgroundColor = "#f0f2f5";
@@ -3240,7 +3241,7 @@
                                             
                                             document.querySelector(".like" + index).onclick = function() {
                                                 likepost(post_id, "unlike");
-                                                document.querySelector(".like2" + index).textContent = parseInt(document.querySelector(".like2" + index).textContent) - 1;
+                                                document.querySelector(".like02" + index).textContent = parseInt(document.querySelector(".like02" + index).textContent) - 1;
                                                 document.querySelector(".like" + index).style.backgroundColor = "#0866ff";
                                                 document.querySelector(".likeicon" + index).style.backgroundColor = "#0866ff";
 
@@ -3259,7 +3260,7 @@
                                     dislike.onclick = function() { 
                                         function disblue() {
                                             dislikepost(post_id, "undislike");
-                                            document.querySelector(".dislike2" + index).textContent = parseInt(document.querySelector(".dislike2" + index).textContent) - 1;
+                                            document.querySelector(".dislike02" + index).textContent = parseInt(document.querySelector(".dislike02" + index).textContent) - 1;
 
                                             document.querySelector(".dislike" + index).style.backgroundColor = "#0866ff";
                                             document.querySelector(".dislikeicon" + index).style.backgroundColor = "#0866ff";
@@ -3270,7 +3271,7 @@
                                             document.querySelector(".dislike" + index).onclick = function() {
                                                 clicklike();
                                                 dislikepost(post_id, "dislike");
-                                                document.querySelector(".dislike2" + index).textContent = parseInt(document.querySelector(".dislike2" + index).textContent) + 1;
+                                                document.querySelector(".dislike02" + index).textContent = parseInt(document.querySelector(".dislike02" + index).textContent) + 1;
                                                 if (document.getElementById("darkmode").textContent == "no") {
                                                     document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
                                                     document.querySelector(".dislikeicon" + index).style.backgroundColor = "#f0f2f5";
@@ -3299,7 +3300,7 @@
                                         function disgrey() {
                                             clicklike();
                                             dislikepost(post_id, "dislike");
-                                            document.querySelector(".dislike2" + index).textContent = parseInt(document.querySelector(".dislike2" + index).textContent) + 1;
+                                            document.querySelector(".dislike02" + index).textContent = parseInt(document.querySelector(".dislike02" + index).textContent) + 1;
                                             if (document.getElementById("darkmode").textContent == "no") {
                                                 document.querySelector(".dislike" + index).style.backgroundColor = "#f0f2f5";
                                                 document.querySelector(".dislikeicon" + index).style.backgroundColor = "#f0f2f5";
@@ -3320,7 +3321,7 @@
                                             document.querySelector(".dislike" + index).onclick = function() {
                                                 
                                                 dislikepost(post_id, "undislike");
-                                                document.querySelector(".dislike2" + index).textContent = parseInt(document.querySelector(".dislike2" + index).textContent) - 1;
+                                                document.querySelector(".dislike02" + index).textContent = parseInt(document.querySelector(".dislike02" + index).textContent) - 1;
                                                 
                                             
                                                 document.querySelector(".dislike" + index).style.backgroundColor = "#0866ff";
@@ -3559,7 +3560,7 @@
                     like2.style.padding = "3px";
                     like2.style.fontSize = "14px";
                     like2.style.width = "73px";
-                    like2.className = "like2" + increment
+                    like2.className = "like02" + increment
 
 
                     dislike2.textContent = "0"
@@ -3570,7 +3571,7 @@
                     dislike2.style.padding = "3px";
                     dislike2.style.fontSize = "14px";
                     dislike2.style.width = "73px";
-                    dislike2.className = "dislike2" + increment
+                    dislike2.className = "dislike02" + increment
 
                     var icon = document.createElement('i');
                     icon.classList.add('fas', 'fa-reply', "fa-flip-horizontal");

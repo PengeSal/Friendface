@@ -1181,9 +1181,12 @@ def posts(post_id):
 
 
 
+            cursor.execute("""SELECT dark_mode FROM users WHERE user_id =?""", (current_user.id,))
+            dark_mode = cursor.fetchone()
+            dark_mode = dark_mode[0]
 
 
-
+            print("dark mode: " + dark_mode)
 
 
             userdata = user_data[0]
@@ -1199,14 +1202,14 @@ def posts(post_id):
 
 
             if isphoto == "yes":
-                return render_template("posts_image.html", theirname=name, views=views,
+                return render_template("posts_image.html", theirname=name, views=views, dark_mode = dark_mode,
                     theirpicture=pfp, profile_picture=userdata, pfp=pfp, theirid = theirid, likebutton = f"likebutton('{likers2}', '{current_user.id}', '{post_id}', '{likes2}')",
                     profile_text=name3, logo=logo, date=date, message=message, dislikebutton = f"dislikebutton('{dislikers2}', '{current_user.id}', '{post_id}', '{dislikes2}')",
                     likes=likes2, dislikes=dislikes2, newposts = newposts, theirbanner = banner,
                     user_id = user_id1, splashmessage = splash, image=image, post_id=post_id, commentslist=commentslist, isreply = isreply, replying_to=replying_to2, displayposts = posts)
 
             else:
-                return render_template("posts_message.html", theirname=name, views=views,
+                return render_template("posts_message.html", theirname=name, views=views, dark_mode = dark_mode,
                     theirpicture=pfp, profile_picture=userdata, pfp=pfp, theirid = theirid, likebutton = f"likebutton('{likers2}', '{current_user.id}', '{post_id}', '{likes2}')",
                     profile_text=name3, logo=logo, date=date, message=message, dislikebutton = f"dislikebutton('{dislikers2}', '{current_user.id}', '{post_id}', '{dislikes2}')",
                     likes=likes2, dislikes=dislikes2, newposts = newposts, theirbanner = banner,
