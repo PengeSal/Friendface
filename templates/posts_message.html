@@ -2057,10 +2057,17 @@
                                 <br style="line-height: 0px;" />
 
                                 <button id="postbutton"
-                                    style="font-size: 16px; color: white; background-color: rgb(8, 102, 255); 
+                                    style="font-size: 16px; color: white; background-color: rgb(8, 102, 255); float: left;
                                     border: 0px; margin: 0px 0px 20px 20px; padding: 10px; width: 80px; 
                                     border-radius: 8px; cursor: pointer;">Reply
                                 </button>
+
+                                <div style="float: left; display: flex; align-items: center; transform: translate(0, -16px);
+                                    justify-content: center;" title="Only your friends can see this post">
+                                    <input id="friends_only" type="checkbox" style="float: left; margin: 7px; margin-left: 20px; width: 20px; height: 20px; accent-color: #0866ff;">
+                                    <p style="float: left; font-size: 18px; cursor: default;">Friends Only</p>
+                                </div>
+
                             </div>
 
 
@@ -2093,8 +2100,14 @@
                                             var urlParts = currentUrl.split('/');
                                             var lastPart = urlParts[urlParts.length - 1];
                                             console.log(lastPart)
+
+                                            if (document.getElementById("friends_only").checked) {
+                                                var friends_only = "yes"
+                                            } else {
+                                                var friends_only = "no"
+                                            }
             
-                                            var url = '/createpost/reply/' + lastPart
+                                            var url = '/createpost/reply/' + lastPart + "/" + friends_only
                                             var data = 'imageData=' + document.getElementById("aboutsectionedit2").value + "_SEPARATINGIMAGEDATAFROMMESSAGEDATA_" + document.getElementById("imageinput").value
             
                                             xhr.open('POST', url, true);
@@ -2394,7 +2407,7 @@
                             
 
                             function displayposts(post_ids, names, messages, user_ids, profile_pictures, likes, dislikes,
-                                comments_amounts, photos, times, likers, dislikers, replying_to, your_id) {
+                                comments_amounts, photos, times, likers, dislikers, replying_to, your_id, friends_only, friending) {
 
                                 var increment = 0;
 
@@ -2415,6 +2428,8 @@
                                 var dislikers = dislikers.split("_SEPARATOR_").reverse();
                                 var replying_to = replying_to.split("_SEPARATOR_").reverse();
                                 var your_id = your_id
+                                var friends_only = friends_only.split("_SEPARATOR_").reverse();
+                                var friending = friending.split("_SEPARATOR_").reverse();
 
                                 console.log("NAMES: " + names[1]);
 
@@ -3301,6 +3316,38 @@
                                     visit.style.width = "calc(100% - 188px)";
                                     visit.style.cursor = "pointer";
                                     visit.className = "visit" + increment
+
+                                    if (friends_only[i] == "yes") {
+                                        function friendsonlydiv() {
+                                            var friendsonlydiv = document.createElement("div");
+
+                                            friendsonlydiv.style.float = "left";
+                                            friendsonlydiv.style.fontSize = "17px";
+                                            friendsonlydiv.style.color = "#787a80";
+                                            friendsonlydiv.textContent = "Friends Only";
+                                            friendsonlydiv.style.lineHeight = "0";
+                                            friendsonlydiv.style.textAlign = "center";
+                                            friendsonlydiv.style.width = "100vw";
+                                            friendsonlydiv.style.transform = "translate(0, 20px)";
+                                            friendsonlydiv.style.maxWidth = "750px";
+
+                                            newDiv.appendChild(friendsonlydiv);
+                                        }
+                                        
+                                        if (!friending[i].split("_ITEM_").includes(String(your_id))) {
+
+                                            newDiv.style.display = "none";
+                                            if (parseInt(user_ids[i]) == parseInt(your_id)) {
+                                                newDiv.style.display = "block";
+
+                                                friendsonlydiv();
+                                            }
+                                        } else {
+                                            friendsonlydiv();
+
+                                        }
+                                    }
+                                    
 
 
                                     document.querySelector(".actualposts2").appendChild(newDiv);
@@ -4363,6 +4410,24 @@
                     visit.style.width = "calc(100% - 188px)";
                     visit.style.cursor = "pointer";
                     visit.className = "visit" + increment
+
+                    if (document.getElementById("friends_only").checked) {
+                        var friendsonlydiv = document.createElement("div");
+
+                        friendsonlydiv.style.float = "left";
+                        friendsonlydiv.style.fontSize = "17px";
+                        friendsonlydiv.style.color = "#787a80";
+                        friendsonlydiv.textContent = "Friends Only";
+                        friendsonlydiv.style.lineHeight = "0";
+                        friendsonlydiv.style.textAlign = "center";
+                        friendsonlydiv.style.width = "100vw";
+                        friendsonlydiv.style.transform = "translate(0, 20px)";
+                        friendsonlydiv.style.maxWidth = "750px";
+
+                        newDiv.appendChild(friendsonlydiv);
+                    }
+
+                    document.getElementById("friends_only").checked = false;
 
 
                     document.getElementById("newpostsarea").prepend(newDiv);

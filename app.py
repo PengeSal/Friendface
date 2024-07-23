@@ -79,6 +79,7 @@ def resize(image, targetwidth, formatstate):
 @app.route('/get_more_posts')
 @login_required
 def get_more_posts():
+
     post_ids = []
     names = []
     messages = []
@@ -93,10 +94,13 @@ def get_more_posts():
     dislikers = []
     replying_to = []
     replytext = []
+    friends_only = []
+    friending = []
 
     db_path = os.path.join(os.getcwd(), 'friendface.db')
     conn2 = sqlite3.connect(db_path)
     cursor2 = conn2.cursor()
+
 
     cursor2.execute("""
         SELECT * FROM posts 
@@ -108,7 +112,11 @@ def get_more_posts():
 
     columns = {description[0]: index for index, description in enumerate(cursor2.description)}
 
+    increment = 0
+
     for post in posts:
+        increment += 1
+
         post_id = post[columns['post_id']]
         name = post[columns['name']]
         message = post[columns['message']]
@@ -120,6 +128,7 @@ def get_more_posts():
         liker = post[columns['likers']]
         disliker = post[columns['dislikers']]
         reply_to = post[columns['replying_to']]
+        friend_only = post[columns["friends_only"]]
 
         post_ids.append(post_id)
         names.append(name)
@@ -132,6 +141,7 @@ def get_more_posts():
         likers.append(liker)
         dislikers.append(disliker)
         replying_to.append(reply_to)
+        friends_only.append(friend_only)
 
         try:
             cursor2.execute("""SELECT profile_picture FROM users WHERE user_id=?""", (user_id,))
@@ -145,6 +155,8 @@ def get_more_posts():
             print(f"Error fetching profile picture for user_id {user_id}: {e}")
             profile_pictures.append("default_picture")
 
+        
+
         try:
             cursor2.execute("""SELECT message FROM posts WHERE post_id=?""", (reply_to,))
             replytexta = cursor2.fetchone()
@@ -156,9 +168,33 @@ def get_more_posts():
             print(f"Error fetching reply text for post_id {post_id}: {e}")
             replytext.append("No reply text")
 
-    print("Post IDs:", post_ids)
-    print("User IDs:", user_ids)
-    print("Names:", names)
+        try:
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+            cursor.execute("""SELECT friending FROM users WHERE user_id=?""", (user_id,))
+            friendingvalue2 = cursor.fetchone()
+            conn.close()
+            if friendingvalue2:
+                friendingvalue2 = friendingvalue2[0]
+                try:
+                    friendingvalue = json.loads(friendingvalue2)
+                    friendingvalue = '_ITEM_'.join(map(str, friendingvalue))
+
+                    friendingvalue = friendingvalue + "_ITEM_"
+
+                    friending.append(friendingvalue)
+                except:
+                    friending.append("")
+
+                    print("ERROR: " + friendingvalue2)
+            else:
+                friending.append("")
+        except Exception as e:
+            print(f"Error fetching friending list for user_id {user_id}: {e}")
+            friending.append("")
+
+        print("ERROR: " + str(friending) + str(increment))
+
 
     post_ids_str = "_SEPARATOR_".join(map(str, post_ids))
     names_str = "_SEPARATOR_".join(names)
@@ -174,8 +210,10 @@ def get_more_posts():
     dislikers_str = "_SEPARATOR_".join(dislikers)
     replying_to_str = "_SEPARATOR_".join(replying_to)
     replytext_str = "_SEPARATOR_".join(replytext)
+    friends_only_str = "_SEPARATOR_".join(friends_only)
+    friending_str = "_SEPARATOR_".join(friending)
 
-    posts = f"'{post_ids_str}', '{names_str}', '{messages_str}', '{user_ids_str}', '{profile_pictures_str}', '{likes_str}', '{dislikes_str}', '{comments_amounts_str}', '{photos_str}', '{times_str}', '{likers_str}', '{dislikers_str}', '{replying_to_str}', {current_user.id}, 'no', '{replytext_str}'"
+    posts = f"'{post_ids_str}', '{names_str}', '{messages_str}', '{user_ids_str}', '{profile_pictures_str}', '{likes_str}', '{dislikes_str}', '{comments_amounts_str}', '{photos_str}', '{times_str}', '{likers_str}', '{dislikers_str}', '{replying_to_str}', {current_user.id}, '{replytext_str}', 'no', '{friends_only_str}', '{friending_str}'"
 
     conn2.close()
 
@@ -224,8 +262,8 @@ def get_max_post_id(cursor):
     result = cursor.fetchone()[0]
     return result if result is not None else 0
 
-@app.route('/createpost/<isreply>/<replying_to>', methods=['POST'])
-def create_post(isreply, replying_to):
+@app.route('/createpost/<isreply>/<replying_to>/<friends_only>', methods=['POST'])
+def create_post(isreply, replying_to, friends_only):
     data = request.form.get('imageData')
 
     print("POST HAS BEEN CREATED")
@@ -251,7 +289,13 @@ def create_post(isreply, replying_to):
         is_photo = "no"
     else:
         is_photo = "yes"
-        # photo = resize(photo, 1280, "png")
+
+
+    if friends_only == "no":
+        friends_only = "no"
+    else:
+        friends_only = "yes"
+
 
     comments = str([])
     comments_amount = 0
@@ -293,16 +337,17 @@ def create_post(isreply, replying_to):
             likers TEXT,
             dislikers TEXT,
             replying_to TEXT,
-            views INTEGER)""")
+            views INTEGER,
+            friends_only TEXT)""")
 
     try:
         max_post_id = get_max_post_id(cursor)
         new_post_id = max_post_id + 1
 
         cursor.execute("""
-                INSERT INTO posts (post_id, name, message, user_id, profile_picture, likes, dislikes, comments, comments_amount, is_reply, is_photo, photo, time, likers, dislikers, replying_to, views)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """, (new_post_id, name, message, user_id, profile_picture, likes, dislikes, comments, comments_amount, is_reply, is_photo, photo, time, likers, dislikers, replying_to, views))
+                INSERT INTO posts (post_id, name, message, user_id, profile_picture, likes, dislikes, comments, comments_amount, is_reply, is_photo, photo, time, likers, dislikers, replying_to, views, friends_only)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """, (new_post_id, name, message, user_id, profile_picture, likes, dislikes, comments, comments_amount, is_reply, is_photo, photo, time, likers, dislikers, replying_to, views, friends_only))
 
         conn.commit()
 
@@ -1124,6 +1169,8 @@ def posts(post_id):
             likers = ""
             dislikers = ""
             replying_to = ""
+            friends_only = ""
+            friending = ""
 
             db_path = os.path.join(os.getcwd(), 'friendface.db')
             conn2 = sqlite3.connect(db_path)
@@ -1132,6 +1179,9 @@ def posts(post_id):
 
             cursor2.execute("""SELECT * FROM posts WHERE replying_to = ?""", (post_id,))
             posts = cursor2.fetchall()
+
+
+            
 
 
 
@@ -1147,6 +1197,31 @@ def posts(post_id):
                         messages = f"{messages}{value}_SEPARATOR_"
                     if column_name[0] == "user_id":
                         user_ids = f"{user_ids}{value}_SEPARATOR_"
+
+                        db_path = os.path.join(os.getcwd(), 'friendface.db')
+                        conn = sqlite3.connect(db_path)
+                        cursor = conn.cursor()
+
+                        cursor.execute("""SELECT friending FROM users WHERE user_id=?""", (value,))
+                        friendingvalue2 = cursor.fetchone()
+                        friendingvalue2 = friendingvalue2[0]
+
+                        conn.close()
+
+                        try:
+                            friendingvalue = json.loads(friendingvalue2)
+                            friendingvalue = '_ITEM_'.join(map(str, friendingvalue))
+
+                            friendingvalue = friendingvalue + "_ITEM_"
+                        except:
+                            friendingvalue = ""
+
+                            print("ERROR: " + friendingvalue2)
+
+                        
+
+                        friending = f"{friending}{friendingvalue}_SEPARATOR_"
+
                     if column_name[0] == "profile_picture":
                         profile_pictures = f"{profile_pictures}image_SEPARATOR_"
                     if column_name[0] == "likes":
@@ -1175,26 +1250,30 @@ def posts(post_id):
                         dislikers = f"{dislikers}{value}_SEPARATOR_"
                     if column_name[0] == "replying_to":
                         replying_to = f"{replying_to}{value}_SEPARATOR_"
+                    if column_name[0] == "friends_only":
+                        friends_only = f"{friends_only}{value}_SEPARATOR_"
 
 
-            posts = f"displayposts('{post_ids}', '{names}', '{messages}', '{user_ids}', '{profile_pictures}', '{likes}', '{dislikes}', '{comments_amounts}', '{photos}', '{times}', '{likers}', '{dislikers}', '{replying_to}', {current_user.id})"
+            posts = f"displayposts('{post_ids}', '{names}', '{messages}', '{user_ids}', '{profile_pictures}', '{likes}', '{dislikes}', '{comments_amounts}', '{photos}', '{times}', '{likers}', '{dislikers}', '{replying_to}', {current_user.id}, '{friends_only}', '{friending}')"
 
 
 
-            cursor.execute("""SELECT dark_mode FROM users WHERE user_id =?""", (current_user.id,))
-            dark_mode = cursor.fetchone()
+            cursor2.execute("""SELECT dark_mode FROM users WHERE user_id =?""", (current_user.id,))
+            dark_mode = cursor2.fetchone()
             dark_mode = dark_mode[0]
 
 
+
             print("dark mode: " + dark_mode)
+            print("dark mode: " + posts)
 
 
             userdata = user_data[0]
 
             newposts = f"newpost('{current_user.forename} {current_user.surname}', '{userdata}', '{current_user.id}', '{post_id}')"
 
-            cursor.execute("""SELECT * FROM users WHERE user_id=?""", (theirid,))
-            user_data2 = cursor.fetchone()
+            cursor2.execute("""SELECT * FROM users WHERE user_id=?""", (theirid,))
+            user_data2 = cursor2.fetchone()
 
             if user_data:
                 banner = user_data2[7]
@@ -1716,78 +1795,9 @@ def home(mode):
             conn.close()
             
             if mode == "feed":
-                post_ids = ""
-                names = ""
-                messages = ""
-                user_ids = ""
-                profile_pictures = ""
-                likes = ""
-                dislikes = ""
-                comments_amounts = ""
-                photos = ""
-                times = ""
-                likers = ""
-                dislikers = ""
-                replying_to = ""
-
-                
-
-                try:
-                    cursor2.execute("""SELECT * FROM posts WHERE dislikers NOT LIKE ?""", (f"%{current_user.id}%",))
-                    posts = cursor2.fetchall()
-                except Exception as e:
-                    posts = []
-
-                random.shuffle(posts)
-                selected_posts = posts[:10]
-
-                for post in selected_posts:
-                    for column_name, value in zip(cursor2.description, post):
-                        if column_name[0] == "post_id":
-                            post_ids = f"{post_ids}{value}_SEPARATOR_"
-                        if column_name[0] == "name":
-                            names = f"{names}{value}_SEPARATOR_"
-                        if column_name[0] == "message":
-                            messages = f"{messages}{value}_SEPARATOR_"
-                        if column_name[0] == "user_id":
-                            user_ids = f"{user_ids}{value}_SEPARATOR_"
-                        if column_name[0] == "profile_picture":
-                            profile_pictures = f"{profile_pictures}image_SEPARATOR_"
-                        if column_name[0] == "likes":
-                            likes = f"{likes}{value}_SEPARATOR_"
-                        if column_name[0] == "dislikes":
-                            dislikes = f"{dislikes}{value}_SEPARATOR_"
-                        if column_name[0] == "comments_amounts":
-                            comments_amounts = f"{comments_amounts}{value}_SEPARATOR_"
-                        if column_name[0] == "is_photo":
-                            if value != "no":
-                                print("THIS IS A PHOTO")
-                                print("THIS IS A PHOTO")
-                                print("THIS IS A PHOTO")
-
-                                photos = f"{photos}image_SEPARATOR_"
-                            else:
-                                photos = f"{photos}_SEPARATOR_"
-
-
-
-                        if column_name[0] == "time":
-                            times = f"{times}{value}_SEPARATOR_"
-                        if column_name[0] == "likers":
-                            likers = f"{likers}{value}_SEPARATOR_"
-                        if column_name[0] == "dislikers":
-                            dislikers = f"{dislikers}{value}_SEPARATOR_"
-                        if column_name[0] == "replying_to":
-                            replying_to = f"{replying_to}{value}_SEPARATOR_"
-
-                posts = f"displayposts('{post_ids}', '{names}', '{messages}', '{user_ids}', '{profile_pictures}', '{likes}', '{dislikes}', '{comments_amounts}', '{photos}', '{times}', '{likers}', '{dislikers}', '{replying_to}', {current_user.id}, 'yes', '')"
+                posts = f"displayposts()"
 
                 conn2.close()
-            
-
-
-
-
 
             if mode == "liked":
                 post_ids = ""
@@ -1803,8 +1813,8 @@ def home(mode):
                 likers = ""
                 dislikers = ""
                 replying_to = ""
-
-                
+                friending = ""
+                friends_only = ""
 
                 try:
                     cursor2.execute("""SELECT * FROM posts WHERE likers LIKE ?""", (f"%{current_user.id}%",))
@@ -1826,6 +1836,32 @@ def home(mode):
                             messages = f"{messages}{value}_SEPARATOR_"
                         if column_name[0] == "user_id":
                             user_ids = f"{user_ids}{value}_SEPARATOR_"
+                            
+                            db_path = os.path.join(os.getcwd(), 'friendface.db')
+                            conn = sqlite3.connect(db_path)
+                            cursor = conn.cursor()
+
+                            cursor.execute("""SELECT friending FROM users WHERE user_id=?""", (value,))
+                            friendingvalue2 = cursor.fetchone()
+                            friendingvalue2 = friendingvalue2[0]
+
+                            conn.close()
+
+                            try:
+                                friendingvalue = json.loads(friendingvalue2)
+                                friendingvalue = '_ITEM_'.join(map(str, friendingvalue))
+
+                                friendingvalue = friendingvalue + "_ITEM_"
+                            except:
+                                friendingvalue = ""
+
+                                print("ERROR: " + friendingvalue2)
+                                
+
+                            
+
+                            friending = f"{friending}{friendingvalue}_SEPARATOR_"
+                            
                         if column_name[0] == "profile_picture":
                             profile_pictures = f"{profile_pictures}image_SEPARATOR_"
                         if column_name[0] == "likes":
@@ -1854,8 +1890,10 @@ def home(mode):
                             dislikers = f"{dislikers}{value}_SEPARATOR_"
                         if column_name[0] == "replying_to":
                             replying_to = f"{replying_to}{value}_SEPARATOR_"
+                        if column_name[0] == "friends_only":
+                            friends_only = f"{friends_only}{value}_SEPARATOR_"
 
-                posts = f"displayposts('{post_ids}', '{names}', '{messages}', '{user_ids}', '{profile_pictures}', '{likes}', '{dislikes}', '{comments_amounts}', '{photos}', '{times}', '{likers}', '{dislikers}', '{replying_to}', {current_user.id}, 'yes', '')"
+                posts = f"displayposts('{post_ids}', '{names}', '{messages}', '{user_ids}', '{profile_pictures}', '{likes}', '{dislikes}', '{comments_amounts}', '{photos}', '{times}', '{likers}', '{dislikers}', '{replying_to}', {current_user.id}, 'yes', '', '{friends_only}', '{friending}')"
 
                 conn2.close()
 
@@ -2214,6 +2252,8 @@ def user_profile(user_id, typeofthing):
                     likers = ""
                     dislikers = ""
                     replying_to = ""
+                    friends_only = ""
+                    friending = ""
 
                     db_path = os.path.join(os.getcwd(), 'friendface.db')
                     conn2 = sqlite3.connect(db_path)
@@ -2226,7 +2266,7 @@ def user_profile(user_id, typeofthing):
 
                     photoalbum = "photoalbum('')"
 
-
+                    conn2.close()
 
                     for post in posts:
                         for column_name, value in zip(cursor2.description, post):
@@ -2240,6 +2280,34 @@ def user_profile(user_id, typeofthing):
                                 messages = f"{messages}{value}_SEPARATOR_"
                             if column_name[0] == "user_id":
                                 user_ids = f"{user_ids}{value}_SEPARATOR_"
+
+                                db_path = os.path.join(os.getcwd(), 'friendface.db')
+                                conn = sqlite3.connect(db_path)
+                                cursor = conn.cursor()
+
+                                cursor.execute("""SELECT friending FROM users WHERE user_id=?""", (value,))
+                                friendingvalue2 = cursor.fetchone()
+                                friendingvalue2 = friendingvalue2[0]
+
+                                conn.close()
+
+                                try:
+                                    friendingvalue = json.loads(friendingvalue2)
+                                    friendingvalue = '_ITEM_'.join(map(str, friendingvalue))
+
+                                    friendingvalue = friendingvalue + "_ITEM_"
+                                except:
+                                    friendingvalue = ""
+
+                                    print("ERROR: " + friendingvalue2)
+                                    
+
+                                
+
+                                friending = f"{friending}{friendingvalue}_SEPARATOR_"
+
+                                    
+
                             if column_name[0] == "profile_picture":
                                 profile_pictures = f"{profile_pictures}image_SEPARATOR_"
                             if column_name[0] == "likes":
@@ -2268,12 +2336,14 @@ def user_profile(user_id, typeofthing):
                                 dislikers = f"{dislikers}{value}_SEPARATOR_"
                             if column_name[0] == "replying_to":
                                 replying_to = f"{replying_to}{value}_SEPARATOR_"
+                            if column_name[0] == "friends_only":
+                                friends_only = f"{friends_only}{value}_SEPARATOR_"
 
 
-                    posts = f"displayposts('{post_ids}', '{names}', '{messages}', '{user_ids}', '{profile_pictures}', '{likes}', '{dislikes}', '{comments_amounts}', '{photos}', '{times}', '{likers}', '{dislikers}', '{replying_to}', {current_user.id})"
+                    posts = f"displayposts('{post_ids}', '{names}', '{messages}', '{user_ids}', '{profile_pictures}', '{likes}', '{dislikes}', '{comments_amounts}', '{photos}', '{times}', '{likers}', '{dislikers}', '{replying_to}', {current_user.id}, '{friends_only}', '{friending}')"
 
 
-
+                    print(posts)
 
 
 
@@ -2297,6 +2367,8 @@ def user_profile(user_id, typeofthing):
                     likers = ""
                     dislikers = ""
                     replying_to = ""
+                    friends_only = ""
+                    friending = ""
 
                     db_path = os.path.join(os.getcwd(), 'friendface.db')
                     conn2 = sqlite3.connect(db_path)
@@ -2321,6 +2393,32 @@ def user_profile(user_id, typeofthing):
                                 messages = f"{messages}{value}_SEPARATOR_"
                             if column_name[0] == "user_id":
                                 user_ids = f"{user_ids}{value}_SEPARATOR_"
+
+                                db_path = os.path.join(os.getcwd(), 'friendface.db')
+                                conn = sqlite3.connect(db_path)
+                                cursor = conn.cursor()
+
+                                cursor.execute("""SELECT friending FROM users WHERE user_id=?""", (value,))
+                                friendingvalue2 = cursor.fetchone()
+                                friendingvalue2 = friendingvalue2[0]
+
+                                conn.close()
+
+                                try:
+                                    friendingvalue = json.loads(friendingvalue2)
+                                    friendingvalue = '_ITEM_'.join(map(str, friendingvalue))
+
+                                    friendingvalue = friendingvalue + "_ITEM_"
+                                except:
+                                    friendingvalue = ""
+
+                                    print("ERROR: " + friendingvalue2)
+
+                                
+
+                                friending = f"{friending}{friendingvalue}_SEPARATOR_"
+
+                                
                             if column_name[0] == "profile_picture":
                                 profile_pictures = f"{profile_pictures}image_SEPARATOR_"
                             if column_name[0] == "likes":
@@ -2351,9 +2449,12 @@ def user_profile(user_id, typeofthing):
                                 dislikers = f"{dislikers}{value}_SEPARATOR_"
                             if column_name[0] == "replying_to":
                                 replying_to = f"{replying_to}{value}_SEPARATOR_"
+                            if column_name[0] == "friends_only":
+                                friends_only = f"{friends_only}{value}_SEPARATOR_"
+                            
 
 
-                    posts = f"displayposts('{post_ids}', '{names}', '{messages}', '{user_ids}', '{profile_pictures}', '{likes}', '{dislikes}', '{comments_amounts}', '{photos}', '{times}', '{likers}', '{dislikers}', '{replying_to}', {current_user.id})"
+                    posts = f"displayposts('{post_ids}', '{names}', '{messages}', '{user_ids}', '{profile_pictures}', '{likes}', '{dislikes}', '{comments_amounts}', '{photos}', '{times}', '{likers}', '{dislikers}', '{replying_to}', {current_user.id}, '{friends_only}', '{friending}')"
 
                     
 

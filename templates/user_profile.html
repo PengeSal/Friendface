@@ -1443,7 +1443,7 @@
                             setInterval(repeat, 50)
 
                             function displayposts(post_ids, names, messages, user_ids, profile_pictures, likes, dislikes,
-                                comments_amounts, photos, times, likers, dislikers, replying_to, your_id) {
+                                comments_amounts, photos, times, likers, dislikers, replying_to, your_id, friends_only, friending) {
 
                                 var increment = 0;
 
@@ -1464,6 +1464,8 @@
                                 var dislikers = dislikers.split("_SEPARATOR_").reverse();
                                 var replying_to = replying_to.split("_SEPARATOR_").reverse();
                                 var your_id = your_id
+                                var friends_only = friends_only.split("_SEPARATOR_").reverse();
+                                var friending = friending.split("_SEPARATOR_").reverse();
 
                                 console.log("NAMES: " + names[1]);
 
@@ -2154,6 +2156,37 @@
                                     visit.style.width = "calc(100% - 188px)";
                                     visit.style.cursor = "pointer";
                                     visit.className = "visit" + increment
+
+                                    if (friends_only[i] == "yes") {
+                                        function friendsonlydiv() {
+                                            var friendsonlydiv = document.createElement("div");
+
+                                            friendsonlydiv.style.float = "left";
+                                            friendsonlydiv.style.fontSize = "17px";
+                                            friendsonlydiv.style.color = "#787a80";
+                                            friendsonlydiv.textContent = "Friends Only";
+                                            friendsonlydiv.style.lineHeight = "0";
+                                            friendsonlydiv.style.textAlign = "center";
+                                            friendsonlydiv.style.width = "100vw";
+                                            friendsonlydiv.style.transform = "translate(0, 20px)";
+                                            friendsonlydiv.style.maxWidth = "750px";
+
+                                            newDiv.appendChild(friendsonlydiv);
+                                        }
+                                        
+                                        if (!friending[i].split("_ITEM_").includes(String(your_id))) {
+
+                                            newDiv.style.display = "none";
+                                            if (parseInt(user_ids[i]) == parseInt(your_id)) {
+                                                newDiv.style.display = "block";
+
+                                                friendsonlydiv();
+                                            }
+                                        } else {
+                                            friendsonlydiv();
+
+                                        }
+                                    }
 
 
                                     document.querySelector(".actualposts2").appendChild(newDiv);

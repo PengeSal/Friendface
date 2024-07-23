@@ -1191,8 +1191,9 @@
                     }
                 }
                 setInterval(repeat, 50)
+
                 function displayposts(post_ids, names, messages, user_ids, profile_pictures, likes, dislikes,
-                    comments_amounts, photos, times, likers, dislikers, replying_to, your_id) {
+                    comments_amounts, photos, times, likers, dislikers, replying_to, your_id, friends_only, friending) {
 
                     var increment = 0;
 
@@ -1213,6 +1214,8 @@
                     var dislikers = dislikers.split("_SEPARATOR_").reverse();
                     var replying_to = replying_to.split("_SEPARATOR_").reverse();
                     var your_id = your_id
+                    var friends_only = friends_only.split("_SEPARATOR_").reverse();
+                    var friending = friending.split("_SEPARATOR_").reverse();
 
 
                     if (typeof names[1] === "undefined") {
@@ -1271,7 +1274,17 @@
                         actualimage.style.aspectRatio = "1/1";
 
 
+                        if (friends_only[i] == "yes") {
+                            if (!friending[i].split("_ITEM_").includes(String(your_id))) {
+                                actualimage.style.display = "none";
+                                if (parseInt(user_ids[i]) == parseInt(your_id)) {
+                                    actualimage.style.display = "block";
+                                }
+                            } else {
+                                friendsonlydiv();
 
+                            }
+                        }
 
 
                         document.querySelector(".mainbox3").appendChild(actualimage);

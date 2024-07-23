@@ -1105,22 +1105,14 @@ position: absolute;  z-index: 99 !important;">
                                 document.querySelector(".actualposts3").style.overflowY = "hidden";
                             }
                         };
-                        function repeat() {
-                            if (window.innerWidth < 950) {
-                                document.getElementById('aboutsection').style.transform = 'translate(-500px)';
-                            } else {
-                                document.getElementById('aboutsection').style.transform = 'translate(0px)';
-                            }
-                            
-                        }
-                        setInterval(repeat, 50)
+
 
                         var increment = 0;
 
                         
 
                         function displayposts(post_ids, names, messages, user_ids, profile_pictures, likes, dislikes, 
-                            comments_amounts, photos, times, likers, dislikers, replying_to, your_id, firsttime, replytext) {
+                            comments_amounts, photos, times, likers, dislikers, replying_to, your_id, firsttime, replytext, friends_only, friending) {
 
                             
         
@@ -1141,6 +1133,8 @@ position: absolute;  z-index: 99 !important;">
                             var your_id = your_id
                             var firsttime = firsttime
                             var replytext = replytext.split("_SEPARATOR_");
+                            var friends_only = friends_only.split("_SEPARATOR_")
+                            var friending = friending.split("_SEPARATOR_")
 
                             console.log("NAMES: " + names[1]);
 
@@ -2099,6 +2093,51 @@ position: absolute;  z-index: 99 !important;">
                                 visit.style.cursor = "pointer";
                                 visit.className = "visit" + increment
 
+                                if (friends_only[i] == "yes") {
+                                    function friendsonlydiv() {
+                                        var friendsonlydiv = document.createElement("div");
+
+                                        friendsonlydiv.style.float = "left";
+                                        friendsonlydiv.style.fontSize = "17px";
+                                        friendsonlydiv.style.color = "#787a80";
+                                        friendsonlydiv.textContent = "Friends Only";
+                                        friendsonlydiv.style.lineHeight = "0";
+                                        friendsonlydiv.style.textAlign = "center";
+                                        friendsonlydiv.style.width = "100vw";
+                                        friendsonlydiv.style.transform = "translate(0, 20px)";
+                                        friendsonlydiv.style.maxWidth = "750px";
+
+                                        newDiv.appendChild(friendsonlydiv);
+                                    }
+                                    
+                                    if (!friending[i].split("_ITEM_").includes(String(your_id))) {
+
+                                        newDiv.style.display = "none";
+                                        if (parseInt(user_ids[i]) == parseInt(your_id)) {
+                                            newDiv.style.display = "block";
+
+                                            friendsonlydiv();
+                                        }
+                                    } else {
+                                        friendsonlydiv();
+
+                                    }
+                                }
+
+                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
+                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
+                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
+                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
+                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
+                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
+                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
+                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
+                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
+                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
+                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
+                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
+                                
+
 
                                 document.querySelector(".actualposts2").appendChild(newDiv);
                                 
@@ -2591,9 +2630,6 @@ position: absolute;  z-index: 99 !important;">
                                         return response.text();
                                     })
                                     .then(posts => {
-
-                                        
-
                                         var dynamicFunction = new Function("displayposts(" + posts + ")");
 
                                         dynamicFunction();
