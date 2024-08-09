@@ -13,7 +13,9 @@ from flask_socketio import SocketIO, emit, join_room, leave_room
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
+from gevent import monkey
 
+monkey.patch_all()
 
 
 app = Flask(__name__, static_url_path='/static')
