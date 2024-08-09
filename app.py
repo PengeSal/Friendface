@@ -21,7 +21,7 @@ app.secret_key = token_hex(16)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///friendface.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-socketio = SocketIO(app, max_http_buffer_size=100000000)
+socketio = SocketIO(app, max_http_buffer_size=100000000, async_mode='gevent')
 db = SQLAlchemy(app)
 
 bcrypt = Bcrypt(app)
