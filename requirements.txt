@@ -6,4 +6,5 @@ pillow
 Flask-SocketIO
 Flask-SQLAlchemy
 editdistance
+gevent
 gunicorn
