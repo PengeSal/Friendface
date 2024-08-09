@@ -34,13 +34,13 @@
         }
 
         .icon-small {
-            font-size: 16px; 
+            font-size: 16px;
         }
         .icon-medium {
-            font-size: 24px; 
+            font-size: 24px;
         }
         .icon-large {
-            font-size: 32px; 
+            font-size: 32px;
         }
 
         .pfp{
@@ -137,8 +137,8 @@
     </style>
     <script>
 
-    
-        
+
+
         //addEventListener("DOMContentLoaded", (event) => {
         (function (){
             function swapElementColors(element, mouseover) {
@@ -151,9 +151,9 @@
                         var transition = computedStyle.transition;
                         element.style.transition = "none"
                     }
-                    
 
-                    if (color === 'rgb(255, 255, 255)') { 
+
+                    if (color === 'rgb(255, 255, 255)') {
                         element.style.color = 'rgb(33, 33, 33)';
                     } else if (color === 'rgb(0, 0, 0)') {
                         element.style.color = 'rgb(254, 254, 254)';
@@ -167,9 +167,9 @@
 
                     let backgroundColor = computedStyle.backgroundColor;
 
-                    if (backgroundColor === 'rgb(255, 255, 255)') { 
+                    if (backgroundColor === 'rgb(255, 255, 255)') {
                         element.style.backgroundColor = 'rgb(33, 33, 33)';
-                    } else if (backgroundColor === 'rgb(0, 0, 0)') { 
+                    } else if (backgroundColor === 'rgb(0, 0, 0)') {
                         element.style.backgroundColor = 'rgb(254, 254, 254)';
                     } else if (backgroundColor === 'rgb(8, 102, 255)' || backgroundColor === 'rgb(57, 105, 251)') {
                         element.style.color = 'rgb(255, 255, 255)';
@@ -185,9 +185,9 @@
                     let borderBottomColor = computedStyle.borderBottomColor;
                     let borderTopColor = computedStyle.borderTopColor;
 
-                    if (borderColor === 'rgb(255, 255, 255)') { 
+                    if (borderColor === 'rgb(255, 255, 255)') {
                         element.style.borderColor = 'rgb(33, 33, 33)';
-                    } else if (borderColor === 'rgb(0, 0, 0)') { 
+                    } else if (borderColor === 'rgb(0, 0, 0)') {
                         element.style.borderColor = 'rgb(254, 254, 254)';
                     } else if (borderColor === 'rgb(240, 242, 245)') {
                         element.style.borderColor = 'rgb(23, 23, 23)';
@@ -197,17 +197,17 @@
                         element.style.borderBottomColor = 'rgb(55, 55, 55)';
                     } else if (borderColor === 'rgb(120, 122, 128)') {
                         element.style.borderColor = 'rgb(180, 180, 180)';
-                    } else if (borderBottomColor === 'rgb(240, 242, 245)') { 
+                    } else if (borderBottomColor === 'rgb(240, 242, 245)') {
                         element.style.borderBottomColor = 'rgb(23, 23, 23)';
-                    } else if (borderTopColor === 'rgb(240, 242, 245)') { 
+                    } else if (borderTopColor === 'rgb(240, 242, 245)') {
                         element.style.borderTopColor = 'rgb(23, 23, 23)';
                     }
 
                     let boxShadow = computedStyle.boxShadow;
 
-                    if (boxShadow === 'rgb(255, 255, 255)') { 
+                    if (boxShadow === 'rgb(255, 255, 255)') {
                         element.style.boxShadow = 'rgb(33, 33, 33)';
-                    } else if (boxShadow === 'rgb(0, 0, 0)') { 
+                    } else if (boxShadow === 'rgb(0, 0, 0)') {
                         element.style.boxShadow = 'rgb(254, 254, 254)';
                     } else if (boxShadow === 'rgb(240, 242, 245)') {
                         element.style.boxShadow = 'rgb(23, 23, 23)';
@@ -220,23 +220,23 @@
                     if (mouseover2 == "yes"){
                         element.style.transition = transition
                     }
-                    
-                    
+
+
 
                 }
             function swapColorsInDocumentDark() {
-                
+
 
                 const allElements = document.querySelectorAll('*');
 
 
                 allElements.forEach(element => {
                     swapElementColors(element, "yes");
-                    
+
                 });
 
 
-                
+
 
 
                 var style = document.createElement('style');
@@ -260,7 +260,7 @@
 
                 document.head.appendChild(style);
 
-                
+
             }
 
 
@@ -293,7 +293,7 @@
                 if (document.getElementById("darkmode").textContent == "yes") {
                     swapColorsInDocumentDark();
                 }
-                document.removeEventListener('mouseout', arguments.callee); 
+                document.removeEventListener('mouseout', arguments.callee);
                 document.addEventListener('mouseout', function(event) {
                     if (document.getElementById("darkmode").textContent == "yes") {
                         var element = event.target;
@@ -332,19 +332,19 @@
             });
 
 
-            
 
-            
+
+
         })();
-        
+
 
 
     </script>
-    
+
 
 </head>
 <body>
-    
+
 
 
     <div id="darkmode" style="display: none;">{{ dark_mode }}</div>
@@ -920,7 +920,7 @@
                             }
                         </style>
 
-                        <i class="fa-solid fa-envelope" style="padding-right: 5px;"></i> Posts 
+                        <i class="fa-solid fa-envelope" style="padding-right: 5px;"></i> Posts
                     </button>
 
                     <div style="padding: 40px 0px 0px 0px;"> <div class="bluebar" style="position: absolute; width: 100px; background-color: #0866ff; z-index: 9999;
@@ -947,7 +947,7 @@
                                 }
                             </style>
 
-                            <i class="fa-solid fa-user" style="padding-right: 5px;"></i> About 
+                            <i class="fa-solid fa-user" style="padding-right: 5px;"></i> About
                         </button>
                     </form>
 
@@ -974,7 +974,7 @@
                                 }
                             </style>
 
-                            <i class="fa-solid fa-user-group" style="padding-right: 5px;"></i> Friends 
+                            <i class="fa-solid fa-user-group" style="padding-right: 5px;"></i> Friends
                         </button>
                     </form>
 
@@ -1000,7 +1000,7 @@
                                 }
                             </style>
 
-                            <i class="fas fa-camera" style="padding-right: 5px;"></i> Photos 
+                            <i class="fas fa-camera" style="padding-right: 5px;"></i> Photos
                         </button>
                     </form>
 
@@ -1060,13 +1060,13 @@
                                             placeholder="Time to share your opinions online :/" name="message" required></textarea>
 
                                 <script>
-                                    
 
-                                    
+
+
 
                                     document.getElementById("aboutsectionedit2").addEventListener('input', function() {
                                         var text = document.getElementById("aboutsectionedit2").value;
-    
+
                                         var p = /(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?/g;
                                         var matches = [];
                                         var match;
@@ -1078,11 +1078,11 @@
                                         if (matches.length > 0) {
                                             document.getElementById("choosephotobutton").style.display = "none";
                                             document.getElementById('imageinput').value = ""
-                                            
+
                                         } else {
                                             document.getElementById("choosephotobutton").style.display = "block";
                                         }
-                                        
+
                                     });
 
                                 </script>
@@ -1169,14 +1169,6 @@
 
 
 
-                        <button id="closebutton" onclick="uncreatepost()"
-                            style="font-size: 16px; color: #787a80; background-color: #f0f2f5;
-                            border: 0px; margin: 0px 0px 20px 20px; padding: 10px; width: 90px; margin: 10px;
-                            border-radius: 8px; cursor: pointer; float: right;">Close
-                        </button>
-
-
-
 
 
                         </div>
@@ -1192,13 +1184,7 @@
                     <script>
 
 
-                        function uncreatepost() {
-                            console.log("CLOSE BUTTON PRESSED");
-                            // document.getElementById("hiddenfornow").style.visibility = "hidden";
-                            document.querySelector(".actualposts").style.transform = "translate(0, -10px)";
-                            document.querySelector(".addpost").style.display = "block";
-
-                        };
+                        
 
                         function dark(){
                             if (document.getElementById("darkmode").textContent == "no"){
@@ -1237,11 +1223,22 @@
 
 
                         <div id="aboutsection" style="width: calc(100% - 770px); position: sticky; top: 0; background-color: #f0f2f5;
-                        transition: transform 0.3s; overflow: hidden; float: left;">
-                            <div style="width: 100%; background-color: white; float: left; border-radius: 10px; max-height: calc(100vh - 790px);
+                        transition: transform 0.3s; overflow: hidden; float: left; height: 100%; overflow-y: scroll;">
+                            <div id="homelesscontainer" style="width: 100%; background-color: white; float: left; border-radius: 10px; max-height: calc(100vh - 790px); min-height: 155px;
                             border-bottom: 2px solid #caccd0; line-height: 15px; overflow: hidden;">
                                 <h2 style="padding: 0 15px 0 15px;">About</h2>
                                 <hr width="1000px">
+
+                                <div title="Location" id="location" style="padding: 10px; display: none; padding-left: 15px; font-size: 18px;">
+                                    giggle
+                                </div>
+
+                                <div title="Relationship Status" id="relationshipstatus" style="padding: 10px; display: none; padding-left: 15px; font-size: 18px;">
+                                    giggle
+                                </div>
+
+                                <hr id="horixon" style="display: none; margin-top: 10px;">
+                                
                                 <textarea id="homeless" style="
                                     margin-left: 13px;
                                     border: 0px solid red; color: black;
@@ -1253,9 +1250,9 @@
                                     font-size: 18px;
                                     margin-top: 5px;
                                     margin-bottom: 12px;
-                                    max-height: calc(100vh - 885px); height: auto;"
-
-                                readonly ></textarea>
+                                    max-height: calc(100vh - 885px); height: auto;
+                                    min-height: 70px;"
+                                readonly></textarea>
 
                                 <div id="everyday" onclick="{{ about }}" style="display: none;"></div>
 
@@ -1289,6 +1286,40 @@
 
 
                                     }
+
+                                    addEventListener("DOMContentLoaded", (event) => {
+                                        if ("{{ relationshipstatus }}".includes("_YES_")){
+                                            document.getElementById("relationshipstatus").style.display = "block";
+                                            document.getElementById("relationshipstatus").innerHTML = "<i style='padding-right: 5px;' class='fa-solid fa-heart-pulse'></i>{{ relationshipstatus }}".replace("_YES_", "");
+
+                                            document.getElementById("homeless").style.maxHeight = "calc(100vh - 1020px)";
+                                            document.getElementById("homelesscontainer").style.minHeight = "215px";
+                                            document.getElementById("homeless").style.minHeight = "70px";
+
+                                            document.getElementById("horixon").style.display = "block";
+                                        }
+
+                                        if ("{{ location }}".includes("_YES_")){
+                                            document.getElementById("location").style.display = "block";
+                                            document.getElementById("location").innerHTML = "<i style='padding-right: 9px; padding-left: 3px;' class='fa-solid fa-location-dot'></i>{{ location }}".replace("_YES_", "");
+                                            
+                                            document.getElementById("homeless").style.maxHeight = "calc(100vh - 1020px)";
+                                            document.getElementById("homelesscontainer").style.minHeight = "215px";
+                                            document.getElementById("homeless").style.minHeight = "70px";
+
+                                            document.getElementById("horixon").style.display = "block";
+                                        }
+
+
+                                        if ("{{ location }}".includes("_YES_") && "{{ relationshipstatus }}".includes("_YES_")){
+                                            document.getElementById("homeless").style.maxHeight = "calc(100vh - 1020px)";
+                                            document.getElementById("homelesscontainer").style.minHeight = "255px";
+                                            document.getElementById("homeless").style.minHeight = "70px";
+                                        }
+                                    });
+                                    
+
+
                                 </script>
 
 
@@ -1338,12 +1369,12 @@
                                             return response.text();
                                         })
                                         .then(album => {
-                                            
+
                                             document.getElementById("photoalbum").onclick = function() {
                                                 photoalbum(album);
                                             };
 
-                                            
+
                                             document.getElementById("photoalbum").click();
 
                                             console.log("ALBUM: " + album);
@@ -1361,12 +1392,12 @@
 
                                         if (photos.length != 1){
 
-                                        for (var i = 0; i < 9; i++) {
+                                        for (var i = 0; i < 11; i++) {
                                             if (i != photos.length - 1){
                                             try {
                                                 var photo = document.createElement('img');
 
-                                                
+
                                                 photo.src = "data:image/jpeg;base64," + photos[i]
 
                                                 if (photos[i] != undefined) {
@@ -1438,7 +1469,7 @@
                                                 console.log("bad luck")
                                             }
                                             }
-                                            
+
 
                                         }
                                         } else {
@@ -1453,8 +1484,8 @@
                                         }
 
                                     }
-                                    
-                                    
+
+
 
 
 
@@ -1538,8 +1569,8 @@
 
                                 if (document.getElementById("darkmode").textContent == "yes"){
                                     colour.style.background = 'linear-gradient(to top, rgb(33, 33, 33), rgb(33, 33, 33), rgb(33, 33, 33), rgb(33, 33, 33), rgb(33, 33, 33), rgb(33, 33, 33), ' + rgb + ')';
-                            
-                                } else { 
+
+                                } else {
                                     colour.style.background = 'linear-gradient(to top, white, white, white, white, white, white, ' + rgb + ')';
                                 }
                             }
@@ -1555,7 +1586,7 @@
 
 
 
-                                
+
 
 
 
@@ -1616,13 +1647,13 @@
                                                 }
                                                 document.getElementById('p').style.mixBlendMode = "normal";
 
-                                                
+
                                             }
                                         };
 
                                         xhr.send(data);
 
-                                        
+
 
 
 
@@ -1736,70 +1767,81 @@
 
                                     if (increment != 1) {
 
-                                    
-
-                                    function advert(increment) {
-                                        var advertreal = document.createElement('div');
-                                        var close = document.createElement('button');
 
 
-                                        close.textContent = "✕"
-                                        close.style.background = "white"
-                                        close.style.fontSize = "10px"
-                                        close.style.padding = "0"
-                                        close.style.margin = "5px"
-                                        close.style.float = "right"
-                                        close.style.width = "20px"
-                                        close.style.height = "20px"
-                                        close.style.border = "1px outset"
-                                        close.style.cursor = "pointer"
+                                        function advert(increment) {
+                                        if (friends_only[i] == "no") {
+                                            var advertreal = document.createElement('div');
+                                            var close = document.createElement('button');
 
 
-
-                                        advertreal.className = "advert" + increment;
-
-                                        (function (index) {
-                                            close.onclick = function () {
-                                                document.querySelector(".advert" + index).style.display = "none";
-                                            };
-
-                                        })(increment);
-
-                                        advertreal.style.marginBottom = "15px";
-                                        advertreal.style.background = "white";
-                                        advertreal.style.height = "175px";
-                                        advertreal.style.width = "calc(100% - 4px)";
-                                        advertreal.style.maxWidth = "746px"
-                                        advertreal.style.border = "2px outset"
+                                            close.textContent = "✕"
+                                            close.style.background = "white"
+                                            close.style.fontSize = "10px"
+                                            close.style.padding = "0"
+                                            close.style.margin = "5px"
+                                            close.style.float = "right"
+                                            close.style.width = "20px"
+                                            close.style.height = "20px"
+                                            close.style.border = "1px outset"
+                                            close.style.cursor = "pointer"
 
 
 
+                                            advertreal.className = "advert" + increment;
+
+                                            (function (index) {
+                                                close.onclick = function () {
+                                                    document.querySelector(".advert" + index).style.display = "none";
+                                                };
+
+                                            })(increment);
+
+                                            advertreal.style.marginBottom = "15px";
+                                            advertreal.style.background = "white";
+                                            advertreal.style.height = "175px";
+                                            if (!navigator.userAgent.includes("Firefox")) {
+                                                advertreal.style.width = "calc(100% - 21px)";
+                                                advertreal.style.transform = "translate(17px)"
+                                            } else {
+                                                advertreal.style.width = "calc(100% - 4px)";
+                                            }
+                                            advertreal.style.maxWidth = "746px"
+                                            advertreal.style.border = "2px outset"
+                                            advertreal.style.backgroundPosition = "center center"
+                                            advertreal.style.backgroundSize = "cover"
 
 
 
 
 
-                                        document.querySelector(".actualposts2").appendChild(advertreal);
-                                        document.querySelector(".advert" + increment).appendChild(close);
-
-
-                                        fetch('/get_random_advert')
-                                            .then(response => {
-                                                if (!response.ok) {
-                                                    throw new Error('Failed to fetch');
-                                                }
-                                                return response.text();
-                                            })
-                                            .then(image => {
-                                                console.log(image)
-                                                advertreal.style.background = "url('data:image/jpeg;base64, " + image + "')"
 
 
 
-                                            })
-                                            .catch(error => {
-                                                console.error('Error fetching advert:', error);
-                                            });
+
+
+                                            document.querySelector(".actualposts2").appendChild(advertreal);
+                                            document.querySelector(".advert" + increment).appendChild(close);
+
+
+                                            fetch('/get_random_advert')
+                                                .then(response => {
+                                                    if (!response.ok) {
+                                                        throw new Error('Failed to fetch');
+                                                    }
+                                                    return response.text();
+                                                })
+                                                .then(image => {
+                                                    console.log(image)
+                                                    advertreal.style.background = "url('data:image/jpeg;base64, " + image + "')"
+
+
+
+                                                })
+                                                .catch(error => {
+                                                    console.error('Error fetching advert:', error);
+                                                });
+                                        }
                                     }
 
 
@@ -1950,7 +1992,7 @@
                                     (function (index, user_id, photo, post_id, likes, dislikes, likers, dislikers, replying_to) {
                                         invite_text2.onclick = function () {
                                             window.location.href = "/users/" + user_id + "/posts";
-                                        };
+                                         };
 
                                         link.onclick = function () {
                                             window.location.href = "/posts/" + replying_to
@@ -1976,7 +2018,7 @@
                                             window.location.href = "/users/" + user_id + "/posts";
                                         };
 
-                                        
+
 
 
                                         deletebutton.onclick = function (event) {
@@ -2092,7 +2134,7 @@
                                         };
 
                                         if (likers.split("_LIKERS_").includes(String(your_id))) {
-                                            like.onclick = function() { 
+                                            like.onclick = function() {
                                                 function blue() {
                                                     likepost(post_id, "unlike");
                                                     document.querySelector(".like02" + index).textContent = parseInt(likes) - 1;
@@ -2122,7 +2164,7 @@
                                                             document.querySelector(".likeicon" + index).style.color = "rgb(180, 180, 180)";
                                                         }
                                                         document.querySelector(".like" + index).onclick = function() {
-                                                            
+
                                                             blue();
                                                         }
                                                     }
@@ -2130,7 +2172,7 @@
                                                 blue();
                                             };
                                         } else {
-                                            like.onclick = function() { 
+                                            like.onclick = function() {
                                                 function grey() {
                                                     clickdislike();
                                                     likepost(post_id, "like");
@@ -2150,7 +2192,7 @@
                                                         document.querySelector(".like" + index).style.color = "rgb(180, 180, 180)";
                                                         document.querySelector(".likeicon" + index).style.color = "rgb(180, 180, 180)";
                                                     }
-                                                    
+
                                                     document.querySelector(".like" + index).onclick = function() {
                                                         likepost(post_id, "unlike");
                                                         document.querySelector(".like02" + index).textContent = parseInt(likes) + 1 - 1;
@@ -2169,7 +2211,7 @@
                                         }
 
                                         if (dislikers.split("_DISLIKERS_").includes(String(your_id))) {
-                                            dislike.onclick = function() { 
+                                            dislike.onclick = function() {
                                                 function disblue() {
                                                     dislikepost(post_id, "undislike");
                                                     document.querySelector(".dislike02" + index).textContent = parseInt(dislikes) - 1;
@@ -2200,7 +2242,7 @@
                                                             document.querySelector(".dislikeicon" + index).style.color = "rgb(180, 180, 180)";
                                                         }
                                                         document.querySelector(".dislike" + index).onclick = function() {
-                                                            
+
                                                             disblue();
                                                         }
                                                     }
@@ -2208,7 +2250,7 @@
                                                 disblue();
                                             };
                                         } else {
-                                            dislike.onclick = function() { 
+                                            dislike.onclick = function() {
                                                 function disgrey() {
                                                     clicklike();
                                                     dislikepost(post_id, "dislike");
@@ -2228,14 +2270,14 @@
                                                         document.querySelector(".dislike" + index).style.color = "rgb(180, 180, 180)";
                                                         document.querySelector(".dislikeicon" + index).style.color = "rgb(180, 180, 180)";
                                                     }
-                                                    
+
 
                                                     document.querySelector(".dislike" + index).onclick = function() {
-                                                        
+
                                                         dislikepost(post_id, "undislike");
                                                         document.querySelector(".dislike02" + index).textContent = parseInt(dislikes) + 1 - 1;
-                                                        
-                                                    
+
+
                                                         document.querySelector(".dislike" + index).style.backgroundColor = "#0866ff";
                                                         document.querySelector(".dislikeicon" + index).style.backgroundColor = "#0866ff";
 
@@ -2244,7 +2286,7 @@
 
 
                                                         document.querySelector(".dislike" + index).onclick = function() {
-                                                            
+
                                                             disgrey();
                                                         }
                                                     }
@@ -2254,8 +2296,8 @@
                                         }
                                         function clicklike() {
                                             console.log("LIKE IS CLICKING");
-                                                
-                                                
+
+
                                             var likeElement = document.querySelector(".like" + index);
                                             var computedStyle = window.getComputedStyle(likeElement);
                                             var backgroundColor = computedStyle.backgroundColor;
@@ -2425,16 +2467,16 @@
 
 
 
-                                    
-                                    
+
+
                                     document.querySelector(".actualposts3").style.overflowX = "hidden";
 
-                                    
+
                                     var actualimageparent = document.createElement("div");
                                     var actualimagediv = document.createElement("div");
                                     var actualimage = document.createElement("img");
 
-                                    
+
                                     actualimage.style.cursor = "pointer";
                                     actualimage.style.objectFit = "contain";
                                     actualimage.id = "actualimage" + increment;
@@ -2446,17 +2488,17 @@
                                     actualimage.style.left = "50%";
                                     actualimage.style.transform = "translate(-50%, -50%)";
 
-                                    
+
                                     actualimagediv.style.background = "url(data:image/jpeg;base64," + photos[i] + ")";
                                     actualimagediv.style.width = "100%";
                                     actualimagediv.style.height = "100%";
-                                    
+
                                     actualimagediv.style.filter = "blur(15px) brightness(50%)";
                                     actualimagediv.style.backgroundPosition = "center center";
                                     actualimagediv.style.backgroundSize = "cover";
                                     actualimagediv.className = "actualimagediv" + post_ids[i];
 
-                                    
+
                                     actualimageparent.style.marginBottom = "5px";
                                     actualimageparent.style.marginTop = "5px";
                                     actualimageparent.style.position = "relative";
@@ -2583,6 +2625,8 @@
 
 
                                     if (friends_only[i] == "yes") {
+                                        console.log("FRIENDZ ONLY (it was yes): " + friends_only[i]);
+
                                         function friendsonlydiv() {
                                             var friendsonlydiv = document.createElement("div");
 
@@ -2598,15 +2642,28 @@
 
                                             newDiv.appendChild(friendsonlydiv);
                                         }
-                                        
+
                                         if (!friending[i].split("_ITEM_").includes(String(your_id))) {
 
                                             newDiv.style.display = "none";
+
+                                            number = document.getElementById("repliesamount").textContent.replace(")", "").replace("(", "")
+                                            number = parseInt(number)
+                                            number = number - 1
+
+
+                                            document.getElementById("repliesamount").textContent = "(" + number + ")"
+
                                             if (parseInt(user_ids[i]) == parseInt(your_id)) {
                                                 newDiv.style.display = "block";
 
+                                                number = number + 1
+
                                                 friendsonlydiv();
                                             }
+
+                                            document.getElementById("repliesamount").textContent = "(" + number + ")"
+
                                         } else {
                                             friendsonlydiv();
 
@@ -2672,15 +2729,15 @@
                                 }
 
                                 console.log(post_ids)
-                                
+
                                 for (var i = 0; i < arraylength; i++) {
                                     (function (index) {
                                         if (index !== 0) {
                                             var post_id = post_ids[index];
 
                                             try {
-                                                var actualimage = document.querySelector(".actualimage" + post_id); 
-                                                var actualimagediv = document.querySelector(".actualimagediv" + post_id); 
+                                                var actualimage = document.querySelector(".actualimage" + post_id);
+                                                var actualimagediv = document.querySelector(".actualimagediv" + post_id);
                                             } catch {
                                                 console.log("stoopid")
                                             }
@@ -2702,14 +2759,14 @@
                                                     actualimagediv.style.backgroundPosition = "center center";
                                                     actualimagediv.style.backgroundSize = "cover";
 
-                                                    
+
                                                     actualimage.onload = function() {
                                                         actualimagediv.style.height = actualimage.offsetHeight + "px";
                                                         actualimagediv.style.maxHeight = "500px";
                                                         actualimage.style.maxHeight = "500px";
                                                     };
 
-                                                    
+
 
                                                     actualimage.onclick = function () {
                                                         function displayimage(){
@@ -2830,37 +2887,37 @@
                                                         displayimage();
 
                                                     };
-                                                    
+
                                                     } catch {
                                                         console.error("stoopid")
                                                     }
-                                                    
-                                                    
+
+
 
                                                 })
                                                 .catch(error => {
                                                     console.error('error fetching image for post id:', post_id, error);
                                                 });
 
-                                                
-                                            
 
 
-                                            
+
+
+
                                         }
                                     })(i);
                                 }
 
                                 for (var i = 0; i < arraylength; i++) {
-                                
+
                                     (function (index) {
                                         if (index !== 0) {
                                             var post_id = post_ids[index];
 
-                                            
 
 
-                                            var imagen = document.querySelector(".image" + post_id); 
+
+                                            var imagen = document.querySelector(".image" + post_id);
                                             var url = '/get/pfp/' + post_id;
 
                                             fetch(url)
@@ -2872,8 +2929,8 @@
                                                 })
                                                 .then(image => {
                                                     imagen.src = "data:image/jpeg;base64," + image;
-                                                    
-                                                    
+
+
                                                 })
                                                 .catch(error => {
                                                     console.error('error fetching image for post id:', post_id, error);
@@ -2883,7 +2940,7 @@
                                 }
 
                                 for (var i = 0; i < arraylength; i++) {
-                                    
+
                                     (function (index) {
                                         if (index !== 0) {
                                             // var replying_to = replying_to[index];
@@ -2894,7 +2951,7 @@
                                             var rizz = ".link" + index2
                                             console.log(rizz)
 
-                                            var link = document.querySelector(rizz); 
+                                            var link = document.querySelector(rizz);
                                             var url = '/get/reply_message/' + replying_to[index];
 
                                             console.log(url)
@@ -2907,14 +2964,14 @@
                                                         }
                                                         return response.text();
                                                     })
-                                                    
+
                                                     .then(message => {
                                                         let message2 = message
 
                                                         message2 = message2.replace(/_THISISALINEBREAK_/g, " ").replace(/_THISISANAPOSTROPHE_/g, "'").substring(0, 30) + "...";
-                                                        
+
                                                         link.textContent = message2
-                                                        
+
                                                     })
                                                     .catch(error => {
                                                         console.error('error fetching image for post id:', error);
@@ -2926,15 +2983,15 @@
                                     })(i);
                                 }
 
-                                
+
                             }
-                            
+
                             setTimeout(() => {
                                 document.getElementById("clickme").click()
                             }, 100);
 
-                            
-                            
+
+
 
                             console.log(document.getElementById("clickme").textContent)
 
@@ -2944,7 +3001,7 @@
                     </div>
                 </div>
 
-                
+
 
 
             </div>
@@ -2988,7 +3045,7 @@
 
                     newDiv.style.maxWidth = "750px";
                     newDiv.style.width = "100vw";
-                    
+
 
 
 
@@ -3231,7 +3288,7 @@
 
 
                                 if ("".split("_LIKERS_").includes(String(your_id))) {
-                                    like.onclick = function() { 
+                                    like.onclick = function() {
                                         function blue() {
                                             likepost(post_id, "unlike");
                                             document.querySelector(".like02" + index).textContent = parseInt(document.querySelector(".like02" + index).textContent) - 1;
@@ -3261,7 +3318,7 @@
                                                     document.querySelector(".likeicon" + index).style.color = "rgb(180, 180, 180)";
                                                 }
                                                 document.querySelector(".like" + index).onclick = function() {
-                                                    
+
                                                     blue();
                                                 }
                                             }
@@ -3269,7 +3326,7 @@
                                         blue();
                                     };
                                 } else {
-                                    like.onclick = function() { 
+                                    like.onclick = function() {
                                         function grey() {
                                             clickdislike();
                                             likepost(post_id, "like");
@@ -3289,7 +3346,7 @@
                                                 document.querySelector(".like" + index).style.color = "rgb(180, 180, 180)";
                                                 document.querySelector(".likeicon" + index).style.color = "rgb(180, 180, 180)";
                                             }
-                                            
+
                                             document.querySelector(".like" + index).onclick = function() {
                                                 likepost(post_id, "unlike");
                                                 document.querySelector(".like02" + index).textContent = parseInt(document.querySelector(".like02" + index).textContent) - 1;
@@ -3308,7 +3365,7 @@
                                 }
 
                                 if ("".split("_DISLIKERS_").includes(String(your_id))) {
-                                    dislike.onclick = function() { 
+                                    dislike.onclick = function() {
                                         function disblue() {
                                             dislikepost(post_id, "undislike");
                                             document.querySelector(".dislike02" + index).textContent = parseInt(document.querySelector(".dislike02" + index).textContent) - 1;
@@ -3339,7 +3396,7 @@
                                                     document.querySelector(".dislikeicon" + index).style.color = "rgb(180, 180, 180)";
                                                 }
                                                 document.querySelector(".dislike" + index).onclick = function() {
-                                                    
+
                                                     disblue();
                                                 }
                                             }
@@ -3347,7 +3404,7 @@
                                         disblue();
                                     };
                                 } else {
-                                    dislike.onclick = function() { 
+                                    dislike.onclick = function() {
                                         function disgrey() {
                                             clicklike();
                                             dislikepost(post_id, "dislike");
@@ -3367,14 +3424,14 @@
                                                 document.querySelector(".dislike" + index).style.color = "rgb(180, 180, 180)";
                                                 document.querySelector(".dislikeicon" + index).style.color = "rgb(180, 180, 180)";
                                             }
-                                            
+
 
                                             document.querySelector(".dislike" + index).onclick = function() {
-                                                
+
                                                 dislikepost(post_id, "undislike");
                                                 document.querySelector(".dislike02" + index).textContent = parseInt(document.querySelector(".dislike02" + index).textContent) - 1;
-                                                
-                                            
+
+
                                                 document.querySelector(".dislike" + index).style.backgroundColor = "#0866ff";
                                                 document.querySelector(".dislikeicon" + index).style.backgroundColor = "#0866ff";
 
@@ -3383,7 +3440,7 @@
 
 
                                                 document.querySelector(".dislike" + index).onclick = function() {
-                                                    
+
                                                     disgrey();
                                                 }
                                             }
@@ -3393,8 +3450,8 @@
                                 }
                                 function clicklike() {
                                     console.log("LIKE IS CLICKING");
-                                        
-                                        
+
+
                                     var likeElement = document.querySelector(".like" + index);
                                     var computedStyle = window.getComputedStyle(likeElement);
                                     var backgroundColor = computedStyle.backgroundColor;
@@ -3503,12 +3560,12 @@
 
                     document.querySelector(".actualposts3").style.overflowX = "hidden";
 
-                                    
+
                     var actualimageparent = document.createElement("div");
                     var actualimagediv = document.createElement("div");
                     var actualimage = document.createElement("img");
 
-                    
+
                     actualimage.style.cursor = "pointer";
                     actualimage.style.objectFit = "contain";
                     actualimage.id = "actualimage" + increment;
@@ -3519,25 +3576,25 @@
                     actualimage.style.left = "50%";
                     actualimage.style.transform = "translate(-50%, -50%)";
 
-                    
+
                     actualimagediv.style.background = "url(data:image/jpeg;base64," + document.getElementById("imageinput").value + ")";
                     actualimagediv.style.width = "100%";
                     actualimagediv.style.height = "100%";
                     actualimagediv.style.filter = "blur(15px) brightness(50%)";
                     actualimagediv.style.backgroundPosition = "center center";
                     actualimagediv.style.backgroundSize = "cover";
-                    
 
-                    
+
+
                     actualimageparent.style.marginBottom = "5px";
                     actualimageparent.style.marginTop = "5px";
                     actualimageparent.style.position = "relative";
                     actualimageparent.style.overflow = "hidden";
                     actualimageparent.style.maxHeight = "500px";
                     actualimageparent.style.width = "100%";
-                    
 
-                    
+
+
 
 
 
@@ -3683,7 +3740,7 @@
 
                         actualimagediv.style.height = actualimage.offsetHeight + "px";
 
-                        
+
 
                         actualimagediv.style.maxHeight = "500px";
                         actualimage.style.maxHeight = "500px";
@@ -3724,7 +3781,7 @@
                     newDiv.style.minHeight = "0";
                     newDiv.style.overflow = "hidden"
                     newDiv.style.height = "0px";
-                    newDiv.style.transition = "height 0.2s"; 
+                    newDiv.style.transition = "height 0.2s";
                     if (!navigator.userAgent.includes("Firefox")) {
                         requestAnimationFrame(() => {
                             newDiv.style.height = newDiv.scrollHeight + actualimage.offsetHeight + "px";
@@ -3735,7 +3792,7 @@
                         });
                     }
 
-                    
+
 
 
 
@@ -3749,6 +3806,8 @@
 
                     }
             </script>
+
+
 
 
             <div id="newpost" style="display: none;" onclick="{{ newposts }}">no_new_posts</div>

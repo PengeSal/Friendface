@@ -209,6 +209,9 @@
                 if (mouseover2 == "yes"){
                     element.style.transition = transition
                 }
+
+                document.querySelector(".friendbutton").style.color = "white";
+                document.getElementById("followicon").style.color = "white";
                 
                 
 
@@ -716,7 +719,7 @@
 
                                             <i class="fa-solid fa-cross" style="padding-right: 8px; background: #0866ff;"></i>{{ followbuttonmessage }}
 
-                                        <script>
+                                            <script>
                                             async function follow(state) {
                                                 var path = window.location.pathname;
                                                 var parts = path.split("/");
@@ -758,28 +761,35 @@
                                                     document.querySelector(".friendbutton").textContent = "";
                                                     var icon = document.createElement('i');
                                                     icon.classList.add('fa-brands', 'fa-facebook');
+                                                    icon.id = "followicon";
                                                     icon.style.paddingRight = "8px";
+                                                    icon.style.color = "white";
                                                     var text = document.createTextNode('Become Judas');
                                                     document.querySelector(".friendbutton").appendChild(icon);
                                                     document.querySelector(".friendbutton").appendChild(text);
 
                                                     document.querySelector(".friendbutton").style.background = "linear-gradient(to bottom, #0866ff, rgb(222, 62, 60))";
-
+                                                    
                                                     
 
                                                     document.querySelector(".friendbutton").onclick = function() {
                                                         follow("unfollow")
+
+                                                        document.getElementById("followicon").remove();
                                                         
                                                         document.querySelector(".friendbutton").textContent = "";
                                                         var icon = document.createElement('i');
                                                         icon.classList.add('fas', 'fa-cross');
+                                                        icon.id = "followicon";
                                                         icon.style.paddingRight = "8px";
                                                         icon.style.background = "#0866ff";
+                                                        icon.style.color = "white";
                                                         var text = document.createTextNode('Become a Disciple');
                                                         document.querySelector(".friendbutton").appendChild(icon);
                                                         document.querySelector(".friendbutton").appendChild(text);
                                                         
                                                         document.querySelector(".friendbutton").style.background = "#0866ff";
+                                                        document.querySelector(".friendbutton").style.color = "white";
                                                     }
 
                                                 } else {
@@ -792,28 +802,35 @@
                                                     document.querySelector(".friendbutton").textContent = "";
                                                     var icon = document.createElement('i');
                                                     icon.classList.add('fas', 'fa-cross');
+                                                    icon.id = "followicon";
                                                     icon.style.paddingRight = "8px";
                                                     icon.style.background = "#0866ff";
+                                                    icon.style.color = "white";
                                                     var text = document.createTextNode('Become a Disciple');
                                                     document.querySelector(".friendbutton").appendChild(icon);
                                                     document.querySelector(".friendbutton").appendChild(text);
 
                                                     document.querySelector(".friendbutton").style.background = "#0866ff";
+                                                    document.querySelector(".friendbutton").style.color = "white";
                                                                                                         
                                                     
                                                     document.querySelector(".friendbutton").onclick = function() {
                                                         follow("follow")
+
+                                                        document.getElementById("followicon").remove();
                                                         
                                                         document.querySelector(".friendbutton").textContent = "";
                                                         var icon = document.createElement('i');
                                                         icon.classList.add('fa-brands', 'fa-facebook');
+                                                        icon.id = "followicon";
                                                         icon.style.paddingRight = "8px";
+                                                        icon.style.color = "white";
                                                         var text = document.createTextNode('Become Judas');
                                                         document.querySelector(".friendbutton").appendChild(icon);
                                                         document.querySelector(".friendbutton").appendChild(text);
 
                                                         document.querySelector(".friendbutton").style.background = "linear-gradient(to bottom, #0866ff, rgb(222, 62, 60))";
-
+                                                        
                                                         
                                                         
                                                     }
@@ -836,12 +853,19 @@
                                                 xhr.send("");
                                             }
 
+                                            document.querySelector(".friendbutton").click();
+                                            setTimeout(() => {
+                                                document.querySelector(".friendbutton").click();
+                                            }, 0);
+
                                             if (document.getElementById("followbuttonmessage").textContent == "Become Judas") {
                                                 console.log(document.querySelector(".friendbutton").value)
                                                 document.querySelector(".friendbutton").textContent = "";
                                                 var icon = document.createElement('i');
                                                 icon.classList.add('fa-brands', 'fa-facebook');
+                                                icon.id = "followicon";
                                                 icon.style.paddingRight = "8px";
+                                                icon.style.color = "white";
                                                 var text = document.createTextNode('Become Judas');
                                                 document.querySelector(".friendbutton").appendChild(icon);
                                                 document.querySelector(".friendbutton").appendChild(text);
@@ -1277,9 +1301,21 @@
                         if (friends_only[i] == "yes") {
                             if (!friending[i].split("_ITEM_").includes(String(your_id))) {
                                 actualimage.style.display = "none";
+
+                                number = document.getElementById("repliesamount").textContent.replace(")", "").replace("(", "")
+                                number = parseInt(number)
+                                number = number - 1
+
+
                                 if (parseInt(user_ids[i]) == parseInt(your_id)) {
-                                    actualimage.style.display = "block";
+                                    actualimage.style.display = "inline";
+
+                                    number = number + 1
                                 }
+
+
+                                document.getElementById("repliesamount").textContent = "(" + number + ")"
+
                             } else {
                                 friendsonlydiv();
 

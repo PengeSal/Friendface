@@ -1275,9 +1275,32 @@
 
                         
 
+                        
+
 
                     </div>
                     </div>
+
+                    <button id="logout">LOG OUT</button>
+
+                    <script>
+                        document.getElementById("logout").onclick = function() {
+                            var xhr = new XMLHttpRequest();
+
+                            var url = "/logout"
+
+                            xhr.open('POST', url, true);
+
+                            xhr.onreadystatechange = function () {
+                                if (xhr.readyState == 4 && xhr.status == 200) {
+                                    console.log(xhr.responseText);
+                                    location.reload()
+                                }
+                            };
+
+                            xhr.send("");
+                        }
+                    </script>
 
                     <!-- <div style="width: 100vw; max-width: 1280px;"> 
                     <p style="float: left; font-size: 19.25px; margin-left: 22px;">Enable Dark Mode</p>

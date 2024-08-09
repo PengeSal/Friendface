@@ -1226,9 +1226,21 @@
                         if (friends_only[i] == "yes") {
                             if (!friending[i].split("_ITEM_").includes(String(your_id))) {
                                 actualimage.style.display = "none";
+
+                                number = document.getElementById("repliesamount").textContent.replace(")", "").replace("(", "")
+                                number = parseInt(number)
+                                number = number - 1
+                                
+
                                 if (parseInt(user_ids[i]) == parseInt(your_id)) {
-                                    actualimage.style.display = "block";
+                                    actualimage.style.display = "inline";
+
+                                    number = number + 1
                                 }
+
+
+                                document.getElementById("repliesamount").textContent = "(" + number + ")"
+
                             } else {
                                 friendsonlydiv();
 

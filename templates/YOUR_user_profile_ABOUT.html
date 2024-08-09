@@ -141,7 +141,7 @@
     
 
         //addEventListener("DOMContentLoaded", (event) => {
-        (function (){
+        (function () {
             function swapElementColors(element, mouseover) {
                     const computedStyle = getComputedStyle(element);
                     let color = computedStyle.color;
@@ -1091,11 +1091,119 @@
                         
                     </form>
 
+                    
+                    <h2 style="margin: 22px; line-height: 18px;">Toggleable Descriptions</h2>
+                    <hr>
+                    <!-- <form action="/changenames" method="POST"> -->
+                        
+                        <textarea id="locationedit" rows="1" style="font-family: Arial, Helvetica, sans-serif; resize: none; border-radius: 5px;
+                                    border: 2px solid #caccd0; margin: 5px 0px 5px 20px; padding: 10px; width: calc(50% - 55px);" 
+                                    placeholder="Location" name="forename"></textarea>
+
+
+                        <input id="locationbox" type="checkbox" style="transform: translate(0, -15px); width: 20px; height: 20px; margin-left: 10px;">
+
+                        
+                        <textarea id="relationshipedit" rows="1" style="font-family: Arial, Helvetica, sans-serif; resize: none; border-radius: 5px;
+                                    border: 2px solid #caccd0; margin: 5px 0px 5px 20px; padding: 10px; width: calc(50% - 55px);" 
+                                    placeholder="Relationship Status" name="forename"></textarea>
+                        
+                    
+                        <input id="relationshipbox" type="checkbox" style="transform: translate(0, -15px); width: 20px; height: 20px; margin-left: 10px;">
+
+
+                        <div>
+                            <button id="updatetogglebutton"
+                                style="font-size: 16px; color: white; background-color: rgb(8, 102, 255); 
+                                border: 0px; margin: 0px 0px 20px 20px; padding: 10px; width: 90px; 
+                                border-radius: 8px; cursor: pointer;">Update
+                            </button>
+                        </div>
+
+                        <script>
+                            document.getElementById("updatetogglebutton").onclick = function() {
+                                if (document.getElementById("relationshipbox").checked) {
+                                    var string = "_YES_" + document.getElementById("relationshipedit").value
+                                } else {
+                                    var string = "_NO_" + document.getElementById("relationshipedit").value
+                                }
+
+                                var xhr = new XMLHttpRequest();
+                                var url = '/changerelationshipstatus/' + string
+
+                                xhr.open('POST', url, true);
+                                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                                xhr.onreadystatechange = function () {
+                                    if (xhr.readyState == 4 && xhr.status == 200) {
+                                        console.log(xhr.responseText);
+                                    }
+                                };
+
+                                xhr.send();
+
+
+                                if (document.getElementById("locationbox").checked) {
+                                    var string = "_YES_" + document.getElementById("locationedit").value
+                                } else {
+                                    var string = "_NO_" + document.getElementById("locationedit").value
+                                }
+
+                                var xhr = new XMLHttpRequest();
+                                var url = '/changelocation/' + string
+
+                                xhr.open('POST', url, true);
+                                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+                                xhr.onreadystatechange = function () {
+                                    if (xhr.readyState == 4 && xhr.status == 200) {
+                                        console.log(xhr.responseText);
+
+                                        location.reload();
+                                    }
+                                };
+
+                                xhr.send();
+                                
+                            }
+
+                            addEventListener("DOMContentLoaded", (event) => {
+                                document.getElementById("relationshipedit").textContent = "{{ relationshipstatus }}".replace("_YES_", "").replace("_NO_", "");
+                                if ("{{ relationshipstatus }}".includes("_YES_")){
+                                    document.getElementById("relationshipbox").checked = true;
+                                } else {
+                                    document.getElementById("relationshipbox").checked = false;
+                                }
+
+                                document.getElementById("locationedit").textContent = "{{ location }}".replace("_YES_", "").replace("_NO_", "");
+                                if ("{{ location }}".includes("_YES_")){
+                                    document.getElementById("locationbox").checked = true;
+                                } else {
+                                    document.getElementById("locationbox").checked = false;
+                                }
+                            });
+                        </script>
+
+                        
+                        
+                    <!-- </form> -->
+
                     <div id="everyday" onclick="{{ about }}" style="display: none;"></div>
 
                     <hr>
 
                     <p id="longhealthylife" style="margin-left: 22px; font-size: 18px;">User ID: {{ theirid }}</p>
+                    <script>
+
+                        if (document.getElementById("longhealthylife").textContent == "User ID: 1"){
+                            document.getElementById("longhealthylife").textContent = "real ass og"
+                        }                        
+
+                    </script>
+
+                    <hr>
+
+                    <p id="longhealthylife" style="margin-left: 22px; font-size: 18px;">Streak: {{ streak }}</p>
 
 
 
@@ -1104,9 +1212,7 @@
                         window.onload = function() {
                             document.getElementById('everyday').click();
 
-                            if (document.getElementById("longhealthylife").textContent == "User ID: 1"){
-                                document.getElementById("longhealthylife").textContent = "real ass og"
-                            }
+                            
             
                             function getAverageRGB(imgEl) {
                                 var blockSize = 5,

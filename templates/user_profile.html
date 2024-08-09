@@ -15,8 +15,8 @@
             overflow-x: hidden;
             background: #f0f2f5;
             font-family: Helvetica, arial;
-            
-            
+
+
         }
 
         .pfp{
@@ -56,7 +56,7 @@
             font-family: Helvetica, Arial, sans-serif;
             font-size: 16px;
             background: #f0f2f5;
-            width: 200px; 
+            width: 200px;
 
             border: 2px solid #f0f2f5;
             color: black;
@@ -64,11 +64,11 @@
             outline: none;
             box-shadow: none;
             transition: width 0.75s;
-            
+
             height: 1px;
             padding-top: 50px;
 
-            
+
         }
 
         #search-input::placeholder {
@@ -84,11 +84,11 @@
             width: 40px;
             border: 3px solid #f0f2f5;
             border-radius: 35px 0px 0px 35px;
-            outline: none; 
+            outline: none;
             text-align: right;
             height: 40px;
             z-index: 99999999999999;
-            
+
         }
 
         .evenmainerbox {
@@ -109,7 +109,7 @@
             background: white;
             box-sizing: border-box;
             line-height: 35px;
-            max-width: 100vw; 
+            max-width: 100vw;
         }
 
         .mainbox2{
@@ -118,15 +118,16 @@
 
             background: white;
             line-height: 35px;
-            max-width: 100vw; 
+            max-width: 100vw;
 
             border-radius: 10px;
         }
 
     </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
 <script>
 
-    
+
 
     //addEventListener("DOMContentLoaded", (event) => {
     (function (){
@@ -136,13 +137,15 @@
 
                 mouseover2 = mouseover
 
+
+
                 if (mouseover2 == "yes"){
                     var transition = computedStyle.transition;
                     element.style.transition = "none"
                 }
-                
 
-                if (color === 'rgb(255, 255, 255)') { 
+
+                if (color === 'rgb(255, 255, 255)') {
                     element.style.color = 'rgb(33, 33, 33)';
                 } else if (color === 'rgb(0, 0, 0)') {
                     element.style.color = 'rgb(254, 254, 254)';
@@ -156,9 +159,9 @@
 
                 let backgroundColor = computedStyle.backgroundColor;
 
-                if (backgroundColor === 'rgb(255, 255, 255)') { 
+                if (backgroundColor === 'rgb(255, 255, 255)') {
                     element.style.backgroundColor = 'rgb(33, 33, 33)';
-                } else if (backgroundColor === 'rgb(0, 0, 0)') { 
+                } else if (backgroundColor === 'rgb(0, 0, 0)') {
                     element.style.backgroundColor = 'rgb(254, 254, 254)';
                 } else if (backgroundColor === 'rgb(8, 102, 255)' || backgroundColor === 'rgb(57, 105, 251)') {
                     element.style.color = 'rgb(255, 255, 255)';
@@ -168,15 +171,15 @@
                     element.style.backgroundColor = 'rgb(55, 55, 55)';
                 } else if (backgroundColor === 'rgb(120, 122, 128)') {
                     element.style.backgroundColor = 'rgb(180, 180, 180)';
-                }
+                } 
 
                 let borderColor = computedStyle.borderColor;
                 let borderBottomColor = computedStyle.borderBottomColor;
                 let borderTopColor = computedStyle.borderTopColor;
 
-                if (borderColor === 'rgb(255, 255, 255)') { 
+                if (borderColor === 'rgb(255, 255, 255)') {
                     element.style.borderColor = 'rgb(33, 33, 33)';
-                } else if (borderColor === 'rgb(0, 0, 0)') { 
+                } else if (borderColor === 'rgb(0, 0, 0)') {
                     element.style.borderColor = 'rgb(254, 254, 254)';
                 } else if (borderColor === 'rgb(240, 242, 245)') {
                     element.style.borderColor = 'rgb(23, 23, 23)';
@@ -186,17 +189,17 @@
                     element.style.borderBottomColor = 'rgb(55, 55, 55)';
                 } else if (borderColor === 'rgb(120, 122, 128)') {
                     element.style.borderColor = 'rgb(180, 180, 180)';
-                } else if (borderBottomColor === 'rgb(240, 242, 245)') { 
+                } else if (borderBottomColor === 'rgb(240, 242, 245)') {
                     element.style.borderBottomColor = 'rgb(23, 23, 23)';
-                } else if (borderTopColor === 'rgb(240, 242, 245)') { 
+                } else if (borderTopColor === 'rgb(240, 242, 245)') {
                     element.style.borderTopColor = 'rgb(23, 23, 23)';
                 }
 
                 let boxShadow = computedStyle.boxShadow;
 
-                if (boxShadow === 'rgb(255, 255, 255)') { 
+                if (boxShadow === 'rgb(255, 255, 255)') {
                     element.style.boxShadow = 'rgb(33, 33, 33)';
-                } else if (boxShadow === 'rgb(0, 0, 0)') { 
+                } else if (boxShadow === 'rgb(0, 0, 0)') {
                     element.style.boxShadow = 'rgb(254, 254, 254)';
                 } else if (boxShadow === 'rgb(240, 242, 245)') {
                     element.style.boxShadow = 'rgb(23, 23, 23)';
@@ -209,23 +212,26 @@
                 if (mouseover2 == "yes"){
                     element.style.transition = transition
                 }
-                
-                
+
+                document.querySelector(".friendbutton").style.color = "white";
+                document.getElementById("followicon").style.color = "white";
+
+
 
             }
         function swapColorsInDocumentDark() {
-            
+
 
             const allElements = document.querySelectorAll('*');
 
 
             allElements.forEach(element => {
                 swapElementColors(element, "yes");
-                
+
             });
 
 
-            
+
 
 
             var style = document.createElement('style');
@@ -249,7 +255,7 @@
 
             document.head.appendChild(style);
 
-            
+
         }
 
 
@@ -282,7 +288,7 @@
             if (document.getElementById("darkmode").textContent == "yes") {
                 swapColorsInDocumentDark();
             }
-            document.removeEventListener('mouseout', arguments.callee); 
+            document.removeEventListener('mouseout', arguments.callee);
             document.addEventListener('mouseout', function(event) {
                 if (document.getElementById("darkmode").textContent == "yes") {
                     var element = event.target;
@@ -302,12 +308,12 @@
                 mutations.forEach(function(mutation) {
                     mutation.addedNodes.forEach(function(node) {
                         if (node.nodeType === Node.ELEMENT_NODE) {
-                            console.log("blue swade shosw");
                             if (document.getElementById("darkmode").textContent == "yes") {
 
                                 swapElementColors(node, "no");
                                 node.querySelectorAll('*').forEach(function(child) {
                                     swapElementColors(child, "no");
+
                                 });
                             }
                         }
@@ -319,22 +325,651 @@
         });
 
 
-        
 
-        
+
+
     })();
 
+    document.addEventListener('DOMContentLoaded', (event) => {
+        var expandbutton = document.createElement("button");
+        expandbutton.innerHTML = "Chat with {{ theirname }}<i style='float: right; color: #787a80; transform: translate(0, 3px);' class='fa-solid fa-chevron-up'></i>";
+        expandbutton.style.backgroundColor = "white";
+        expandbutton.style.textAlign = "left";
+        expandbutton.style.padding = "5px";
+        expandbutton.style.paddingLeft = "17px";
+        expandbutton.style.paddingRight = "17px";
+        expandbutton.style.paddingBottom = "10px";
+        expandbutton.style.border = "0px solid white";
+        expandbutton.style.color = "black";
+        expandbutton.style.fontSize = "18px";
+        expandbutton.style.width = "500px";
+        expandbutton.style.height = "50px";
+        expandbutton.style.paddingBottom = "10px";
+        expandbutton.style.borderRadius = "5px";
+        expandbutton.style.cursor = "pointer";
 
+
+        var messagesdiv =  document.createElement("div");
+        messagesdiv.style.backgroundColor = "#f0f2f5";
+        messagesdiv.style.width = "100%";
+        messagesdiv.style.height = "calc(100% - 150px)"
+        messagesdiv.style.overflowY = "scroll"
+        messagesdiv.style.overflowX = "hidden"
+        messagesdiv.id = "messagesdiv"
+        
+
+        var commentbar = document.createElement("input");
+        commentbar.id = "commentbar";
+        commentbar.placeholder = "Message {{ theirname }}";
+        commentbar.required = true;
+
+        commentbar.style.marginTop = "auto";
+        commentbar.style.outline = "none";
+        commentbar.style.width = "calc(100% - 58px)";
+        commentbar.style.paddingRight = "15px";
+        commentbar.style.fontSize = "16px";
+        commentbar.style.backgroundColor = "#f0f2f5";
+        commentbar.style.marginLeft = "17px";
+        commentbar.style.marginBottom = "17px";
+        commentbar.style.border = "none";
+        commentbar.style.padding = "10px";
+        commentbar.style.paddingLeft = "15px";
+        commentbar.style.borderRadius = "25px";
+        commentbar.style.marginTop = "15px";
+        messagesdiv.style.display = "flex"
+        messagesdiv.style.flexDirection = "column"
+        messagesdiv.style.alignItems = "flex-start"
+
+        var picturebutton = document.createElement("button");
+        picturebutton.style.height = "38px"
+        picturebutton.style.width = "38px"
+        picturebutton.style.border = "none"
+        picturebutton.style.backgroundColor = "#f0f2f5"
+        picturebutton.style.color = "#787a80"
+        picturebutton.style.borderRadius = "50%"
+        picturebutton.style.fontSize = "20px"
+
+        if (navigator.userAgent.includes("Firefox")) {
+            picturebutton.innerHTML = "<p style='transform: translate(0, -16px);'>+</p>"
+        } else{
+            picturebutton.innerHTML = "<p style='transform: translate(0, -13px);'>+</p>"
+        }
+
+        picturebutton.style.cursor = "pointer"
+        picturebutton.id = "picturebutton"
+        picturebutton.style.marginLeft = "17px";
+        picturebutton.style.transform = "translate(0, -8px)";
+
+        picturebutton.onmouseover = function() {
+            this.style.backgroundColor = "#caccd0"
+        }
+        picturebutton.onmouseout = function() {
+            this.style.backgroundColor = "#f0f2f5"
+        }
+
+
+        var socket = io({
+            reconnection: true,
+            reconnectionAttempts: Infinity,
+            reconnectionDelay: 1000,
+            reconnectionDelayMax: 5000,
+            timeout: 20000,
+            autoConnect: true
+        });
+
+        var sender_id = parseInt("{{ theirid }}");
+        var receiver_id = parseInt("{{ user_id }}");
+
+        if (sender_id > receiver_id) {
+            var temp = sender_id;
+            sender_id = receiver_id;
+            receiver_id = temp;
+        }
+
+        var name = sender_id + "&" + receiver_id;
+
+
+        socket.emit('join', {'name': name, 'room': '{{ username }}'});
+
+        socket.on('disconnect', () => {
+            socket.emit('join', {'name': name, 'room': '{{ username }}'});
+        });
+        
+        
+        
+
+
+
+        var deletedropdown = document.createElement("div");
+        deletedropdown.style.position = "absolute";
+
+        deletedropdown.style.top = "calc(100vh - 50px)"
+
+        document.body.appendChild(deletedropdown);
+        deletedropdown.appendChild(expandbutton);
+        deletedropdown.appendChild(messagesdiv);
+        deletedropdown.appendChild(commentbar);
+
+        deletedropdown.appendChild(picturebutton);
+
+
+
+        spacer = document.createElement("div")
+        spacer.style.width = "100%"
+        spacer.style.padding = "40px"
+        messagesdiv.appendChild(spacer)
+
+
+        function handleFileChange(event) {
+            var fileInput = document.getElementById('fileInput3');
+            var file = fileInput.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var imageData = e.target.result.split(',')[1];
+                sendImageData3(imageData);
+            };
+
+            reader.readAsDataURL(file);
+        }
+
+
+        document.getElementById('fileInput3').addEventListener('change', handleFileChange);
+
+        picturebutton.onclick = function() {
+            document.getElementById('fileInput3').click();
+        };
+
+        function sendImageData3(imageData) {
+            var messagecontainer = document.createElement('div');
+            messagecontainer.style.width = "100%";
+            messagecontainer.style.backgroundColor = "#f0f2f5";
+
+            (function () {
+                messagecontainer.onmouseover = function() {
+                    if (document.getElementById("darkmode").textContent == "no") {
+                        this.style.backgroundColor = "#e4e6eb";
+                    } else {
+                        this.style.backgroundColor = "rgb(33, 33, 33)";
+                    }
+                }
+                messagecontainer.onmouseout = function() {
+                    this.style.backgroundColor = "#f0f2f5"
+                }
+
+            })();
+
+            console.log(imageData);
+
+            var imageData2 = "_THISISANIMAGE_" + imageData;
+
+            var receiverId = '{{ theirid }}';
+            socket.emit('send_message', {'content': imageData2, 'receiver_id': receiverId});
+
+            var message = document.createElement("img");
+            message.src = "data:image/jpeg;base64," + imageData;
+            message.style.maxWidth = "300px";
+            message.style.maxHeight = "400px";
+            message.style.margin = "5px";
+            if (!navigator.userAgent.includes("Firefox")) {
+                message.style.marginLeft = "15px";
+            } else {
+                
+                message.style.marginRight = "15px";
+            }
+            message.style.borderRadius = "10px 10px 0 10px";
+            message.style.float = "right";
+
+
+
+            // (function (src) {
+            //     message.onclick = function() {
+            //         displayimage(src)
+            //     }
+            // })(message.src);
+
+            document.getElementById("messagesdiv").appendChild(messagecontainer);
+            messagecontainer.appendChild(message);
+            messagesdiv.appendChild(spacer);
+            message.onload = function() {
+                var messagesDiv = document.getElementById("messagesdiv");
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            }
+                
+
+        }
+
+
+
+        
+
+          
+            
+
+
+
+
+        socket.on('receive_message', function(data) {
+            var messagecontainer = document.createElement('div');
+            messagecontainer.style.width = "100%";
+            messagecontainer.style.backgroundColor = "#f0f2f5";
+
+            (function () {
+                messagecontainer.onmouseover = function() {
+                    if (document.getElementById("darkmode").textContent == "no") {
+                        this.style.backgroundColor = "#e4e6eb";
+                    } else {
+                        this.style.backgroundColor = "rgb(33, 33, 33)";
+                    }
+                }
+                messagecontainer.onmouseout = function() {
+                    this.style.backgroundColor = "#f0f2f5"
+                }
+
+            })();
+            
+            if (data.content.includes("_THISISANIMAGE_")) {
+                var message = document.createElement("img")
+                message.src = "data:image/jpeg;base64," + data.content.replace("_THISISANIMAGE_", "")
+                message.style.maxWidth = "300px";
+                message.style.maxHeight = "400px";
+                message.style.margin = "5px";
+                if (!navigator.userAgent.includes("Firefox")) {
+                    message.style.marginLeft = "15px";
+                } else {
+                    
+                    message.style.marginLeft = "15px";
+                }
+                message.style.borderRadius = "10px 10px 10px 0";
+                message.style.float = "left";
+
+
+                // (function (src) {
+                //     message.onclick = function() {
+                //         displayimage(src)
+                //     }
+                // })(message.src);
+
+            } else {
+                var message = document.createElement('div');
+                message.textContent = data.content
+
+                console.log(data.content)
+
+
+                if (document.getElementById("darkmode").textContent == "no") {
+                    message.style.backgroundColor = "#e4e6eb";
+                } else {
+                    message.style.backgroundColor = "rgb(33, 33, 33)";
+                }
+                message.style.margin = "5px";
+                message.style.marginLeft = "15px";
+                message.style.maxWidth = "300px";
+
+                (function (message) {
+                    messagecontainer.onmouseover = function() {
+                        if (document.getElementById("darkmode").textContent == "no") {
+                            this.style.backgroundColor = "#e4e6eb";
+                            message.style.backgroundColor = "#f0f2f5"
+                        } else {
+                            this.style.backgroundColor = "rgb(33, 33, 33)";
+                            message.style.backgroundColor = "rgb(55, 55, 55)"
+                        }
+                    }
+                    messagecontainer.onmouseout = function() {
+                        this.style.backgroundColor = "#f0f2f5"
+                        if (document.getElementById("darkmode").textContent == "no") {
+                            message.style.backgroundColor = "#e4e6eb";
+                        } else {
+                            message.style.backgroundColor = "rgb(33, 33, 33)";
+                        }
+                    }
+
+                })(message);
+
+                message.style.overflowWrap = "break-word";
+                message.style.wordWrap = "break-word";
+                message.style.whiteSpace = "normal";
+                message.style.display = "inline-block";
+
+                message.style.padding = "10px";
+                message.style.borderRadius = "10px 10px 10px 0";
+            }
+            
+
+            if (String(data.sender_id) == "{{ theirid }}") {
+                document.getElementById("messagesdiv").appendChild(messagecontainer);
+                messagecontainer.appendChild(message);
+
+                messagesdiv.appendChild(spacer)
+                var messagesDiv = document.getElementById("messagesdiv");
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                message.onload = function() {
+                    var messagesDiv = document.getElementById("messagesdiv");
+                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                }
+
+                
+            }
+
+            
+
+        });
+
+        document.getElementById('commentbar').addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                var messageInput = document.getElementById('commentbar');
+                var message = messageInput.value;
+                if (message.trim() !== '') {
+                    var receiverId = '{{ theirid }}';
+                    socket.emit('send_message', {'content': message, 'receiver_id': receiverId});
+                    
+                    var message = document.createElement('div');
+                    message.textContent = messageInput.value
+                    messageInput.value = '';
+
+                    var messagecontainer = document.createElement('div');
+                    messagecontainer.style.width = "100%";
+                    messagecontainer.style.backgroundColor = "#f0f2f5";
+
+                    (function () {
+                        messagecontainer.onmouseover = function() {
+                            if (document.getElementById("darkmode").textContent == "no") {
+                                this.style.backgroundColor = "#e4e6eb";
+                            } else {
+                                this.style.backgroundColor = "rgb(33, 33, 33)";
+                            }
+                        }
+                        messagecontainer.onmouseout = function() {
+                            this.style.backgroundColor = "#f0f2f5"
+                        }
+
+                    })();
+
+                    message.style.backgroundColor = "#0866ff";
+                    message.style.margin = "5px";
+                    if (!navigator.userAgent.includes("Firefox")) {
+                        message.style.marginLeft = "15px";
+                    } else {
+                        message.style.marginRight = "15px";
+                    }
+                    message.style.maxWidth = "300px";
+
+                    message.style.overflowWrap = "break-word";
+                    message.style.wordWrap = "break-word";
+                    message.style.whiteSpace = "normal";
+                    message.style.display = "inline-block";
+                    message.style.color = "white";
+
+                    message.style.padding = "10px";
+                    message.style.borderRadius = "10px 10px 0 10px";
+                    message.style.float = "right";
+
+                    document.getElementById("messagesdiv").appendChild(messagecontainer);
+                    messagecontainer.appendChild(message);
+                    setTimeout(() => {
+                        var messagesDiv = document.getElementById("messagesdiv");
+                        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                    }, 0);
+
+
+                    messagesdiv.appendChild(spacer)
+                }
+            }
+
+            
+        });
+
+    
+
+    
+
+
+        deletedropdown.style.backgroundColor = "white";
+        if (document.getElementById("darkmode").textContent == "yes"){
+            deletedropdown.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.9)";
+        } else {
+            deletedropdown.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.35)";
+        }
+
+        deletedropdown.style.position = "fixed";
+        deletedropdown.style.zIndex = "9999999999999999999999999999";
+        deletedropdown.style.borderRadius = "10px 10px 0 0";
+        deletedropdown.style.paddingBottom = "10px";
+        deletedropdown.style.width = "500px";
+        deletedropdown.style.overflow = "hidden";
+        deletedropdown.style.transform = "translate(0)";
+        deletedropdown.style.transition = "transform 0.3s, left 0.3s";
+
+        function rizz(){
+            if (window.innerWidth < 1280) {
+                deletedropdown.style.left = "calc((100vw - " + deletedropdown.offsetWidth + "px) / 2)";
+
+
+            } else {
+                var width = 1280
+                deletedropdown.style.left = "calc(((100vw - " + width + "px) / 2) + 1280px - 500px - 30px)";
+            }
+
+
+        }
+
+        rizz();
+
+
+        function resize() {
+            deletedropdown.style.transform = "translate(0, -" + (deletedropdown.offsetHeight - 50) + "px)";
+
+            rizz();
+        }
+
+        function resize2() {
+            rizz();
+        }
+
+        window.addEventListener("resize", resize2)
+
+
+        function toggleChevron() {
+            var chevronIcon = expandbutton.querySelector('i');
+            if (chevronIcon.classList.contains('fa-chevron-up')) {
+                expandbutton.innerHTML = "Chat with {{ theirname }}<i style='float: right; color: #787a80; transform: translate(0, 3px);' class='fa-solid fa-chevron-down'></i>";
+                deletedropdown.style.maxHeight = "70vh";
+                deletedropdown.style.height = "800px";
+
+                setTimeout(() => {
+                    var messagesDiv = document.getElementById("messagesdiv");
+                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                }, 0);
+
+
+                resize();
+
+                window.removeEventListener("resize", resize2)
+                window.addEventListener("resize", resize)
+
+            } else {
+                expandbutton.innerHTML = "Chat with {{ theirname }}<i style='float: right; color: #787a80; transform: translate(0, 3px);' class='fa-solid fa-chevron-up'></i>";
+                deletedropdown.style.transform = "translate(0)";
+
+                window.removeEventListener("resize", resize)
+                window.addEventListener("resize", resize2)
+            }
+        }
+
+        expandbutton.onclick = toggleChevron;
+
+
+        if ("{{ up }}" == "yes"){
+            toggleChevron()
+
+            setTimeout(() => {
+                var messagesDiv = document.getElementById("messagesdiv");
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            }, 0);
+            
+        }
+
+
+    });
+
+    
 </script>
 
 
 </head>
 <body>
-    <div id="darkmode" style="display: none;">{{ dark_mode }}</div>
+    <input type="file" id="fileInput3" style="display: none">
 
-    
+    <div id="darkmode" style="display: none;">{{ dark_mode }}</div>
+    <div id="direct_messages" style="display: none;" onclick="{{ direct_messages }}">{{ direct_messages }}</div>
+
+    <div id="followicon" style="display: none;"></div>
+
+
     <div style="width: 100vw; justify-content: center; display: flex; background-color: blue; height: 0px;">
-        <div id="splash" style="float: right; z-index: 999999999999; background-color: white; 
+        <script>
+            function display_direct_messages(user_ids, contents, dates, message_ids) {
+                var user_ids2 = user_ids.split("_SEPARATOR_")
+                var contents2 = contents.split("_SEPARATOR_")
+                var dates2 = dates.split("_SEPARATOR_")
+                var message_ids2 = message_ids.split("_SEPARATOR_")
+                
+
+                for (var i = 0; i < contents2.length - 1; i++) {
+                    
+
+
+                    var messagecontainer = document.createElement('div');
+                    messagecontainer.style.width = "100%";
+                    messagecontainer.style.backgroundColor = "#f0f2f5";
+
+                    (function () {
+                        messagecontainer.onmouseover = function() {
+                            if (document.getElementById("darkmode").textContent == "no") {
+                                this.style.backgroundColor = "#e4e6eb";
+                            } else {
+                                this.style.backgroundColor = "rgb(33, 33, 33)";
+                            }
+                        }
+                        messagecontainer.onmouseout = function() {
+                            this.style.backgroundColor = "#f0f2f5"
+                        }
+
+                    })();
+
+                    if (contents2[i].includes("_THISISANIMAGE_")) {
+                        imageData = contents2[i].replace("_THISISANIMAGE_", "")
+
+                        var message = document.createElement("img")
+                        message.src = "data:image/jpeg;base64," + imageData
+
+                        message.style.maxWidth = "300px";
+                        message.style.maxHeight = "400px";
+                        message.style.margin = "5px";
+                        if (!navigator.userAgent.includes("Firefox")) {
+                            message.style.marginLeft = "15px";
+                        } else {
+                            message.style.marginRight = "15px";
+                        }
+                        if (String(user_ids2[i]) == "{{ user_id }}") {
+                            message.style.float = "right";
+                            message.style.borderRadius = "10px 10px 0 10px";
+                        } else {
+                            message.style.marginLeft = "15px";
+                            message.style.float = "left";
+                            message.style.borderRadius = "10px 10px 10px 0";
+                        } 
+
+
+
+                    } else {
+                        var message = document.createElement('div');
+                        message.textContent = contents2[i].replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'");
+
+                        if (String(user_ids2[i]) == "{{ user_id }}") {
+                            message.style.backgroundColor = "#0866ff";
+                            message.style.margin = "5px";
+                            if (!navigator.userAgent.includes("Firefox")) {
+                                message.style.marginLeft = "15px";
+                            } else {
+                                message.style.marginRight = "15px";
+                            }
+                            message.style.maxWidth = "300px";
+
+                            message.style.overflowWrap = "break-word";
+                            message.style.wordWrap = "break-word";
+                            message.style.whiteSpace = "normal";
+                            message.style.display = "inline-block";
+                            message.style.color = "white";
+
+                            message.style.padding = "10px";
+                            message.style.borderRadius = "10px 10px 0 10px";
+                            message.style.float = "right";
+
+                        } else {
+                            if (document.getElementById("darkmode").textContent == "no") {
+                                message.style.backgroundColor = "#e4e6eb";
+                            } else {
+                                message.style.backgroundColor = "rgb(33, 33, 33)";
+                            }
+
+                            (function (message) {
+                                messagecontainer.onmouseover = function() {
+                                    if (document.getElementById("darkmode").textContent == "no") {
+                                        this.style.backgroundColor = "#e4e6eb";
+                                        message.style.backgroundColor = "#f0f2f5"
+                                    } else {
+                                        this.style.backgroundColor = "rgb(33, 33, 33)";
+                                        message.style.backgroundColor = "rgb(55, 55, 55)"
+                                    }
+                                }
+                                messagecontainer.onmouseout = function() {
+                                    this.style.backgroundColor = "#f0f2f5"
+                                    if (document.getElementById("darkmode").textContent == "no") {
+                                        message.style.backgroundColor = "#e4e6eb";
+                                    } else {
+                                        message.style.backgroundColor = "rgb(33, 33, 33)";
+                                    }
+                                }
+
+                            })(message);
+
+                            message.style.margin = "5px";
+                            message.style.marginLeft = "15px";
+                            message.style.maxWidth = "300px";
+
+                            message.style.overflowWrap = "break-word";
+                            message.style.wordWrap = "break-word";
+                            message.style.whiteSpace = "normal";
+                            message.style.display = "inline-block";
+
+                            message.style.padding = "10px";
+                            message.style.borderRadius = "10px 10px 10px 0";
+
+                        } 
+                    }
+
+                    message.title = dates2[i]
+
+
+                    document.getElementById("messagesdiv").appendChild(messagecontainer);
+                    messagecontainer.appendChild(message);
+
+                    document.getElementById("messagesdiv").appendChild(spacer)
+                }
+
+
+            }
+   
+            document.addEventListener('DOMContentLoaded', (event) => {
+                document.getElementById("direct_messages").click()
+
+            })
+        </script>
+
+
+        <div id="splash" style="float: right; z-index: 999999999999; background-color: white;
         text-align: center; cursor: default; transition: transform 0.3s; width: 375px; border-radius: 15px; position: fixed; top: 0;
         line-height: 40px; color: #787a80;">{{ splashmessage }}</div>
 
@@ -354,7 +989,7 @@
     </div>
 
     <div class="pfp">
-        
+
         <img
             id="uploadButton"
             style="width: 50px; height: 50px; cursor: pointer; padding: 7px 15px 8px 15px; float: right; border-radius: 50%; transition: filter 0.3s; object-fit: cover;"
@@ -365,10 +1000,10 @@
                 if (!navigator.userAgent.includes("Firefox")) {
                     document.getElementById("uploadButton").style.marginRight = "15px";
                 }
-                
+
 
                 document.getElementById("uploadButton").onclick = function (event) {
-                    event.stopPropagation(); 
+                    event.stopPropagation();
 
                     var existingdropdown = document.querySelector('.delete-dropdown2');
                     if (existingdropdown) {
@@ -386,7 +1021,7 @@
                     confirmdeletebutton.style.borderRadius = "5px";
                     confirmdeletebutton.style.cursor = "pointer";
                     confirmdeletebutton.style.marginBottom = "5px";
-                    
+
 
                     var confirmdeletebutton2 = document.createElement("button");
                     confirmdeletebutton2.textContent = "Settings";
@@ -402,11 +1037,11 @@
 
 
                     var deletedropdown = document.createElement("div");
-                    deletedropdown.classList.add('delete-dropdown2'); 
+                    deletedropdown.classList.add('delete-dropdown2');
                     deletedropdown.style.position = "absolute";
-                    
 
-                    deletedropdown.style.top = (event.clientY + window.pageYOffset + 10) + "px"; 
+
+                    deletedropdown.style.top = (event.clientY + window.pageYOffset + 10) + "px";
                     deletedropdown.style.left = event.clientX - 150 + "px";
                     deletedropdown.style.backgroundColor = "white";
                     deletedropdown.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.35)";
@@ -424,8 +1059,8 @@
 
                     deletedropdown.style.overflow = "hidden"
 
-                    deletedropdown.style.height = "0px"; 
-                    deletedropdown.style.transition = "height 0.2s"; 
+                    deletedropdown.style.height = "0px";
+                    deletedropdown.style.transition = "height 0.2s";
                     requestAnimationFrame(() => {
                         deletedropdown.style.height = deletedropdown.scrollHeight - 15 + "px";
                     });
@@ -449,7 +1084,7 @@
 
                         window.location.href = url
 
-                        
+
                     };
                     confirmdeletebutton2.onclick = function () {
                         var url = "/settings"
@@ -476,7 +1111,7 @@
                         if (!deletedropdown.contains(event.target)) {
                             console.log("young sheldon")
                             document.body.removeChild(deletedropdown);
-                            document.removeEventListener('click', handleclickoutside); 
+                            document.removeEventListener('click', handleclickoutside);
                         }
                     }
 
@@ -486,9 +1121,9 @@
             </script>
 
 
-        
 
-        
+
+
         <form id="accountform" action="/users/{{ user_id }}/posts" method="get">
             <div id="user_id_div" style="display: none;">{{ user_id}}</div>
             <div class="name" onclick="submitname()"  title="Your Account" style="float: right; font-family: Helvetica, arial;  font-size: 20px;">
@@ -501,7 +1136,7 @@
 
 
 
-        
+
         <form id="accountform" action="/" method="post">
             <img title="Friendface"
 
@@ -526,7 +1161,7 @@
         </form>
 
 
-        
+
         <form id="search-form" action="/searchusers" method="get">
             <div id="search-container" style="border-radius: 35px;">
                 <button type="submit" id="search-button">⌕</button>
@@ -538,34 +1173,34 @@
                     } else {
                         document.getElementById("search-input").style.transform = "translate(-4px, -2px)";
                     }
-                
+
                     document.getElementById("search-container").style.height = "42px";
                     document.getElementById("search-container").style.backgroundColor = "#f0f2f5";
                     document.getElementById("search-container").style.transition = "box-shadow 0.75s";
-                
+
                     document.getElementById("search-container").onmouseover = function() {
                         document.getElementById("search-input").style.width = "300px";
                         document.getElementById("search-container").style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.35)";
                     }
-                
+
                     document.getElementById("search-container").onmouseout = function() {
                         if (!document.getElementById("search-input").matches(":focus")) {
                             document.getElementById("search-input").style.width = "200px";
                             document.getElementById("search-container").style.boxShadow = "none";
                         }
                     }
-                
+
                     document.getElementById("search-input").addEventListener("blur", function() {
                         document.getElementById("search-input").style.width = "200px";
                         document.getElementById("search-container").style.boxShadow = "none";
                     });
                 </script>
-                
-                
+
+
             </div>
         </form>
 
-        
+
 
 
 
@@ -583,7 +1218,7 @@
                 color: rgb(124, 127, 136);
                 float: right;
                 cursor: pointer;
-                
+
             }
             .name:hover{
                 color: rgb(163, 165, 172);
@@ -593,7 +1228,7 @@
     </div>
 
     <input type="file" id="fileInput" style="display: none">
-    
+
 
     <script>
         // THIS CODE IS STOLEN AF
@@ -602,7 +1237,7 @@
         // THIS CODE IS STOLEN AF
         // THIS CODE IS STOLEN AF
         // THIS CODE IS STOLEN AF
-        
+
         function triggerFileInput() {
             document.getElementById('fileInput').click();
         }
@@ -668,13 +1303,13 @@
                         height: auto;
                         transform: translate(50px);
                         background-color: white;
-                        
+
                     }
                 </style>
                 <div id="container" style="border-radius: 0px 0px 10px 10px;">
                     <div id="background" style="
                             background: url('data:image/jpeg;base64, {{ theirbanner }}');
-                            
+
                             background-position: center center;
 
                             background-attachment: fixed;
@@ -682,43 +1317,43 @@
                             background-size: cover;
                             transition: background 1s, background-position 0s;
                             ">
-                            
+
                     </div>
 
                 </div>
-                
+
 
                 <script>
                     window.addEventListener('scroll', function () {
                         const background = document.getElementById('background');
                         const scroll = window.scrollY;
 
-                        
+
                         background.style.backgroundPosition = 'center ' + 'calc(50% + ' + scroll * 0.55 + 'px)';
                     });
                 </script>
 
 
                 <div id="container div">
-                    
+
                     <div class="littlebit" style="padding: 10px 0px 0px 250px; transform: translate(); box-sizing: border-box;
                     line-height: 20px; position: absolute; width: 1280px; max-width: 100vw; height: 10px; background-color: white;">
                         <h1>{{ theirname }}</h1>
                         <a style="line-height: 0px; color: #787a80;"><p id="friendsandfollowers" style="transform: translate(1px);">{{ friends }} Friends ︱ {{ followers }} Disciples</p></a>
-                        
+
                         <div style="transform: translate(0px, -60px); width: 390px; float: right; text-align: right;">
-                            
+
                                 <div style="float: right; padding: 0px 60px 0px 0px;">
                                     <p id="followbuttonmessage" style="display: none;">{{ followbuttonmessage }}</p>
                                     <button class="friendbutton"
                                             style="float: right; letter-spacing: -0.7px; font-size: 18px; width: 200px; background-color: #0866ff;
-                                            cursor: pointer; padding: 13px; border-radius: 8px; color: white; font-family: sans-serif; font-weight: normal; border-width: 0px;" 
-                                            type="submit" 
+                                            cursor: pointer; padding: 13px; border-radius: 8px; color: white; font-family: sans-serif; font-weight: normal; border-width: 0px;"
+                                            type="submit"
                                             onclick="{{ onclick }}">
 
                                             <i class="fa-solid fa-cross" style="padding-right: 8px; background: #0866ff;"></i>{{ followbuttonmessage }}
 
-                                        <script>
+                                            <script>
                                             async function follow(state) {
                                                 var path = window.location.pathname;
                                                 var parts = path.split("/");
@@ -732,7 +1367,7 @@
 
                                                     let match = str.match(regex);
 
-                                                
+
                                                     let firstNumber = match[1];
                                                     let textBefore = match[2];
                                                     let secondNumber = parseInt(match[3]);
@@ -743,12 +1378,12 @@
                                                     } else {
                                                         secondNumber--;
                                                     }
-                                                    
+
 
                                                     let updatedString = `${firstNumber} ${textBefore} ︱ ${secondNumber} ${textAfter}`;
-                                                    
+
                                                     return updatedString
-                                                        
+
                                                 }
 
                                                 if (state == "follow") {
@@ -760,32 +1395,39 @@
                                                     document.querySelector(".friendbutton").textContent = "";
                                                     var icon = document.createElement('i');
                                                     icon.classList.add('fa-brands', 'fa-facebook');
+                                                    icon.id = "followicon";
                                                     icon.style.paddingRight = "8px";
+                                                    icon.style.color = "white";
                                                     var text = document.createTextNode('Become Judas');
                                                     document.querySelector(".friendbutton").appendChild(icon);
                                                     document.querySelector(".friendbutton").appendChild(text);
 
                                                     document.querySelector(".friendbutton").style.background = "linear-gradient(to bottom, #0866ff, rgb(222, 62, 60))";
 
-                                                    
+
 
                                                     document.querySelector(".friendbutton").onclick = function() {
                                                         follow("unfollow")
-                                                        
+
+                                                        document.getElementById("followicon").remove();
+
                                                         document.querySelector(".friendbutton").textContent = "";
                                                         var icon = document.createElement('i');
                                                         icon.classList.add('fas', 'fa-cross');
+                                                        icon.id = "followicon";
                                                         icon.style.paddingRight = "8px";
                                                         icon.style.background = "#0866ff";
+                                                        icon.style.color = "white";
                                                         var text = document.createTextNode('Become a Disciple');
                                                         document.querySelector(".friendbutton").appendChild(icon);
                                                         document.querySelector(".friendbutton").appendChild(text);
-                                                        
+
                                                         document.querySelector(".friendbutton").style.background = "#0866ff";
+                                                        document.querySelector(".friendbutton").style.color = "white";
                                                     }
 
                                                 } else {
-                                                    var url = '/removefollower/' + user_id; 
+                                                    var url = '/removefollower/' + user_id;
 
                                                     str = document.getElementById("friendsandfollowers").textContent
                                                     document.getElementById("friendsandfollowers").textContent = increasefollowers("decrease", str);
@@ -794,32 +1436,39 @@
                                                     document.querySelector(".friendbutton").textContent = "";
                                                     var icon = document.createElement('i');
                                                     icon.classList.add('fas', 'fa-cross');
+                                                    icon.id = "followicon";
                                                     icon.style.paddingRight = "8px";
                                                     icon.style.background = "#0866ff";
+                                                    icon.style.color = "white";
                                                     var text = document.createTextNode('Become a Disciple');
                                                     document.querySelector(".friendbutton").appendChild(icon);
                                                     document.querySelector(".friendbutton").appendChild(text);
 
                                                     document.querySelector(".friendbutton").style.background = "#0866ff";
-                                                                                                        
-                                                    
+                                                    document.querySelector(".friendbutton").style.color = "white";
+
+
                                                     document.querySelector(".friendbutton").onclick = function() {
                                                         follow("follow")
-                                                        
+
+                                                        document.getElementById("followicon").remove();
+
                                                         document.querySelector(".friendbutton").textContent = "";
                                                         var icon = document.createElement('i');
                                                         icon.classList.add('fa-brands', 'fa-facebook');
+                                                        icon.id = "followicon";
                                                         icon.style.paddingRight = "8px";
+                                                        icon.style.color = "white";
                                                         var text = document.createTextNode('Become Judas');
                                                         document.querySelector(".friendbutton").appendChild(icon);
                                                         document.querySelector(".friendbutton").appendChild(text);
 
                                                         document.querySelector(".friendbutton").style.background = "linear-gradient(to bottom, #0866ff, rgb(222, 62, 60))";
 
-                                                        
-                                                        
+
+
                                                     }
-                                                    
+
                                                 }
 
                                                 xhr.open('POST', url, true);
@@ -827,23 +1476,30 @@
                                                 xhr.onreadystatechange = function () {
                                                     if (xhr.readyState == 4 && xhr.status == 200) {
                                                         console.log(xhr.responseText);
-                                                        
-                                                        
 
-                                                        
-                                                        
+
+
+
+
                                                     }
                                                 };
 
                                                 xhr.send("");
                                             }
 
+                                            document.querySelector(".friendbutton").click();
+                                            setTimeout(() => {
+                                                document.querySelector(".friendbutton").click();
+                                            }, 0);
+
                                             if (document.getElementById("followbuttonmessage").textContent == "Become Judas") {
                                                 console.log(document.querySelector(".friendbutton").value)
                                                 document.querySelector(".friendbutton").textContent = "";
                                                 var icon = document.createElement('i');
                                                 icon.classList.add('fa-brands', 'fa-facebook');
+                                                icon.id = "followicon";
                                                 icon.style.paddingRight = "8px";
+                                                icon.style.color = "white";
                                                 var text = document.createTextNode('Become Judas');
                                                 document.querySelector(".friendbutton").appendChild(icon);
                                                 document.querySelector(".friendbutton").appendChild(text);
@@ -860,7 +1516,7 @@
 
                                 <div style="padding: 0px 10px 0px 0px; float: right;">
                                     <button id="friendbutton" style="float: right; letter-spacing: -0.7px; font-size: 18px; width: 120px;
-                                    cursor: pointer; padding: 13px; border-radius: 8px; color: white; font-family: sans-serif; font-weight: normal; border-width: 0px;" 
+                                    cursor: pointer; padding: 13px; border-radius: 8px; color: white; font-family: sans-serif; font-weight: normal; border-width: 0px;"
                                     type="submit" onclick="{{ onclickfriend }}">
 
                                         <style>
@@ -885,7 +1541,7 @@
                                                 } else if (state == "alreadypending") {
                                                     var url = '/alreadypending';
                                                 } else {
-                                                    var url = '/unfriend/' + user_id; 
+                                                    var url = '/unfriend/' + user_id;
                                                 }
 
                                                 xhr.open('POST', url, true);
@@ -901,7 +1557,7 @@
                                             }
                                         </script>
 
-                                        
+
                                     </button>
                                     <script>
                                         if (document.getElementById("friendbutton").textContent.includes("Sent")) {
@@ -914,7 +1570,7 @@
                                     </script>
                                 </div>
 
-                            
+
 
                         </div>
                     </div>
@@ -923,7 +1579,7 @@
 
 
                 <div id="container img">
-                    <img src="data:image/jpeg;base64,{{ theirpicture }}" alt="Profile Picture" style="border-radius: 50%; 
+                    <img src="data:image/jpeg;base64,{{ theirpicture }}" alt="Profile Picture" style="border-radius: 50%;
                     height: 175px; width: 175px; border: 5px solid white; float: left; object-fit: cover;">
 
                     <img id="image" src="data:image/jpeg;base64,{{ theirbanner }}" style="display: none;">
@@ -938,11 +1594,11 @@
 
 
             <style>
-                hr {  
-                    height: 2px;  
-                    background-color: #caccd0;  
-                    border: none;  
-                }  
+                hr {
+                    height: 2px;
+                    background-color: #caccd0;
+                    border: none;
+                }
             </style>
 
             <!-- <div class="theirname" style="font-size: 100px;"><p>HELLO {{ theirname }}!</p></div> -->
@@ -963,7 +1619,7 @@
                             }
                         </style>
 
-                        <i class="fa-solid fa-envelope" style="padding-right: 5px;"></i> Posts 
+                        <i class="fa-solid fa-envelope" style="padding-right: 5px;"></i> Posts
                     </button>
 
                     <div style="padding: 40px 0px 0px 0px;"> <div class="bluebar" style="position: absolute; width: 100px; background-color: #0866ff; z-index: 9999;
@@ -990,7 +1646,7 @@
                                 }
                             </style>
 
-                            <i class="fa-solid fa-user" style="padding-right: 5px;"></i> About 
+                            <i class="fa-solid fa-user" style="padding-right: 5px;"></i> About
                         </button>
                     </form>
 
@@ -1017,7 +1673,7 @@
                                 }
                             </style>
 
-                            <i class="fa-solid fa-user-group" style="padding-right: 5px;"></i> Friends 
+                            <i class="fa-solid fa-user-group" style="padding-right: 5px;"></i> Friends
                         </button>
                     </form>
 
@@ -1043,7 +1699,7 @@
                                 }
                             </style>
 
-                            <i class="fas fa-camera" style="padding-right: 5px;"></i> Photos 
+                            <i class="fas fa-camera" style="padding-right: 5px;"></i> Photos
                         </button>
                     </form>
 
@@ -1057,7 +1713,7 @@
 
 
             </div>
-            
+
 
 
         </div>
@@ -1076,12 +1732,12 @@
                     display: flex;
                     justify-content: center;
                     width: 100vw;
-                    
+
                 }
             </style>
-  
+
             <div class="evenmainerbox2" id="thecodewasstolen">
-                                                                                
+
 
                 <div class="actualposts" style="transition: transform 0.3s; transform: translate(0, 12px); background-color: #f0f2f5; border-top: 20px solid #f0f2f5; max-width: 1280px; height: calc(100vh - 83px);">
                     <div class="actualposts3" style="max-width: 1280px; background-color: #f0f2f5; transition: transform 0.3s; border-radius: 10px; height: calc(100vh - 100px); width: 100vw;
@@ -1092,28 +1748,39 @@
                         border-bottom: 2px solid #caccd0; padding: 0 15px 0 15px; line-height: 15px; z-index: 999;"><h2 style="float: left;">Posts</h2>
 
                         <p style="float: left; padding-left: 5px; font-size: 20px;" id="repliesamount"></p></div>
-                        
+
 
                         <div id="aboutsection" style="width: calc(100% - 770px); position: sticky; top: 0; background-color: #f0f2f5;
-                        transition: transform 0.3s; overflow: hidden; float: left;">
-                            <div style="width: 100%; background-color: white; float: left; border-radius: 10px; max-height: calc(100vh - 790px);
+                        transition: transform 0.3s; overflow: hidden; float: left; height: 100%; overflow-y: scroll;">
+                            <div id="homelesscontainer" style="width: 100%; background-color: white; float: left; border-radius: 10px; max-height: calc(100vh - 790px); min-height: 155px;
                             border-bottom: 2px solid #caccd0; line-height: 15px; overflow: hidden;">
                                 <h2 style="padding: 0 15px 0 15px;">About</h2>
                                 <hr width="1000px">
+
+                                <div title="Location" id="location" style="padding: 10px; display: none; padding-left: 15px; font-size: 18px;">
+                                    giggle
+                                </div>
+
+                                <div title="Relationship Status" id="relationshipstatus" style="padding: 10px; display: none; padding-left: 15px; font-size: 18px;">
+                                    giggle
+                                </div>
+
+                                <hr id="horixon" style="display: none; margin-top: 10px;">
+                                
                                 <textarea id="homeless" style="
-                                    margin-left: 13px; 
+                                    margin-left: 13px;
                                     border: 0px solid red; color: black;
                                     width: calc(100% - 100px);
-                                    resize: none; 
-                                    outline: none; 
-                                    background-color: white; 
-                                    font-family: Arial; 
+                                    resize: none;
+                                    outline: none;
+                                    background-color: white;
+                                    font-family: Arial;
                                     font-size: 18px;
-                                    margin-top: 5px; 
-                                    margin-bottom: 12px; 
-                                    max-height: calc(100vh - 885px); height: auto;" 
-                                    
-                                readonly ></textarea>
+                                    margin-top: 5px;
+                                    margin-bottom: 12px;
+                                    max-height: calc(100vh - 885px); height: auto;
+                                    min-height: 70px;"
+                                readonly></textarea>
 
                                 <div id="everyday" onclick="{{ about }}" style="display: none;"></div>
 
@@ -1144,14 +1811,48 @@
                                         }
 
                                         setInterval(loop, 1);
-                                        
-                                        
+
+
                                     }
+
+                                    addEventListener("DOMContentLoaded", (event) => {
+                                        if ("{{ relationshipstatus }}".includes("_YES_")){
+                                            document.getElementById("relationshipstatus").style.display = "block";
+                                            document.getElementById("relationshipstatus").innerHTML = "<i style='padding-right: 5px;' class='fa-solid fa-heart-pulse'></i>{{ relationshipstatus }}".replace("_YES_", "");
+
+                                            document.getElementById("homeless").style.maxHeight = "calc(100vh - 1020px)";
+                                            document.getElementById("homelesscontainer").style.minHeight = "215px";
+                                            document.getElementById("homeless").style.minHeight = "70px";
+
+                                            document.getElementById("horixon").style.display = "block";
+                                        }
+
+                                        if ("{{ location }}".includes("_YES_")){
+                                            document.getElementById("location").style.display = "block";
+                                            document.getElementById("location").innerHTML = "<i style='padding-right: 9px; padding-left: 3px;' class='fa-solid fa-location-dot'></i>{{ location }}".replace("_YES_", "");
+                                            
+                                            document.getElementById("homeless").style.maxHeight = "calc(100vh - 1020px)";
+                                            document.getElementById("homelesscontainer").style.minHeight = "215px";
+                                            document.getElementById("homeless").style.minHeight = "70px";
+
+                                            document.getElementById("horixon").style.display = "block";
+                                        }
+
+
+                                        if ("{{ location }}".includes("_YES_") && "{{ relationshipstatus }}".includes("_YES_")){
+                                            document.getElementById("homeless").style.maxHeight = "calc(100vh - 1020px)";
+                                            document.getElementById("homelesscontainer").style.minHeight = "255px";
+                                            document.getElementById("homeless").style.minHeight = "70px";
+                                        }
+                                    });
+                                    
+
+
                                 </script>
-                                
-                            
-                                
-                        
+
+
+
+
                             </div>
                             <div id="photoalbumdiv" style="width: 100%; background-color: white; float: left; border-radius: 10px; max-height: calc(100vh - 190px); margin-top: 20px;
                             border-bottom: 2px solid #caccd0; line-height: 15px; overflow: hidden;">
@@ -1194,12 +1895,12 @@
                                             return response.text();
                                         })
                                         .then(album => {
-                                            
+
                                             document.getElementById("photoalbum").onclick = function() {
                                                 photoalbum(album);
                                             };
 
-                                            
+
                                             document.getElementById("photoalbum").click();
 
                                             console.log("ALBUM: " + album);
@@ -1211,7 +1912,7 @@
 
                                     async function photoalbum(photos){
                                         document.getElementById("photoalbumdiv2").innerHTML = ""
-                                        
+
                                         console.log("PYTHON RULEZ")
                                         photos = photos.split("_SEPARATOR_")
 
@@ -1222,7 +1923,7 @@
                                             try {
                                                 var photo = document.createElement('img');
 
-                                                
+
                                                 photo.src = "data:image/jpeg;base64," + photos[i]
 
                                                 if (photos[i] != undefined) {
@@ -1294,7 +1995,7 @@
                                                 console.log("bad luck")
                                             }
                                             }
-                                            
+
 
                                         }
                                         } else {
@@ -1309,8 +2010,8 @@
                                         }
 
                                     }
-                                    
-                                    
+
+
 
 
 
@@ -1322,7 +2023,7 @@
 
                             <p style="color: #787a80; margin-top: 15px; margin-left: 10px; line-height: 35px;">Copyright © Friendface Corporation 2024</p>
                             <p style="color: #787a80; margin-top: 15px; margin-left: 10px; line-height: 35px; transform: translate(0, -29px);">"Based" in British Virgin Islands</p>
-                            
+
                         </div>
 
 
@@ -1334,8 +2035,8 @@
 
                         <div id="everyday" onclick="{{ about }}" style="display: none;"></div>
 
-                       
-                        
+
+
 
                         <script>
                             window.onload = (event) => {
@@ -1343,7 +2044,7 @@
 
                                 function getAverageRGB(imgEl) {
                                     var blockSize = 5,
-                                        defaultRGB = {r:0,g:0,b:0}, 
+                                        defaultRGB = {r:0,g:0,b:0},
                                         canvas = document.createElement('canvas'),
                                         context = canvas.getContext && canvas.getContext('2d'),
                                         data, width, height,
@@ -1394,16 +2095,16 @@
                                     var colour = document.getElementById('thecodewasstolen');
                                     if (document.getElementById("darkmode").textContent == "yes"){
                                         colour.style.background = 'linear-gradient(to top, rgb(33, 33, 33), rgb(33, 33, 33), rgb(33, 33, 33), rgb(33, 33, 33), rgb(33, 33, 33), rgb(33, 33, 33), ' + rgb + ')';
-                                
-                                    } else { 
+
+                                    } else {
                                         colour.style.background = 'linear-gradient(to top, white, white, white, white, white, white, ' + rgb + ')';
                                     }
                                 }
-                                
 
-                                
+
+
                                 reload();
-                                
+
                                     var string = "github.com/isaacgisby/lan-messager\n"
                                     if (document.getElementById("splash").textContent == string) {
                                         document.getElementById("splash").style.cursor = "pointer";
@@ -1423,7 +2124,7 @@
                                 document.querySelector(".actualposts3").style.overflowY = "hidden";
                             };
 
-                            
+
 
                             window.onscroll = function(ev) {
                                 if ((window.innerHeight + Math.round(window.scrollY)) >= document.documentElement.scrollHeight) {
@@ -1438,7 +2139,7 @@
                                 } else {
                                     document.getElementById('aboutsection').style.transform = 'translate(0px)';
                                 }
-                                
+
                             }
                             setInterval(repeat, 50)
 
@@ -1510,70 +2211,81 @@
 
                                     if (increment != 1) {
 
-                                    
-
-                                    function advert(increment) {
-                                        var advertreal = document.createElement('div');
-                                        var close = document.createElement('button');
 
 
-                                        close.textContent = "✕"
-                                        close.style.background = "white"
-                                        close.style.fontSize = "10px"
-                                        close.style.padding = "0"
-                                        close.style.margin = "5px"
-                                        close.style.float = "right"
-                                        close.style.width = "20px"
-                                        close.style.height = "20px"
-                                        close.style.border = "1px outset"
-                                        close.style.cursor = "pointer"
+                                        function advert(increment) {
+                                        if (friends_only[i] == "no") {
+                                            var advertreal = document.createElement('div');
+                                            var close = document.createElement('button');
 
 
-
-                                        advertreal.className = "advert" + increment;
-
-                                        (function (index) {
-                                            close.onclick = function () {
-                                                document.querySelector(".advert" + index).style.display = "none";
-                                            };
-
-                                        })(increment);
-
-                                        advertreal.style.marginBottom = "15px";
-                                        advertreal.style.background = "white";
-                                        advertreal.style.height = "175px";
-                                        advertreal.style.width = "calc(100% - 4px)";
-                                        advertreal.style.maxWidth = "746px"
-                                        advertreal.style.border = "2px outset"
+                                            close.textContent = "✕"
+                                            close.style.background = "white"
+                                            close.style.fontSize = "10px"
+                                            close.style.padding = "0"
+                                            close.style.margin = "5px"
+                                            close.style.float = "right"
+                                            close.style.width = "20px"
+                                            close.style.height = "20px"
+                                            close.style.border = "1px outset"
+                                            close.style.cursor = "pointer"
 
 
 
+                                            advertreal.className = "advert" + increment;
+
+                                            (function (index) {
+                                                close.onclick = function () {
+                                                    document.querySelector(".advert" + index).style.display = "none";
+                                                };
+
+                                            })(increment);
+
+                                            advertreal.style.marginBottom = "15px";
+                                            advertreal.style.background = "white";
+                                            advertreal.style.height = "175px";
+                                            if (!navigator.userAgent.includes("Firefox")) {
+                                                advertreal.style.width = "calc(100% - 21px)";
+                                                advertreal.style.transform = "translate(17px)"
+                                            } else {
+                                                advertreal.style.width = "calc(100% - 4px)";
+                                            }
+                                            advertreal.style.maxWidth = "746px"
+                                            advertreal.style.border = "2px outset"
+                                            advertreal.style.backgroundPosition = "center center"
+                                            advertreal.style.backgroundSize = "cover"
 
 
 
 
 
-                                        document.querySelector(".actualposts2").appendChild(advertreal);
-                                        document.querySelector(".advert" + increment).appendChild(close);
-
-
-                                        fetch('/get_random_advert')
-                                            .then(response => {
-                                                if (!response.ok) {
-                                                    throw new Error('Failed to fetch');
-                                                }
-                                                return response.text();
-                                            })
-                                            .then(image => {
-                                                console.log(image)
-                                                advertreal.style.background = "url('data:image/jpeg;base64, " + image + "')"
 
 
 
-                                            })
-                                            .catch(error => {
-                                                console.error('Error fetching advert:', error);
-                                            });
+
+
+                                            document.querySelector(".actualposts2").appendChild(advertreal);
+                                            document.querySelector(".advert" + increment).appendChild(close);
+
+
+                                            fetch('/get_random_advert')
+                                                .then(response => {
+                                                    if (!response.ok) {
+                                                        throw new Error('Failed to fetch');
+                                                    }
+                                                    return response.text();
+                                                })
+                                                .then(image => {
+                                                    console.log(image)
+                                                    advertreal.style.background = "url('data:image/jpeg;base64, " + image + "')"
+
+
+
+                                                })
+                                                .catch(error => {
+                                                    console.error('Error fetching advert:', error);
+                                                });
+                                        }
                                     }
 
 
@@ -1612,7 +2324,7 @@
 
 
 
-                                    
+
                                     async function likepost(post_id, likestate) {
                                         try {
                                             const response = await fetch(`/like/${likestate}/${post_id}`, { method: 'POST' });
@@ -1693,7 +2405,7 @@
                                         };
 
                                         if (likers.split("_LIKERS_").includes(String(your_id))) {
-                                            like.onclick = function() { 
+                                            like.onclick = function() {
                                                 function blue() {
                                                     likepost(post_id, "unlike");
                                                     document.querySelector(".like02" + index).textContent = parseInt(likes) - 1;
@@ -1723,7 +2435,7 @@
                                                             document.querySelector(".likeicon" + index).style.color = "rgb(180, 180, 180)";
                                                         }
                                                         document.querySelector(".like" + index).onclick = function() {
-                                                            
+
                                                             blue();
                                                         }
                                                     }
@@ -1731,7 +2443,7 @@
                                                 blue();
                                             };
                                         } else {
-                                            like.onclick = function() { 
+                                            like.onclick = function() {
                                                 function grey() {
                                                     clickdislike();
                                                     likepost(post_id, "like");
@@ -1751,7 +2463,7 @@
                                                         document.querySelector(".like" + index).style.color = "rgb(180, 180, 180)";
                                                         document.querySelector(".likeicon" + index).style.color = "rgb(180, 180, 180)";
                                                     }
-                                                    
+
                                                     document.querySelector(".like" + index).onclick = function() {
                                                         likepost(post_id, "unlike");
                                                         document.querySelector(".like02" + index).textContent = parseInt(likes) + 1 - 1;
@@ -1770,7 +2482,7 @@
                                         }
 
                                         if (dislikers.split("_DISLIKERS_").includes(String(your_id))) {
-                                            dislike.onclick = function() { 
+                                            dislike.onclick = function() {
                                                 function disblue() {
                                                     dislikepost(post_id, "undislike");
                                                     document.querySelector(".dislike02" + index).textContent = parseInt(dislikes) - 1;
@@ -1801,7 +2513,7 @@
                                                             document.querySelector(".dislikeicon" + index).style.color = "rgb(180, 180, 180)";
                                                         }
                                                         document.querySelector(".dislike" + index).onclick = function() {
-                                                            
+
                                                             disblue();
                                                         }
                                                     }
@@ -1809,7 +2521,7 @@
                                                 disblue();
                                             };
                                         } else {
-                                            dislike.onclick = function() { 
+                                            dislike.onclick = function() {
                                                 function disgrey() {
                                                     clicklike();
                                                     dislikepost(post_id, "dislike");
@@ -1829,14 +2541,14 @@
                                                         document.querySelector(".dislike" + index).style.color = "rgb(180, 180, 180)";
                                                         document.querySelector(".dislikeicon" + index).style.color = "rgb(180, 180, 180)";
                                                     }
-                                                    
+
 
                                                     document.querySelector(".dislike" + index).onclick = function() {
-                                                        
+
                                                         dislikepost(post_id, "undislike");
                                                         document.querySelector(".dislike02" + index).textContent = parseInt(dislikes) + 1 - 1;
-                                                        
-                                                    
+
+
                                                         document.querySelector(".dislike" + index).style.backgroundColor = "#0866ff";
                                                         document.querySelector(".dislikeicon" + index).style.backgroundColor = "#0866ff";
 
@@ -1845,7 +2557,7 @@
 
 
                                                         document.querySelector(".dislike" + index).onclick = function() {
-                                                            
+
                                                             disgrey();
                                                         }
                                                     }
@@ -1855,8 +2567,8 @@
                                         }
                                         function clicklike() {
                                             console.log("LIKE IS CLICKING");
-                                                
-                                                
+
+
                                             var likeElement = document.querySelector(".like" + index);
                                             var computedStyle = window.getComputedStyle(likeElement);
                                             var backgroundColor = computedStyle.backgroundColor;
@@ -2001,16 +2713,16 @@
 
 
 
-                                    
-                                    
+
+
                                     document.querySelector(".actualposts3").style.overflowX = "hidden";
 
-                                    
+
                                     var actualimageparent = document.createElement("div");
                                     var actualimagediv = document.createElement("div");
                                     var actualimage = document.createElement("img");
 
-                                    
+
                                     actualimage.style.cursor = "pointer";
                                     actualimage.style.objectFit = "contain";
                                     actualimage.id = "actualimage" + increment;
@@ -2022,17 +2734,17 @@
                                     actualimage.style.left = "50%";
                                     actualimage.style.transform = "translate(-50%, -50%)";
 
-                                    
+
                                     actualimagediv.style.background = "url(data:image/jpeg;base64," + photos[i] + ")";
                                     actualimagediv.style.width = "100%";
                                     actualimagediv.style.height = "100%";
-                                    
+
                                     actualimagediv.style.filter = "blur(15px) brightness(50%)";
                                     actualimagediv.style.backgroundPosition = "center center";
                                     actualimagediv.style.backgroundSize = "cover";
                                     actualimagediv.className = "actualimagediv" + post_ids[i];
 
-                                    
+
                                     actualimageparent.style.marginBottom = "5px";
                                     actualimageparent.style.marginTop = "5px";
                                     actualimageparent.style.position = "relative";
@@ -2158,6 +2870,8 @@
                                     visit.className = "visit" + increment
 
                                     if (friends_only[i] == "yes") {
+                                        console.log("FRIENDZ ONLY (it was yes): " + friends_only[i]);
+
                                         function friendsonlydiv() {
                                             var friendsonlydiv = document.createElement("div");
 
@@ -2173,15 +2887,28 @@
 
                                             newDiv.appendChild(friendsonlydiv);
                                         }
-                                        
+
                                         if (!friending[i].split("_ITEM_").includes(String(your_id))) {
 
                                             newDiv.style.display = "none";
+
+                                            number = document.getElementById("repliesamount").textContent.replace(")", "").replace("(", "")
+                                            number = parseInt(number)
+                                            number = number - 1
+
+
+                                            document.getElementById("repliesamount").textContent = "(" + number + ")"
+
                                             if (parseInt(user_ids[i]) == parseInt(your_id)) {
                                                 newDiv.style.display = "block";
 
+                                                number = number + 1
+
                                                 friendsonlydiv();
                                             }
+
+                                            document.getElementById("repliesamount").textContent = "(" + number + ")"
+
                                         } else {
                                             friendsonlydiv();
 
@@ -2246,15 +2973,15 @@
                                 }
 
                                 console.log(post_ids)
-                                
+
                                 for (var i = 0; i < arraylength; i++) {
                                     (function (index) {
                                         if (index !== 0) {
                                             var post_id = post_ids[index];
 
                                             try {
-                                                var actualimage = document.querySelector(".actualimage" + post_id); 
-                                                var actualimagediv = document.querySelector(".actualimagediv" + post_id); 
+                                                var actualimage = document.querySelector(".actualimage" + post_id);
+                                                var actualimagediv = document.querySelector(".actualimagediv" + post_id);
                                             } catch {
                                                 console.log("stoopid")
                                             }
@@ -2276,14 +3003,14 @@
                                                     actualimagediv.style.backgroundPosition = "center center";
                                                     actualimagediv.style.backgroundSize = "cover";
 
-                                                    
+
                                                     actualimage.onload = function() {
                                                         actualimagediv.style.height = actualimage.offsetHeight + "px";
                                                         actualimagediv.style.maxHeight = "500px";
                                                         actualimage.style.maxHeight = "500px";
                                                     };
 
-                                                    
+
 
                                                     actualimage.onclick = function () {
                                                         function displayimage(){
@@ -2404,37 +3131,37 @@
                                                         displayimage();
 
                                                     };
-                                                    
+
                                                     } catch {
                                                         console.error("stoopid")
                                                     }
-                                                    
-                                                    
+
+
 
                                                 })
                                                 .catch(error => {
                                                     console.error('error fetching image for post id:', post_id, error);
                                                 });
 
-                                                
-                                            
 
 
-                                            
+
+
+
                                         }
                                     })(i);
                                 }
 
                                 for (var i = 0; i < arraylength; i++) {
-                                
+
                                     (function (index) {
                                         if (index !== 0) {
                                             var post_id = post_ids[index];
 
-                                            
 
 
-                                            var imagen = document.querySelector(".image" + post_id); 
+
+                                            var imagen = document.querySelector(".image" + post_id);
                                             var url = '/get/pfp/' + post_id;
 
                                             fetch(url)
@@ -2446,8 +3173,8 @@
                                                 })
                                                 .then(image => {
                                                     imagen.src = "data:image/jpeg;base64," + image;
-                                                    
-                                                    
+
+
                                                 })
                                                 .catch(error => {
                                                     console.error('error fetching image for post id:', post_id, error);
@@ -2457,7 +3184,7 @@
                                 }
 
                                 for (var i = 0; i < arraylength; i++) {
-                                    
+
                                     (function (index) {
                                         if (index !== 0) {
                                             // var replying_to = replying_to[index];
@@ -2468,7 +3195,7 @@
                                             var rizz = ".link" + index2
                                             console.log(rizz)
 
-                                            var link = document.querySelector(rizz); 
+                                            var link = document.querySelector(rizz);
                                             var url = '/get/reply_message/' + replying_to[index];
 
                                             console.log(url)
@@ -2481,12 +3208,12 @@
                                                         }
                                                         return response.text();
                                                     })
-                                                    
+
                                                     .then(message => {
                                                         link.textContent = message.replace(/_THISISALINEBREAK_/g, " ").replace(/_THISISANAPOSTROPHE_/g, "'").substring(0, 30) + "..."
 
 
-                                                        
+
                                                     })
                                                     .catch(error => {
                                                         console.error('error fetching image for post id:', error);
@@ -2498,21 +3225,21 @@
                                     })(i);
                                 }
 
-                                
+
                             }
                             setTimeout(() => {
                                 document.getElementById("clickme").click()
                             }, 100);
 
                             console.log(document.getElementById("clickme").textContent)
-            
+
                         </script>
                     </div>
                 </div>
             </div>
 
-        
-        
+
+
     </div>
 
 
@@ -2520,15 +3247,15 @@
         function updateposition() {
           const div1 = document.querySelector(".mainbox");
           const div2 = document.querySelector(".posts");
-      
+
           const position = div1.getBoundingClientRect();
           const scrolltop = window.scrollY || document.documentElement.scrollTop;
-      
+
           div2.style.top = `${position.bottom + scrolltop}px`;
         }
-      
+
         updateposition();
-      
+
         setInterval(updateposition, 0);
     </script>
 

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="data:image/jpeg;base64,{{ logo }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>Friendface︱Post</title>
+    <title id="titleyay">Friendface︱Post</title>
 
     <style>
         body {
@@ -1418,29 +1418,39 @@
                                 var thingdiv = document.createElement("div");
                                 thingdiv.className = "friending2" + increment;
 
-                                
+
                                 var clearDiv = document.createElement("div");
                                 clearDiv.style.clear = "both";
-                                
 
-                                
-                                
+
+
+
 
                                 newDiv.style.fontSize = "20px";
                                 newDiv.style.backgroundColor = 'white';
-                                newDiv.style.padding = '24px 24px 24px 15px';
+                                newDiv.style.padding = '24px 24px 0 15px';
                                 newDiv.className = "friending" + increment;
                                 newDiv.style.borderRadius = "0px";
-                                newDiv.style.height = "40px";      
+                                newDiv.style.minHeight = "40px";
+                                newDiv.style.height = "fit-content";
                                 newDiv.style.overflow = "hidden";
 
 
                                 var user_id = document.getElementById("yourid").textContent
 
-                                
+
 
 
                                 invite_text2.textContent = document.getElementById("yourname").textContent
+                                if (document.getElementById("yourid").textContent == document.getElementById("theirid").textContent) {
+                                    invite_text2.textContent = document.getElementById("yourname").textContent.trim();
+
+                                    var authorSpan = document.createElement("span");
+                                    authorSpan.textContent = " (Author)";
+                                    authorSpan.style.color = "#787a80";
+
+                                    invite_text2.appendChild(authorSpan);
+                                }
                                 invite_text2.style.lineHeight = "0px";
                                 invite_text2.style.transform = "translate(-1px, -17px)";
                                 invite_text2.style.cursor = "pointer";
@@ -1452,9 +1462,12 @@
 
 
                                 invite_text.textContent = document.getElementById("commentbar").value
-                                invite_text.style.lineHeight = "0px";
+                                invite_text.style.lineHeight = "17px";
+                                invite_text.style.width = "50%";
                                 invite_text.style.fontSize = "17px";
                                 invite_text.style.transform = "translate(50px, -25px)";
+                                invite_text.style.whiteSpace = "normal";
+                                invite_text.style.wordWrap = "break-word";
 
 
 
@@ -1488,17 +1501,24 @@
 
                                 (function(index, user_id, your_id) {
                                     newDiv.onmouseover = function() {
-                                        document.querySelector(".friending" + index).style.backgroundColor = "#f0f2f5";
+                                        this.style.backgroundColor = "#f0f2f5";
                                         if (user_id == String(your_id)) {
-                                            document.querySelector(".decline" + index).style.backgroundColor = "#caccd0";
+                                            if (document.getElementById("darkmode").textContent == "yes"){
+                                                document.querySelector(".decline" + index).style.backgroundColor = "rgb(55, 55, 55)";
+                                            } else {
+                                                document.querySelector(".decline" + index).style.backgroundColor = "#caccd0";
+                                            }
                                         }
-                                        
                                     };
 
                                     newDiv.onmouseout = function() {
-                                        document.querySelector(".friending" + index).style.backgroundColor = "white";
+                                        this.style.backgroundColor = "white";
                                         if (user_id == String(your_id)) {
-                                            document.querySelector(".decline" + index).style.backgroundColor = "#f0f2f5";
+                                            if (document.getElementById("darkmode").textContent == "yes"){
+                                                document.querySelector(".decline" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                            } else {
+                                                document.querySelector(".decline" + index).style.backgroundColor = "#f0f2f5";
+                                            }
                                         }
                                     };
 
@@ -1678,6 +1698,21 @@
                             }
                         });
 
+                        if ("{{ friends_only }}" == "yes"){
+                            document.getElementById("titleyay").textContent = "Friendface | Friends Only"
+                            document.querySelector(".replybutton").onmouseover = function() {
+                                this.style.color = "#787a80";
+                                this.style.borderBottom = "2px solid white";
+                                this.firstElementChild.style.color = "#787a80";
+                            }
+
+                            document.querySelector(".replybutton").onclick = function() {}
+                            document.querySelector(".replybutton").style.cursor = "not-allowed"
+                            
+                            document.querySelector(".replybutton").innerHTML = document.querySelector(".replybutton").innerHTML + " (Friends Only)"
+                            document.getElementById(".hiddenfornow").remove()
+                    
+                        }
 
                     </script>
                 </div>
@@ -1940,7 +1975,11 @@
                                     newDiv.onmouseout = function() {
                                         this.style.backgroundColor = "white";
                                         if (user_id == String(your_id)) {
-                                            document.querySelector(".decline" + index).style.backgroundColor = "#f0f2f5";
+                                            if (document.getElementById("darkmode").textContent == "yes"){
+                                                document.querySelector(".decline" + index).style.backgroundColor = "rgb(23, 23, 23)";
+                                            } else {
+                                                document.querySelector(".decline" + index).style.backgroundColor = "#f0f2f5";
+                                            }
                                         }
                                     };
 
@@ -2477,67 +2516,78 @@
                                     
 
                                     function advert(increment) {
-                                        var advertreal = document.createElement('div');
-                                        var close = document.createElement('button');
+                                        if (friends_only[i] == "no") {
+                                            var advertreal = document.createElement('div');
+                                            var close = document.createElement('button');
 
 
-                                        close.textContent = "✕"
-                                        close.style.background = "white"
-                                        close.style.fontSize = "10px"
-                                        close.style.padding = "0"
-                                        close.style.margin = "5px"
-                                        close.style.float = "right"
-                                        close.style.width = "20px"
-                                        close.style.height = "20px"
-                                        close.style.border = "1px outset"
-                                        close.style.cursor = "pointer"
+                                            close.textContent = "✕"
+                                            close.style.background = "white"
+                                            close.style.fontSize = "10px"
+                                            close.style.padding = "0"
+                                            close.style.margin = "5px"
+                                            close.style.float = "right"
+                                            close.style.width = "20px"
+                                            close.style.height = "20px"
+                                            close.style.border = "1px outset"
+                                            close.style.cursor = "pointer"
+
+                                            
+
+                                            advertreal.className = "advert" + increment;
+
+                                            (function (index) {
+                                                close.onclick = function () {
+                                                    document.querySelector(".advert" + index).style.display = "none"; 
+                                                };
+
+                                            })(increment);
+
+                                            advertreal.style.marginBottom = "15px";
+                                            advertreal.style.background = "white";
+                                            advertreal.style.height = "175px";
+                                            if (!navigator.userAgent.includes("Firefox")) {
+                                                advertreal.style.width = "calc(100% - 21px)";
+                                                advertreal.style.transform = "translate(17px)"
+                                            } else {
+                                                advertreal.style.width = "calc(100% - 4px)";
+                                            }
+                                            advertreal.style.maxWidth = "746px"
+                                            advertreal.style.border = "2px outset"
+                                            advertreal.style.backgroundPosition = "center center"
+                                            advertreal.style.backgroundSize = "cover"
+
+                                            
 
 
+                                            
+                                            
+                                            
 
-                                        advertreal.className = "advert" + increment;
-
-                                        (function (index) {
-                                            close.onclick = function () {
-                                                document.querySelector(".advert" + index).style.display = "none";
-                                            };
-
-                                        })(increment);
-
-                                        advertreal.style.marginBottom = "15px";
-                                        advertreal.style.background = "white";
-                                        advertreal.style.height = "175px";
-                                        advertreal.style.width = "calc(100% - 4px)";
-                                        advertreal.style.maxWidth = "746px"
-                                        advertreal.style.border = "2px outset"
+                                            
+                                            
+                                            document.querySelector(".actualposts2").appendChild(advertreal);
+                                            document.querySelector(".advert" + increment).appendChild(close);
 
 
+                                            fetch('/get_random_advert')
+                                                .then(response => {
+                                                    if (!response.ok) {
+                                                        throw new Error('Failed to fetch');
+                                                    }
+                                                    return response.text();
+                                                })
+                                                .then(image => {
+                                                    console.log(image)
+                                                    advertreal.style.background = "url('data:image/jpeg;base64, " + image + "')"
 
+                                                    
 
-
-
-
-
-                                        document.querySelector(".actualposts2").appendChild(advertreal);
-                                        document.querySelector(".advert" + increment).appendChild(close);
-
-
-                                        fetch('/get_random_advert')
-                                            .then(response => {
-                                                if (!response.ok) {
-                                                    throw new Error('Failed to fetch');
-                                                }
-                                                return response.text();
-                                            })
-                                            .then(image => {
-                                                console.log(image)
-                                                advertreal.style.background = "url('data:image/jpeg;base64, " + image + "')"
-
-
-
-                                            })
-                                            .catch(error => {
-                                                console.error('Error fetching advert:', error);
-                                            });
+                                                })
+                                                .catch(error => {
+                                                    console.error('Error fetching advert:', error);
+                                                });
+                                        }
                                     }
 
 
@@ -3318,6 +3368,8 @@
                                     visit.className = "visit" + increment
 
                                     if (friends_only[i] == "yes") {
+                                        console.log("FRIENDZ ONLY (it was yes): " + friends_only[i]);
+
                                         function friendsonlydiv() {
                                             var friendsonlydiv = document.createElement("div");
 
@@ -3337,11 +3389,24 @@
                                         if (!friending[i].split("_ITEM_").includes(String(your_id))) {
 
                                             newDiv.style.display = "none";
+                                            
+                                            number = document.getElementById("repliesamount").textContent.replace(")", "").replace("(", "")
+                                            number = parseInt(number)
+                                            number = number - 1
+
+
+                                            document.getElementById("repliesamount").textContent = "(" + number + ")"
+
                                             if (parseInt(user_ids[i]) == parseInt(your_id)) {
                                                 newDiv.style.display = "block";
 
+                                                number = number + 1
+
                                                 friendsonlydiv();
                                             }
+
+                                            document.getElementById("repliesamount").textContent = "(" + number + ")"
+
                                         } else {
                                             friendsonlydiv();
 

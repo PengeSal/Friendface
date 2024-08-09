@@ -458,12 +458,12 @@ position: absolute;  z-index: 99 !important;">
         </script>
 
         <button id="mostviewedbutton" class="papalazarou" style="width: 100%; height: 50px; font-size: 18px; text-align: left; padding-left: 12px; margin-top: 10px;
-                    border: none; border-radius: 10px; cursor: pointer; background-color: #f0f2f5;  display: flex; align-items: center;">
-                    <img src="{{ url_for('static', filename='icons/viewed.png') }}" style="width: 40px; height: 40px; float: left; object-fit: cover; margin-right: 7px;">
-                    Most Popular</button>
+                border: none; border-radius: 10px; cursor: pointer; background-color: #f0f2f5;  display: flex; align-items: center;">
+                <img src="{{ url_for('static', filename='icons/group.png') }}" style="width: 40px; height: 40px; float: left; object-fit: cover; margin-right: 7px;">
+                All Users</button>
         <script>
             document.getElementById("mostviewedbutton").onclick = function () {
-                window.location.href = "/home/most_viewed";
+                window.location.href = "/all_users";
             };
         </script>
 
@@ -609,8 +609,13 @@ position: absolute;  z-index: 99 !important;">
                 friendbutton.appendChild(icon);
                 friendbutton.appendChild(text);
 
-                friendbutton.style.backgroundColor = "#f0f2f5";
-                friendbutton.style.color = "#787a80";
+                if (document.getElementById("darkmode").textContent == "yes") {
+                    friendbutton.style.backgroundColor = "#171717";
+                    friendbutton.style.color = "#b4b4b4";
+                } else {
+                    friendbutton.style.backgroundColor = "#f0f2f5";
+                    friendbutton.style.color = "#787a80";
+                }
             
 
             }
@@ -1093,15 +1098,6 @@ position: absolute;  z-index: 99 !important;">
                                 document.querySelector(".actualposts3").style.overflowY = "hidden";
                             }
                         };
-                        function repeat() {
-                            if (window.innerWidth < 950) {
-                                document.getElementById('aboutsection').style.transform = 'translate(-500px)';
-                            } else {
-                                document.getElementById('aboutsection').style.transform = 'translate(0px)';
-                            }
-                            
-                        }
-                        setInterval(repeat, 50)
 
                         var increment = 0;
 
@@ -1129,6 +1125,8 @@ position: absolute;  z-index: 99 !important;">
                             var your_id = your_id
                             var firsttime = firsttime
                             var replytext = replytext.split("_SEPARATOR_");
+                            var friends_only = friends_only.split("_SEPARATOR_").reverse()
+                            var friending = friending.split("_SEPARATOR_").reverse()
 
                             console.log("NAMES: " + names[1]);
 
@@ -1203,75 +1201,79 @@ position: absolute;  z-index: 99 !important;">
 
                                 if (increment != 1) {
 
-                                function advert(increment) {
-                                    var advertreal = document.createElement('div');
-                                    var close = document.createElement('button');
+                                    function advert(increment) {
+                                    if (friends_only[i] == "no") {
+                                        var advertreal = document.createElement('div');
+                                        var close = document.createElement('button');
 
 
-                                    close.textContent = "✕"
-                                    close.style.background = "white"
-                                    close.style.fontSize = "10px"
-                                    close.style.padding = "0"
-                                    close.style.margin = "5px"
-                                    close.style.float = "right"
-                                    close.style.width = "20px"
-                                    close.style.height = "20px"
-                                    close.style.border = "1px outset"
-                                    close.style.cursor = "pointer"
+                                        close.textContent = "✕"
+                                        close.style.background = "white"
+                                        close.style.fontSize = "10px"
+                                        close.style.padding = "0"
+                                        close.style.margin = "5px"
+                                        close.style.float = "right"
+                                        close.style.width = "20px"
+                                        close.style.height = "20px"
+                                        close.style.border = "1px outset"
+                                        close.style.cursor = "pointer"
 
-                                    
+                                        
 
-                                    advertreal.className = "advert" + increment;
+                                        advertreal.className = "advert" + increment;
 
-                                    (function (index) {
-                                        close.onclick = function () {
-                                            document.querySelector(".advert" + index).style.display = "none"; 
-                                        };
+                                        (function (index) {
+                                            close.onclick = function () {
+                                                document.querySelector(".advert" + index).style.display = "none"; 
+                                            };
 
-                                    })(increment);
+                                        })(increment);
 
-                                    advertreal.style.marginBottom = "15px";
-                                    advertreal.style.background = "white";
-                                    advertreal.style.height = "175px";
-                                    if (!navigator.userAgent.includes("Firefox")) {
-                                        advertreal.style.width = "calc(100% - 21px)";
-                                        advertreal.style.transform = "translate(17px)"
-                                    } else {
-                                        advertreal.style.width = "calc(100% - 4px)";
+                                        advertreal.style.marginBottom = "15px";
+                                        advertreal.style.background = "white";
+                                        advertreal.style.height = "175px";
+                                        if (!navigator.userAgent.includes("Firefox")) {
+                                            advertreal.style.width = "calc(100% - 21px)";
+                                            advertreal.style.transform = "translate(17px)"
+                                        } else {
+                                            advertreal.style.width = "calc(100% - 4px)";
+                                        }
+                                        advertreal.style.maxWidth = "746px"
+                                        advertreal.style.border = "2px outset"
+                                        advertreal.style.backgroundPosition = "center center"
+                                        advertreal.style.backgroundSize = "cover"
+
+                                        
+
+
+                                        
+                                        
+                                        
+
+                                        
+                                        
+                                        document.querySelector(".actualposts2").appendChild(advertreal);
+                                        document.querySelector(".advert" + increment).appendChild(close);
+
+
+                                        fetch('/get_random_advert')
+                                            .then(response => {
+                                                if (!response.ok) {
+                                                    throw new Error('Failed to fetch');
+                                                }
+                                                return response.text();
+                                            })
+                                            .then(image => {
+                                                console.log(image)
+                                                advertreal.style.background = "url('data:image/jpeg;base64, " + image + "')"
+
+                                                
+
+                                            })
+                                            .catch(error => {
+                                                console.error('Error fetching advert:', error);
+                                            });
                                     }
-                                    advertreal.style.maxWidth = "746px"
-                                    advertreal.style.border = "2px outset"
-                                    advertreal.style.backgroundPosition = "center center"
-                                    advertreal.style.backgroundSize = "cover"
-
-
-                                    
-                                    
-                                    
-
-                                    
-                                    
-                                    document.querySelector(".actualposts2").appendChild(advertreal);
-                                    document.querySelector(".advert" + increment).appendChild(close);
-
-
-                                    fetch('/get_random_advert')
-                                        .then(response => {
-                                            if (!response.ok) {
-                                                throw new Error('Failed to fetch');
-                                            }
-                                            return response.text();
-                                        })
-                                        .then(image => {
-                                            console.log(image)
-                                            advertreal.style.background = "url('data:image/jpeg;base64, " + image + "')"
-
-                                            
-
-                                        })
-                                        .catch(error => {
-                                            console.error('Error fetching advert:', error);
-                                        });
                                 }
 
 
@@ -2093,7 +2095,15 @@ position: absolute;  z-index: 99 !important;">
                                 visit.style.cursor = "pointer";
                                 visit.className = "visit" + increment
 
+                                console.log("FRIENDZ ONLY LIST: " + friends_only);
+                                console.log("FRIENDZ ONLY: " + friends_only[i]);
+
+                                console.log(i)
+
+
                                 if (friends_only[i] == "yes") {
+                                    console.log("FRIENDZ ONLY (it was yes): " + friends_only[i]);
+
                                     function friendsonlydiv() {
                                         var friendsonlydiv = document.createElement("div");
 
@@ -2113,16 +2123,30 @@ position: absolute;  z-index: 99 !important;">
                                     if (!friending[i].split("_ITEM_").includes(String(your_id))) {
 
                                         newDiv.style.display = "none";
+                                        
+                                        number = document.getElementById("repliesamount").textContent.replace(")", "").replace("(", "")
+                                        number = parseInt(number)
+                                        number = number - 1
+
+
+                                        document.getElementById("repliesamount").textContent = "(" + number + ")"
+
                                         if (parseInt(user_ids[i]) == parseInt(your_id)) {
                                             newDiv.style.display = "block";
 
+                                            number = number + 1
+
                                             friendsonlydiv();
                                         }
+
+                                        document.getElementById("repliesamount").textContent = "(" + number + ")"
+
                                     } else {
                                         friendsonlydiv();
 
                                     }
                                 }
+
                                 
 
 
@@ -2606,21 +2630,7 @@ position: absolute;  z-index: 99 !important;">
 </div>
 
 
-<script>
-    function updateposition() {
-      const div1 = document.querySelector(".mainbox");
-      const div2 = document.querySelector(".posts");
-  
-      const position = div1.getBoundingClientRect();
-      const scrolltop = window.scrollY || document.documentElement.scrollTop;
-  
-      div2.style.top = `${position.bottom + scrolltop}px`;
-    }
-  
-    updateposition();
-  
-    setInterval(updateposition, 0);
-</script>
+
 
 
 </body>

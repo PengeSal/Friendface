@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="data:image/jpeg;base64,{{ logo }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>Friendface︱"{{ searchterm }}"</title>
+    <title>Friendface︱Marketplace</title>
 
     <style>
         body {
             margin: 0;
             padding: 0;
-            height: 100vh;
+
             overflow-x: hidden;
             background: #f0f2f5;
             font-family: Helvetica, arial;
-            overflow-y: hidden;
+            overflow-y: scroll;
 
         }
 
@@ -620,73 +620,148 @@
 
             xhr.send(data);
         }
+
+        if (!navigator.userAgent.includes("Firefox")) {
+            document.getElementById("uploadButton").style.marginRight = "15px";
+        }
     </script>
     
     <div onclick="{{ displaymatches }}" style="display: none;" id="clickme"></div>
 
 
-    <div class="evenmainerbox">
-        <div class="mainbox">
-            <div style="background-color: #f0f2f5; width: 100%; max-width: 1280px; height: 20px;"></div>
-            <div style="background-color: #f0f2f5; width: 100%; max-width: 1280px;">
-                <div style="background-color: white; width: 100%; max-width: 1280px; border-radius: 10px; height: 55px; border-bottom: 2px solid #caccd0;">
-                    <h2 style="padding-left: 20px; margin-top: 0; transform: translate(0, 10px);">Search Users</h2>
-                
-                </div>
-            </div>
-
-            <div style="background-color: #f0f2f5; width: 100%; max-width: 1280px; height: 20px;"></div>
-            <div style="background-color: #f0f2f5; width: 100%; max-width: 1280px;">
-                <div style="background-color: white; width: 100%; max-width: 1280px; border-radius: 10px 10px 0 0; height: 10px;">
-                    
-                
-                </div>
-            </div>
+    <div class="evenmainerbox" id="thecodewasstolen">
+        <div class="mainbox" style="display: flex; align-items: center; flex-direction: column; background: #f0f2f5;">
 
             
+            <div style="display: flex; justify-content: center; background: linear-gradient(to bottom, white, #0866ff); border-radius: 10px; border-bottom: 2px solid #caccd0;
+            margin-top: 20px; width: 100vw; max-width: 1280px; height: 90px; padding-top: 23px;">
+            
+                <img
+                    class="uploadButton"
+                    style="width: 60px; height: 50px; margin: 7px 0px 0px 0px; float: left; object-fit: cover; filter: drop-shadow(0 1px 0 white);"
+                    src="{{ url_for('static', filename='icons/premium.png') }}"
+                alt=":(">
 
 
-            <p style="margin-left: 20px; line-height: 16px; font-size: 22px; transform: translate(0, -4px); float: left;">Showing results for: "{{ searchterm }}"</p>
-            <p id="allusers" style="float: right; margin-right: 20px; line-height: 16px; font-size: 22px; transform: translate(0, -4px); cursor: pointer;">All Users</p>
+                <div class="logo" title="Friendface" style="float: left; color: #0866ff; font-family: Helvetica, arial; padding: 0px 0 0px 1px;">
+                    <h1 style="display: inline-block; text-shadow: 0 1px 0 white; transform: translateY(-7px);">riendface</h1>
 
-            <script>
-                document.getElementById("allusers").style.color = "#787a80"
+                </div>
+                <div style="transform: translate(0, 16px);">
+                    <div style="text-shadow: 0 1px 0 white; font-size: 24px; font-weight: normal; float: left; padding-left: 12px;">Premium</div>
+                </div>
 
-                document.getElementById("allusers").onmouseover = function() {
-                    this.style.color = "#caccd0"
-                }
-                document.getElementById("allusers").onmouseout = function() {
-                    this.style.color = "#787a80"
-                }
-                document.getElementById("allusers").onclick = function() {
-                    window.location.href = "/all_users";
-                }
-            </script>
 
-            <hr>
-            <div class="resultsbox" style="max-height: calc(100vh - 300px); overflow-y: scroll; width: 1280px; overflow-x: hidden;">
 
             </div>
+
+
+
+            <div style="background-color: #f0f2f5;"><div style="height: 67px; width: 100vw; max-width: 1280px; background-color: white;
+                border-radius: 10px 10px 0 0;"><h2 style="margin-left: 22px; padding-top: 14px;">Make your account eligible for Friendface Premium</h2></div></div>
+                
+    
+                
+                <div style="width: 100%; text-align: left; background: linear-gradient(to bottom, white 95%, #f0f2f5 5%);">
+                <hr style="transform: translate(0, -10px);">
+                <p style="margin: 0; margin-left: 22px; font-size: 18px; max-width: 800px; line-height: 28px; padding-top: 10px; margin-bottom: 20px;">
+                    Please complete the following form and click the "Submit" button to request account verification for Friendface Premium.
+                </p>
+
+
+                <div>
+
+                <h2 style="margin-left: 22px; padding-top: 20px;">Date of Birth</h2>
+                <hr style="transform: translate(0, -10px); margin-bottom: 6px;">
+                <textarea class="input" rows="1" style="font-family: Arial, Helvetica, sans-serif; resize: none; border-radius: 5px; margin-right: 100px;
+                        border: 2px solid #caccd0; margin: 5px 0px 5px 20px; padding: 10px; width: calc(50% - 155px);" 
+                        placeholder="Date of birth (DD/MM/YYYY)"></textarea>
+                </div>
+                
+
+                <div>
+                <textarea class="input" rows="1" style="font-family: Arial, Helvetica, sans-serif; resize: none; border-radius: 5px; margin-right: 100px;
+                        border: 2px solid #caccd0; margin: 5px 0px 5px 20px; padding: 10px; width: calc(50% - 155px);" 
+                        placeholder="Date of birth (MM/DD/YYYY)"></textarea>
+                </div>
+
+                <div>
+                <textarea class="input" rows="1" style="font-family: Arial, Helvetica, sans-serif; resize: none; border-radius: 5px; margin-right: 100px;
+                        border: 2px solid #caccd0; margin: 5px 0px 5px 20px; padding: 10px; width: calc(50% - 155px);" 
+                        placeholder="Date of birth (DD/MM/YY) E.G. 29/10/99 = 29/10/1999"></textarea>
+                </div>
+
+
+                <div>
+                <textarea class="input" rows="1" style="font-family: Arial, Helvetica, sans-serif; resize: none; border-radius: 5px; margin-right: 100px;
+                        border: 2px solid #caccd0; margin: 5px 0px 5px 20px; padding: 10px; width: calc(50% - 155px);" 
+                        placeholder="Date of birth (MM/DD/YY) E.G. 10/29/99 = 10/29/1999"></textarea>
+                </div>
+
+                <div>
+                <textarea class="input" rows="2" style="font-family: Arial, Helvetica, sans-serif; resize: none; border-radius: 5px; margin-right: 100px;
+                        border: 2px solid #caccd0; margin: 5px 0px 5px 20px; padding: 10px; width: calc(50% - 155px);" 
+                        placeholder="Date of birth within the Chinese Calender E.G. 10/29/99 = Jia-Xu (Year of the Dog) (9th month), 21, 4697 = 甲戌（狗年）（九月）"></textarea>
+                </div>
+
+                
+
+
+                <h2 style="margin-left: 22px; padding-top: 20px;">Location</h2>
+                <hr style="transform: translate(0, -10px); margin-bottom: 6px;">
+                <div>
+                <textarea class="input" rows="1" style="font-family: Arial, Helvetica, sans-serif; resize: none; border-radius: 5px; margin-right: 100px;
+                        border: 2px solid #caccd0; margin: 5px 0px 5px 20px; padding: 10px; width: calc(50% - 155px);" 
+                        placeholder="Your current address"></textarea>
+                </div>
+
+
+
+
+
+
+
+
+
+
+
+                <div style="background-color: #f0f2f5;">
+                    <div style="display: flex; justify-content: center; background-color: white; height: 12px;
+                    width: 100vw; max-width: 1280px; border-radius: 0 0 10px 10px; border-bottom: 2px solid #caccd0;"></div>
+                </div>
+
+                <div style="height: 10px; background-color: #f0f2f5; width: 100%; max-width: 1280px; 
+                color: #787a80; padding-bottom: 100px; padding-left: 10px;">Copyright © Friendface Corporation 2024</div>
+
+                <div style="height: 10px; background: transparent; width: 100%; max-width: 1280px; transform: translate(0, -87px);
+                color: #787a80; padding-bottom: 12px; padding-left: 10px;">"Based" in British Virgin Islands</div>
+
+
+                </div>
+
+                
+
+            
+            </div>
+
+
             <style>
                 hr {  
                     height: 2px;  
-                    width: 100%;
                     background-color: #caccd0;  
                     border: none;  
                     margin-bottom: 0;
                 }  
             </style>
 
-            <div style="background-color: #f0f2f5;"><div style="height: 15px; border-bottom: 2px solid #caccd0; background-color: white; 
-            border-radius: 0 0 10px 10px; width: 100%; max-width: 1280px;"></div></div>
+            
 
-            <div style="height: 10px; background-color: #f0f2f5; width: 100%; max-width: 1280px; 
-            color: #787a80; padding-bottom: 12px; padding-left: 10px;">Copyright © Friendface Corporation 2024</div>
-
-            <div style="height: 10px; background-color: #f0f2f5; width: 100%; max-width: 1280px; 
-            color: #787a80; padding-bottom: 12px; padding-left: 10px;">"Based" in British Virgin Islands</div>
+            
             
         </div>
+
+
+
 
 
 
@@ -695,6 +770,8 @@
 
 
     </div>
+
+    <div style="height: 2000px;"></div>
 
 
 
@@ -800,16 +877,15 @@
                 name.textContent = namesarray[i];
 
                 name.style.fontSize = "22px";
-
+                name.style.position = "absolute";
                 name.style.fontWeight = "bold"
                 name.style.cursor = "pointer"
-                name.style.width = "400px"
-                //name.style.transform = "translate(100px, 0px)";
+                name.style.transform = "translate(100px, 0px)";
 
                 desc.textContent = descriptionsarray[i].replace(/_THISISALINEBREAK_/g, " ").replace(/_THISISANAPOSTROPHE_/g, "'").substring(0, 30) + "...";
-
+                desc.style.position = "absolute";
                 desc.style.fontSize = "16px";
-                desc.style.transform = "translate(0, -35px)";
+                desc.style.transform = "translate(100px, 27px)";
                 desc.style.color = "#787a80";
 
 
@@ -834,7 +910,7 @@
                 visit.style.backgroundColor = "#0866ff";
                 visit.style.border = "0px"; 
                 visit.style.margin = "0px 0px 0px 0px"; 
-                visit.style.transform = "translate(-10px, -100px)";
+                visit.style.transform = "translate(-10px, 31px)";
                 visit.style.padding = "7px"; 
                 visit.style.width = "70px"; 
                 visit.style.borderRadius = "8px"; 

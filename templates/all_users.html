@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="data:image/jpeg;base64,{{ logo }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>Friendface︱"{{ searchterm }}"</title>
+    <title>Friendface︱All Users</title>
 
     <style>
         body {
@@ -628,14 +628,13 @@
     <div class="evenmainerbox">
         <div class="mainbox">
             <div style="background-color: #f0f2f5; width: 100%; max-width: 1280px; height: 20px;"></div>
-            <div style="background-color: #f0f2f5; width: 100%; max-width: 1280px;">
+            <!-- <div style="background-color: #f0f2f5; width: 100%; max-width: 1280px;">
                 <div style="background-color: white; width: 100%; max-width: 1280px; border-radius: 10px; height: 55px; border-bottom: 2px solid #caccd0;">
                     <h2 style="padding-left: 20px; margin-top: 0; transform: translate(0, 10px);">Search Users</h2>
                 
                 </div>
-            </div>
+            </div> -->
 
-            <div style="background-color: #f0f2f5; width: 100%; max-width: 1280px; height: 20px;"></div>
             <div style="background-color: #f0f2f5; width: 100%; max-width: 1280px;">
                 <div style="background-color: white; width: 100%; max-width: 1280px; border-radius: 10px 10px 0 0; height: 10px;">
                     
@@ -646,23 +645,7 @@
             
 
 
-            <p style="margin-left: 20px; line-height: 16px; font-size: 22px; transform: translate(0, -4px); float: left;">Showing results for: "{{ searchterm }}"</p>
-            <p id="allusers" style="float: right; margin-right: 20px; line-height: 16px; font-size: 22px; transform: translate(0, -4px); cursor: pointer;">All Users</p>
-
-            <script>
-                document.getElementById("allusers").style.color = "#787a80"
-
-                document.getElementById("allusers").onmouseover = function() {
-                    this.style.color = "#caccd0"
-                }
-                document.getElementById("allusers").onmouseout = function() {
-                    this.style.color = "#787a80"
-                }
-                document.getElementById("allusers").onclick = function() {
-                    window.location.href = "/all_users";
-                }
-            </script>
-
+            <h2 style="margin-left: 20px; line-height: 16px; transform: translate(0, -4px);">All Users</h2>
             <hr>
             <div class="resultsbox" style="max-height: calc(100vh - 300px); overflow-y: scroll; width: 1280px; overflow-x: hidden;">
 
@@ -670,7 +653,6 @@
             <style>
                 hr {  
                     height: 2px;  
-                    width: 100%;
                     background-color: #caccd0;  
                     border: none;  
                     margin-bottom: 0;
@@ -720,6 +702,8 @@
                                 }
 
             document.getElementById("clickme").click()
+
+
         };
         
 

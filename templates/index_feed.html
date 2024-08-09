@@ -6,7 +6,7 @@
     <link rel="icon" type="image/x-icon" href="data:image/jpeg;base64,{{ logo }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Friendface︱Home</title>
-    
+
     <style>
         body {
             margin: 0;
@@ -57,7 +57,7 @@
             font-family: Helvetica, Arial, sans-serif;
             font-size: 16px;
             background: #f0f2f5;
-            width: 200px; 
+            width: 200px;
 
             border: 2px solid #f0f2f5;
             color: black;
@@ -65,11 +65,11 @@
             outline: none;
             box-shadow: none;
             transition: width 0.75s;
-            
+
             height: 1px;
             padding-top: 50px;
 
-            
+
         }
 
         #search-input::placeholder {
@@ -85,11 +85,11 @@
             width: 40px;
             border: 3px solid #f0f2f5;
             border-radius: 35px 0px 0px 35px;
-            outline: none; 
+            outline: none;
             text-align: right;
             height: 40px;
             z-index: 99999999999999;
-            
+
         }
 
     </style>
@@ -97,7 +97,7 @@
 
 <body>
     <div style="width: 100vw; justify-content: center; display: flex; background-color: blue; height: 0px;">
-        <div id="splash" style="float: right; z-index: 999999999999; background-color: white; 
+        <div id="splash" style="float: right; z-index: 999999999999; background-color: white;
         text-align: center; cursor: default; transition: transform 0.3s; width: 375px; border-radius: 15px; position: fixed; top: 0;
         line-height: 40px; color: #787a80;">{{ splashmessage }}</div>
 
@@ -117,7 +117,7 @@
     </div>
 
     <div class="pfp">
-        
+
         <img
             id="uploadButton"
             style="width: 50px; height: 50px; cursor: pointer; padding: 7px 15px 8px 15px; float: right; border-radius: 50%; transition: filter 0.3s; object-fit: cover;"
@@ -126,10 +126,10 @@
 
             <script>
 
-                
+
 
                 document.getElementById("uploadButton").onclick = function (event) {
-                    event.stopPropagation(); 
+                    event.stopPropagation();
 
                     var existingdropdown = document.querySelector('.delete-dropdown2');
                     if (existingdropdown) {
@@ -147,7 +147,7 @@
                     confirmdeletebutton.style.borderRadius = "5px";
                     confirmdeletebutton.style.cursor = "pointer";
                     confirmdeletebutton.style.marginBottom = "5px";
-                    
+
 
                     var confirmdeletebutton2 = document.createElement("button");
                     confirmdeletebutton2.textContent = "Settings";
@@ -163,11 +163,11 @@
 
 
                     var deletedropdown = document.createElement("div");
-                    deletedropdown.classList.add('delete-dropdown2'); 
+                    deletedropdown.classList.add('delete-dropdown2');
                     deletedropdown.style.position = "absolute";
-                    
 
-                    deletedropdown.style.top = (event.clientY + window.pageYOffset + 10) + "px"; 
+
+                    deletedropdown.style.top = (event.clientY + window.pageYOffset + 10) + "px";
                     deletedropdown.style.left = event.clientX - 150 + "px";
                     deletedropdown.style.backgroundColor = "white";
                     deletedropdown.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.35)";
@@ -185,8 +185,8 @@
 
                     deletedropdown.style.overflow = "hidden"
 
-                    deletedropdown.style.height = "0px"; 
-                    deletedropdown.style.transition = "height 0.2s"; 
+                    deletedropdown.style.height = "0px";
+                    deletedropdown.style.transition = "height 0.2s";
                     requestAnimationFrame(() => {
                         deletedropdown.style.height = deletedropdown.scrollHeight - 15 + "px";
                     });
@@ -210,7 +210,7 @@
 
                         window.location.href = url
 
-                        
+
                     };
                     confirmdeletebutton2.onclick = function () {
                         var url = "/settings"
@@ -237,7 +237,7 @@
                         if (!deletedropdown.contains(event.target)) {
                             console.log("young sheldon")
                             document.body.removeChild(deletedropdown);
-                            document.removeEventListener('click', handleclickoutside); 
+                            document.removeEventListener('click', handleclickoutside);
                         }
                     }
 
@@ -247,9 +247,9 @@
             </script>
 
 
-        
 
-        
+
+
         <form id="accountform" action="/users/{{ user_id }}/posts" method="get">
             <div id="user_id_div" style="display: none;">{{ user_id}}</div>
             <div class="name" onclick="submitname()"  title="Your Account" style="float: right; font-family: Helvetica, arial;  font-size: 20px;">
@@ -262,7 +262,7 @@
 
 
 
-        
+
         <form id="accountform" action="/" method="post">
             <img title="Friendface"
 
@@ -287,7 +287,7 @@
         </form>
 
 
-        
+
         <form id="search-form" action="/searchusers" method="get">
             <div id="search-container" style="border-radius: 35px;">
                 <button type="submit" id="search-button">⌕</button>
@@ -299,34 +299,34 @@
                     } else {
                         document.getElementById("search-input").style.transform = "translate(-4px, -2px)";
                     }
-                
+
                     document.getElementById("search-container").style.height = "42px";
                     document.getElementById("search-container").style.backgroundColor = "#f0f2f5";
                     document.getElementById("search-container").style.transition = "box-shadow 0.75s";
-                
+
                     document.getElementById("search-container").onmouseover = function() {
                         document.getElementById("search-input").style.width = "300px";
                         document.getElementById("search-container").style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.35)";
                     }
-                
+
                     document.getElementById("search-container").onmouseout = function() {
                         if (!document.getElementById("search-input").matches(":focus")) {
                             document.getElementById("search-input").style.width = "200px";
                             document.getElementById("search-container").style.boxShadow = "none";
                         }
                     }
-                
+
                     document.getElementById("search-input").addEventListener("blur", function() {
                         document.getElementById("search-input").style.width = "200px";
                         document.getElementById("search-container").style.boxShadow = "none";
                     });
                 </script>
-                
-                
+
+
             </div>
         </form>
 
-        
+
 
 
 
@@ -344,7 +344,7 @@
                 color: rgb(124, 127, 136);
                 float: right;
                 cursor: pointer;
-                
+
             }
             .name:hover{
                 color: rgb(163, 165, 172);
@@ -354,7 +354,7 @@
     </div>
 
     <input type="file" id="fileInput" style="display: none">
-    
+
 
     <script>
         // THIS CODE IS STOLEN AF
@@ -363,7 +363,7 @@
         // THIS CODE IS STOLEN AF
         // THIS CODE IS STOLEN AF
         // THIS CODE IS STOLEN AF
-        
+
         function triggerFileInput() {
             document.getElementById('fileInput').click();
         }
@@ -406,7 +406,7 @@
 
 
 <div id="id" style="width: 380px; border-radius: 10px;
-background-color: #f0f2f5; top: 84px; transform: translate(calc(50vw - 775px)); 
+background-color: #f0f2f5; top: 84px; transform: translate(calc(50vw - 775px));
 position: absolute;  z-index: 99 !important;">
 
     <div id="id2" style="float: right; height: calc(100vh - 100px);">
@@ -415,11 +415,11 @@ position: absolute;  z-index: 99 !important;">
                 border-bottom: 2px solid #caccd0; padding: 0 15px 0 15px; line-height: 15px; z-index: 999;"><h2 style="float: left;">Home</h2></div>
 
 
-    
+
     <div style="max-height: calc(100vh - 250px); overflow-y: scroll; height: auto; width: calc(100%); overflow-x: hidden;">
         <button id="profilebutton" class="papalazarou" style="width: 100%; height: 50px; font-size: 18px; text-align: left; padding-left: 12px; margin-top: 5px;
             border: none; border-radius: 10px; cursor: pointer; background-color: #f0f2f5; display: flex; align-items: center;">
-            <img src="data:image/jpeg;base64,{{ profile_picture }}" style="width: 40px; height: 40px; float: left; border-radius: 50%; object-fit: 
+            <img src="data:image/jpeg;base64,{{ profile_picture }}" style="width: 40px; height: 40px; float: left; border-radius: 50%; object-fit:
                 cover; margin-right: 7px; min-width: 40px;">
                 Your profile
         </button>
@@ -463,32 +463,38 @@ position: absolute;  z-index: 99 !important;">
 
         <button id="mostviewedbutton" class="papalazarou" style="width: 100%; height: 50px; font-size: 18px; text-align: left; padding-left: 12px; margin-top: 10px;
                     border: none; border-radius: 10px; cursor: pointer; background-color: #f0f2f5;  display: flex; align-items: center;">
-                    <img src="{{ url_for('static', filename='icons/viewed.png') }}" style="width: 40px; height: 40px; float: left; object-fit: cover; margin-right: 7px;">
-                    Most Popular</button>
+                    <img src="{{ url_for('static', filename='icons/group.png') }}" style="width: 40px; height: 40px; float: left; object-fit: cover; margin-right: 7px;">
+                    All Users</button>
         <script>
             document.getElementById("mostviewedbutton").onclick = function () {
-                window.location.href = "/home/most_viewed";
+                window.location.href = "/all_users";
             };
         </script>
 
-        <button class="papalazarou" style="width: 100%; height: 50px; font-size: 18px; text-align: left; padding-left: 12px; margin-top: 10px;cursor: pointer;  
+        <button class="papalazarou" style="width: 100%; height: 50px; font-size: 18px; text-align: left; padding-left: 12px; margin-top: 10px;cursor: pointer;
             border: none; border-radius: 10px; background-color: #f0f2f5; display: flex; align-items: center;">
             <img src="{{ url_for('static', filename='icons/pc.png') }}" style="width: 40px; height: 40px; float: left; object-fit: cover; margin-right: 7px;">
             Download PC App</button>
 
 
-        <button class="papalazarou" style="width: 100%; height: 50px; font-size: 18px; text-align: left; padding-left: 12px; margin-top: 10px; cursor: pointer; 
+        <button id="marketplace" class="papalazarou" style="width: 100%; height: 50px; font-size: 18px; text-align: left; padding-left: 12px; margin-top: 10px; cursor: pointer;
                 border: none; border-radius: 10px; background-color: #f0f2f5; display: flex; align-items: center;">
                 <img src="{{ url_for('static', filename='icons/note.png') }}" style="width: 40px; height: 40px; float: left; object-fit: cover; margin-right: 7px;">
-                Friendface Notes™</button>
+                Marketplace</button>
+
+        <script>
+            document.getElementById("marketplace").onclick = function () {
+                window.location.href = "/marketplace";
+            };
+        </script>
 
         <button class="papalazarou" style="width: 100%; height: 45px; font-size: 18px; text-align: left; padding-left: 12px; margin-top: 10px; cursor: pointer; margin-bottom: 10px;
                     border: none; border-radius: 10px; background-color: #f0f2f5; display: flex; align-items: center;">
                     <img src="{{ url_for('static', filename='icons/message.png') }}" style="width: 40px; height: 40px; float: left; object-fit: cover; margin-right: 7px;">
                     Direct Messages</button>
-        
-        
-        
+
+
+
 
 
         <button class="papalazarou" id="settings" style="width: 100%; height: 45px; font-size: 18px; text-align: left; padding-left: 12px; margin-top: 10px; cursor: pointer; margin-bottom: 10px;
@@ -510,9 +516,6 @@ position: absolute;  z-index: 99 !important;">
 
     </div>
 
-    
-        
-    
 
 
 
@@ -520,12 +523,15 @@ position: absolute;  z-index: 99 !important;">
 
 
 
-    
+
+
+
+
 
     <script>
         document.querySelectorAll(".papalazarou").forEach(function(button) {
             button.style.borderBottom = "2px solid #f0f2f5"
-            
+
             button.onmouseover = function() {
                 if (document.getElementById("darkmode").textContent == "no") {
                     this.style.backgroundColor = "#e4e6eb"
@@ -534,12 +540,12 @@ position: absolute;  z-index: 99 !important;">
                 }
             }
             button.onmouseout = function() {
-                
+
                 this.style.backgroundColor = "#f0f2f5"
-                
+
             }
 
-            
+
         });
 
 
@@ -550,7 +556,7 @@ position: absolute;  z-index: 99 !important;">
     </script>
 
 
-    
+
 
 
 </div>
@@ -558,29 +564,29 @@ position: absolute;  z-index: 99 !important;">
 
 
 
-<div id="id3" style="width: 380px; height: 100px; background-color: #f0f2f5; top: 84px; 
+<div id="id3" style="width: 380px; height: 100px; background-color: #f0f2f5; top: 84px;
     position: absolute; transform: translate(calc(50vw + 395px)); position: absolute; z-index: 99 !important;">
     <div id="id4" style="width: 380px;">
     <div style="width: 100%; border-radius: 10px 10px 0 0; background-color: white; display: flex;">
-        
+
         <img id="suggested_pfp" src="data:image/jpeg;base64,{{ recommended_pfp }}" style="width: 80px; height: 80px; object-fit: cover; cursor: pointer;
                 border-radius: 50%; padding: 10px; margin-left: 10px; min-width: 80px;" onclick="window.location.href = '/users/{{ recommended_user_id }}/posts';">
 
         <div style="height: 90px; padding-left: 10px; width: calc(100% - 50px); margin-right: 10px; overflow: hidden;">
             <div id="mutuals" style="padding-top: 25px; font-size: 18px;">{{ num_mutuals | safe}}</div>
-            <div id="suggested_name" style="padding-top: 5px; font-size: 20px; font-weight: bold; 
+            <div id="suggested_name" style="padding-top: 5px; font-size: 20px; font-weight: bold;
             cursor: pointer;" onclick="window.location.href = '/users/{{ recommended_user_id }}/posts';">{{ recommended_forename }} {{ recommended_surname }}</div>
         </div>
 
         <script>
             document.getElementById("profile_photo").onclick = function() {
                 var url = "/users/" + document.getElementById("user_id_div").textContent + "/posts"
-    
+
                 window.location.href = url
             }
         </script>
- 
-        
+
+
 
     </div>
     <div style="width: 100%; border-radius: 0 0 10px 10px; border-bottom: 2px solid #caccd0; background-color: white; height: 52.5px; padding-top: 5px;">
@@ -596,7 +602,7 @@ position: absolute;  z-index: 99 !important;">
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState == 4 && xhr.status == 200) {
                         console.log(xhr.responseText);
-                        
+
                     }
                 };
 
@@ -613,9 +619,15 @@ position: absolute;  z-index: 99 !important;">
                 friendbutton.appendChild(icon);
                 friendbutton.appendChild(text);
 
-                friendbutton.style.backgroundColor = "#f0f2f5";
-                friendbutton.style.color = "#787a80";
-            
+                if (document.getElementById("darkmode").textContent == "yes") {
+                    friendbutton.style.backgroundColor = "#171717";
+                    friendbutton.style.color = "#b4b4b4";
+                } else {
+                    friendbutton.style.backgroundColor = "#f0f2f5";
+                    friendbutton.style.color = "#787a80";
+                }
+
+
 
             }
 
@@ -639,10 +651,10 @@ position: absolute;  z-index: 99 !important;">
 
         <style>
             .ignorebutton{
-                background-color: #f0f2f5; 
+                background-color: #f0f2f5;
             }
             .ignorebutton:hover{
-                background-color: #caccd0; 
+                background-color: #caccd0;
             }
         </style>
 
@@ -650,10 +662,265 @@ position: absolute;  z-index: 99 !important;">
     </div>
     </div>
 
-    <div id="id5" style="width: 380px; margin-top: 15px;">
-    <div style="width: 100%; border-radius: 10px; background-color: white; border-bottom: 2px solid #caccd0; ">
-        <h3>Tip of the day:</h3>
-        
+    <div id="id5" style="width: 380px; margin-top: 15px; ">
+    <div id="messagecontainer" style="width: 100%; border-radius: 10px; background-color: white; border-bottom: 2px solid #caccd0; ">
+        <h3 style="padding: 10px; padding-left: 15px; margin-bottom: 0; padding-top: 11px;">Notifications</h3>
+
+        <hr style="margin: 0; margin-bottom: 7px;">
+
+        <div id="messagecontainer2" style="width: 100%; max-height: calc(100vh - 500px); overflow-y: scroll; overflow-x: hidden;">
+            <p id="nope" style="color: #787a80; text-align: center; width: 100%;">No Notifications</p>
+
+        </div>
+        <div style="height: 10px;"></div>
+
+        <div id="direct_messages" style="display: none;" onclick="{{ direct_messages }}">{{ direct_messages }}</div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+        <script>
+
+            function display_direct_messages(user_ids, contents, dates, message_ids, names) {
+                var user_ids2 = user_ids.split("_SEPARATOR_")
+                var contents2 = contents.split("_SEPARATOR_")
+                var dates2 = dates.split("_SEPARATOR_")
+                var message_ids2 = message_ids.split("_SEPARATOR_")
+                var names2 = names.split("_SEPARATOR_")
+
+                for (var i = 0; i < contents2.length - 1; i++) {
+                    var message = document.createElement('div');
+                    var namediv = document.createElement('div');
+                    var pfp = document.createElement('img');
+                    var name = document.createElement('p');
+                    var actualmessage = document.createElement('p');
+                    var icon = document.createElement('div')
+
+                    message.style.width = "calc(100% - 4px)";
+                    message.style.borderLeft = "2px solid white";
+                    message.style.borderRight = "2px solid white";
+                    message.style.height = "65px";
+                    message.style.cursor = "pointer";
+
+                    name.innerHTML = "Message from <strong>" + names2[i] + "</strong>"
+                    name.style.width = "100%";
+                    name.style.marginTop = "0";
+                    name.style.marginBottom = "0";
+                    name.style.padding = "10px";
+                    name.style.paddingBottom = "5px";
+                    name.style.transform = "translate(8px)";
+                    name.style.cursor = "pointer";
+
+                    actualmessage.textContent = contents2[i].replace(/_THISISALINEBREAK_/g, "").replace(/_THISISANAPOSTROPHE_/g, "'").substring(0, 20) + "...";
+                    actualmessage.style.width = "100%";
+                    actualmessage.style.marginTop = "0";
+                    actualmessage.style.marginBottom = "0";
+                    actualmessage.style.transform = "translate(8px)";
+                    actualmessage.style.cursor = "pointer";
+
+                    icon.style.color = "#0866ff";
+                    icon.style.float = "right";
+                    icon.style.fontSize = "24px";
+                    icon.style.paddingRight = "15px";
+                    icon.style.paddingTop = "17px";
+                    icon.innerHTML = "<i class='fa-solid fa-circle-exclamation'></i>";
+                    icon.style.cursor = "pointer";
+
+                    pfp.style.width = "50px";
+                    pfp.style.height = "50px";
+                    pfp.style.marginLeft = "15px";
+                    pfp.style.marginTop = "7px";
+                    pfp.style.objectFit = "cover";
+                    pfp.style.borderRadius = "50%";
+                    pfp.id = "pfp" + i;
+                    pfp.style.float = "left";
+                    pfp.style.cursor = "pointer";
+
+                    (function (index) {
+                        message.onmouseover = function() {
+                            this.style.backgroundColor = "#f0f2f5";
+                        }
+                        message.onmouseout = function() {
+                            this.style.backgroundColor = "white";
+                        }
+                        message.onclick = function() {
+                            var url = "/users/" + user_ids2[index] + "/posts_up"
+
+                            window.location.href = url
+                        }
+
+                        
+                    })(i);
+                    
+
+                    document.getElementById("messagecontainer2").prepend(message);
+                    message.appendChild(pfp)
+                    message.appendChild(icon)
+                    message.appendChild(namediv)
+                    namediv.appendChild(name)
+                    namediv.appendChild(actualmessage)
+
+                    document.getElementById("nope").style.display = "none";
+
+                    
+                }
+
+                for (var i = 0; i < contents2.length - 1; i++) {
+                    (function (index) {
+                        var url = '/get/pfp_comment/' + user_ids2[index];
+
+                        fetch(url)
+                            .then(response => {
+                                if (!response.ok) {
+                                    throw new Error('you lose');
+                                }
+                                return response.text();
+                            })
+                            .then(image => {
+                                document.getElementById("pfp" + index).src = "data:image/jpeg;base64," + image;
+
+
+                            })
+                            .catch(error => {
+                                console.error('error fetching image for post id:');
+                            });
+
+                    })(i);
+                }
+
+            };
+
+            document.addEventListener('DOMContentLoaded', (event) => {
+                document.getElementById("direct_messages").click()
+            });
+
+            var socket = io({
+                reconnection: true,
+                reconnectionAttempts: Infinity,
+                reconnectionDelay: 1000,
+                reconnectionDelayMax: 5000,
+                timeout: 20000,
+                autoConnect: true
+            });
+            socket.emit('join_nice', {'username': '{{ username }}', 'room': '{{ username }}'});
+
+            var incerment = 0
+
+            socket.on('receive_message', function(data) {
+                increment = increment - 1
+
+                var message = document.createElement('div');
+                var namediv = document.createElement('div');
+                var pfp = document.createElement('img');
+                var name = document.createElement('p');
+                var actualmessage = document.createElement('p');
+                var icon = document.createElement('div')
+
+                message.style.width = "calc(100% - 4px)";
+                message.style.borderLeft = "2px solid white";
+                message.style.borderRight = "2px solid white";
+                message.style.cursor = "pointer";
+
+                name.innerHTML = "Message from <strong>" + data.username + "</strong>"
+                name.style.width = "100%";
+                name.style.marginTop = "0";
+                name.style.marginBottom = "0";
+                name.style.padding = "10px";
+                name.style.paddingBottom = "5px";
+                name.style.transform = "translate(8px)";
+                name.style.cursor = "pointer";
+
+                if (data.content.includes("_THISISANIMAGE_")){
+                    actualmessage.textContent = "Sent an image...";
+                } else {
+                    actualmessage.textContent = data.content.replace(/_THISISALINEBREAK_/g, "").replace(/_THISISANAPOSTROPHE_/g, "'").substring(0, 20) + "...";
+                }
+                actualmessage.style.width = "100%";
+                actualmessage.style.marginTop = "0";
+                actualmessage.style.marginBottom = "0";
+                actualmessage.style.transform = "translate(8px)";
+                actualmessage.style.cursor = "pointer";
+
+                icon.style.color = "#0866ff";
+                icon.style.float = "right";
+                icon.style.fontSize = "24px";
+                icon.style.paddingRight = "15px";
+                icon.style.paddingTop = "17px";
+                icon.innerHTML = "<i class='fa-solid fa-circle-exclamation'></i>";
+                icon.style.cursor = "pointer";
+
+                pfp.style.width = "50px";
+                pfp.style.height = "50px";
+                pfp.style.marginLeft = "15px";
+                pfp.style.marginTop = "7px";
+                pfp.style.objectFit = "cover";
+                pfp.style.borderRadius = "50%";
+                pfp.id = "pfp" + increment;
+                pfp.style.float = "left";
+                pfp.style.cursor = "pointer";
+
+                (function (index) {
+                    message.onmouseover = function() {
+                        this.style.backgroundColor = "#f0f2f5";
+                    }
+                    message.onmouseout = function() {
+                        this.style.backgroundColor = "white";
+                    }
+                    message.onclick = function() {
+                        var url = "/users/" + index + "/posts_up"
+
+                        window.location.href = url
+                    }
+
+                    
+                })(data.sender_id);
+                
+                document.getElementById("messagecontainer2").prepend(message);
+                message.appendChild(pfp);
+                message.appendChild(icon);
+                message.appendChild(namediv);
+                namediv.appendChild(name);
+                namediv.appendChild(actualmessage);
+
+                
+
+                (function () {
+                    var url = '/get/pfp_comment/' + data.sender_id;
+
+                    fetch(url)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('you lose');
+                            }
+                            return response.text();
+                        })
+                        .then(image => {
+                            pfp.src = "data:image/jpeg;base64," + image;
+
+
+                        })
+                        .catch(error => {
+                            console.error('error fetching image for post id:');
+                        });
+
+                })();
+
+                message.style.minHeight = "0px";
+                message.style.overflow = "hidden"
+                message.style.height = "0px";
+                message.style.transition = "height 0.2s"; 
+                setTimeout(() => {
+                    requestAnimationFrame(() => {
+                        message.style.height = "65px";
+                        document.getElementById("nope").style.display = "none";
+                    });
+                }, 300);
+                
+
+            });
+
+
+
+        </script>
+
     </div>
 
     </div>
@@ -681,7 +948,7 @@ position: absolute;  z-index: 99 !important;">
 
         }
 
-        
+
     }
 
     changewidth();
@@ -696,7 +963,7 @@ position: absolute;  z-index: 99 !important;">
         const computedStyle = getComputedStyle(element);
         let color = computedStyle.color;
 
-        if (color === 'rgb(255, 255, 255)') { 
+        if (color === 'rgb(255, 255, 255)') {
             element.style.color = 'rgb(33, 33, 33)';
         } else if (color === 'rgb(0, 0, 0)') {
             element.style.color = 'rgb(254, 254, 254)';
@@ -710,9 +977,9 @@ position: absolute;  z-index: 99 !important;">
 
         let backgroundColor = computedStyle.backgroundColor;
 
-        if (backgroundColor === 'rgb(255, 255, 255)') { 
+        if (backgroundColor === 'rgb(255, 255, 255)') {
             element.style.backgroundColor = 'rgb(33, 33, 33)';
-        } else if (backgroundColor === 'rgb(0, 0, 0)') { 
+        } else if (backgroundColor === 'rgb(0, 0, 0)') {
             element.style.backgroundColor = 'rgb(254, 254, 254)';
         } else if (backgroundColor === 'rgb(8, 102, 255)' || backgroundColor === 'rgb(57, 105, 251)') {
             element.style.color = 'rgb(255, 255, 255)';
@@ -728,9 +995,12 @@ position: absolute;  z-index: 99 !important;">
         let borderBottomColor = computedStyle.borderBottomColor;
         let borderTopColor = computedStyle.borderTopColor;
 
-        if (borderColor === 'rgb(255, 255, 255)') { 
+        let borderLeftColor = computedStyle.borderLeftColor;
+        let borderRightColor = computedStyle.borderRightColor;
+
+        if (borderColor === 'rgb(255, 255, 255)') {
             element.style.borderColor = 'rgb(33, 33, 33)';
-        } else if (borderColor === 'rgb(0, 0, 0)') { 
+        } else if (borderColor === 'rgb(0, 0, 0)') {
             element.style.borderColor = 'rgb(254, 254, 254)';
         } else if (borderColor === 'rgb(240, 242, 245)') {
             element.style.borderColor = 'rgb(23, 23, 23)';
@@ -740,17 +1010,21 @@ position: absolute;  z-index: 99 !important;">
             element.style.borderBottomColor = 'rgb(55, 55, 55)';
         } else if (borderColor === 'rgb(120, 122, 128)') {
             element.style.borderColor = 'rgb(180, 180, 180)';
-        } else if (borderBottomColor === 'rgb(240, 242, 245)') { 
+        } else if (borderBottomColor === 'rgb(240, 242, 245)') {
             element.style.borderBottomColor = 'rgb(23, 23, 23)';
-        } else if (borderTopColor === 'rgb(240, 242, 245)') { 
+        } else if (borderTopColor === 'rgb(240, 242, 245)') {
             element.style.borderTopColor = 'rgb(23, 23, 23)';
+        } if (borderRightColor === 'rgb(255, 255, 255)') {
+            element.style.borderRightColor = 'rgb(33, 33, 33)';
+        } if (borderLeftColor === 'rgb(255, 255, 255)') {
+            element.style.borderLeftColor = 'rgb(33, 33, 33)';
         }
 
         let boxShadow = computedStyle.boxShadow;
 
-        if (boxShadow === 'rgb(255, 255, 255)') { 
+        if (boxShadow === 'rgb(255, 255, 255)') {
             element.style.boxShadow = 'rgb(33, 33, 33)';
-        } else if (boxShadow === 'rgb(0, 0, 0)') { 
+        } else if (boxShadow === 'rgb(0, 0, 0)') {
             element.style.boxShadow = 'rgb(254, 254, 254)';
         } else if (boxShadow === 'rgb(240, 242, 245)') {
             element.style.boxShadow = 'rgb(23, 23, 23)';
@@ -766,7 +1040,7 @@ position: absolute;  z-index: 99 !important;">
         const allElements = document.querySelectorAll('*');
         allElements.forEach(element => {
             swapElementColors(element);
-            
+
         });
 
 
@@ -822,7 +1096,7 @@ position: absolute;  z-index: 99 !important;">
         if (document.getElementById("darkmode").textContent == "yes") {
             swapColorsInDocumentDark();
         }
-        document.removeEventListener('mouseout', arguments.callee); 
+        document.removeEventListener('mouseout', arguments.callee);
         document.addEventListener('mouseout', function(event) {
             if (document.getElementById("darkmode").textContent == "yes") {
                 var element = event.target;
@@ -876,26 +1150,26 @@ position: absolute;  z-index: 99 !important;">
                 display: flex;
                 justify-content: center;
                 width: 100vw;
-                
+
             }
         </style>
 
         <style>
-            hr {  
-                height: 2px;  
-                background-color: #caccd0;  
-                border: none;  
-            }  
+            hr {
+                height: 2px;
+                background-color: #caccd0;
+                border: none;
+            }
         </style>
 
-        
-        
+
+
 
         <div class="evenmainerbox2" id="thecodewasstolen">
 
-            
 
-                                                                            
+
+
 
             <div class="actualposts" style="transition: transform 0.3s; transform: translate(0, 12px); background-color: #f0f2f5; border-top: 20px solid #f0f2f5; max-width: 750px; height: calc(100vh - 83px);">
                 <div class="actualposts3" style="max-width: 750px; background-color: #f0f2f5; transition: transform 0.3s; border-radius: 10px; height: calc(100vh - 100px); width: 100vw;
@@ -904,7 +1178,7 @@ position: absolute;  z-index: 99 !important;">
 
                     <div style="max-width: 720px; width: calc(100% - 30px); background-color: white; float: right; border-radius: 10px; margin-bottom: 15px;
                     border-bottom: 2px solid #caccd0; padding: 0 15px 0 15px; line-height: 15px; z-index: 999;"><h2 style="float: left;">Your Feed</h2></div>
-                    
+
 
                     <!-- <div id="aboutsection" style="width: calc(100% - 770px); position: sticky; top: 0; background-color: #f0f2f5;
                     transition: transform 0.3s; overflow: hidden; float: left;">
@@ -913,26 +1187,26 @@ position: absolute;  z-index: 99 !important;">
                             <h2 style="padding: 0 15px 0 15px;">Welcome to Friendface</h2>
                             <hr width="1000px">
                             <textarea id="homeless" style="
-                                margin-left: 13px; 
+                                margin-left: 13px;
                                 border: 0px solid red; color: black;
                                 width: calc(100% - 100px);
-                                resize: none; 
-                                outline: none; 
-                                background-color: white; 
-                                font-family: Arial; 
+                                resize: none;
+                                outline: none;
+                                background-color: white;
+                                font-family: Arial;
                                 font-size: 18px;
-                                margin-top: 5px; 
-                                margin-bottom: 12px; 
-                                max-height: calc(100vh - 285px); height: auto;" 
-                                
+                                margin-top: 5px;
+                                margin-bottom: 12px;
+                                max-height: calc(100vh - 285px); height: auto;"
+
                             readonly ></textarea>
 
                             <style>
-                                hr {  
-                                    height: 2px;  
-                                    background-color: #caccd0;  
-                                    border: none;  
-                                }  
+                                hr {
+                                    height: 2px;
+                                    background-color: #caccd0;
+                                    border: none;
+                                }
                             </style>
 
                             <div id="everyday" onclick="{{ about }}" style="display: none;"></div>
@@ -964,21 +1238,21 @@ position: absolute;  z-index: 99 !important;">
                                     }
 
                                     setInterval(loop, 1);
-                                    
-                                    
+
+
                                 }
                             </script>
-                            
-                        
-                            
-                    
+
+
+
+
                         </div>
                         <p style="color: #787a80; margin-top: 15px; margin-left: 10px; line-height: 35px;">Copyright © Friendface Corporation 2024</p>
                         <p style="color: #787a80; margin-top: 15px; margin-left: 10px; line-height: 35px;  ransform: translate(0, -29px);">"Based" in British Virgin Islands</p>
-                        
+
                     </div> -->
 
-                    
+
 
 
 
@@ -990,7 +1264,7 @@ position: absolute;  z-index: 99 !important;">
 
                     <div id="everyday" onclick="{{ about }}" style="display: none;"></div>
 
-                   
+
                     <div style="display: none;" id="arraylength">11</div>
 
                     <script>
@@ -998,7 +1272,7 @@ position: absolute;  z-index: 99 !important;">
                             var splashContent = document.getElementById("splash").textContent.trim();
                             var arraylength = parseInt(document.getElementById("arraylength").textContent)
                             console.log("SKIBIDI ARRAYLENGTH: " + arraylength)
-    
+
                             var string = "github.com/isaacgisby/lan-messager\n"
                                     if (document.getElementById("splash").textContent == string) {
                                         document.getElementById("splash").style.cursor = "pointer";
@@ -1021,7 +1295,7 @@ position: absolute;  z-index: 99 !important;">
 
                             function getAverageRGB(imgEl) {
                                 var blockSize = 5,
-                                    defaultRGB = {r:0,g:0,b:0}, 
+                                    defaultRGB = {r:0,g:0,b:0},
                                     canvas = document.createElement('canvas'),
                                     context = canvas.getContext && canvas.getContext('2d'),
                                     data, width, height,
@@ -1072,11 +1346,11 @@ position: absolute;  z-index: 99 !important;">
                                 var colour = document.getElementById('thecodewasstolen');
                                 colour.style.background = 'linear-gradient(to top, white, white, white, white, white, white, ' + rgb + ')';
                             }
-                            
 
-                            
+
+
                             reload();
-                            
+
                                 var string = "github.com/isaacgisby/lan-messager\n"
                                 if (document.getElementById("splash").textContent == string) {
                                     document.getElementById("splash").style.cursor = "pointer";
@@ -1096,7 +1370,7 @@ position: absolute;  z-index: 99 !important;">
                             document.querySelector(".actualposts3").style.overflowY = "hidden";
                         };
 
-                        
+
 
                         window.onscroll = function(ev) {
                             if ((window.innerHeight + Math.round(window.scrollY)) >= document.documentElement.scrollHeight) {
@@ -1109,13 +1383,13 @@ position: absolute;  z-index: 99 !important;">
 
                         var increment = 0;
 
-                        
 
-                        function displayposts(post_ids, names, messages, user_ids, profile_pictures, likes, dislikes, 
+
+                        function displayposts(post_ids, names, messages, user_ids, profile_pictures, likes, dislikes,
                             comments_amounts, photos, times, likers, dislikers, replying_to, your_id, firsttime, replytext, friends_only, friending) {
 
-                            
-        
+
+
 
                             var post_ids = post_ids.split("_SEPARATOR_");
                             var names = names.split("_SEPARATOR_");
@@ -1141,12 +1415,12 @@ position: absolute;  z-index: 99 !important;">
 
                             if (typeof names[1] === "undefined") {
                                 no_posts();
-                            }; 
-
-                            
+                            };
 
 
-                            function no_posts() {               
+
+
+                            function no_posts() {
                                 var newDiv2 = document.createElement('div');
                                 var paragr = document.createElement('p');
 
@@ -1154,23 +1428,23 @@ position: absolute;  z-index: 99 !important;">
                                 newDiv2.style.borderRadius = "10px";
                                 newDiv2.style.maxWidth = "746px";
                                 newDiv2.style.width = "100vh";
-                                newDiv2.style.border = "2px solid #caccd0";   
-                                newDiv2.style.height = "100px"; 
-                                newDiv2.style.textAlign = "center"; 
-                                
+                                newDiv2.style.border = "2px solid #caccd0";
+                                newDiv2.style.height = "100px";
+                                newDiv2.style.textAlign = "center";
+
                                 newDiv2.className = "maggiemae";
 
                                 paragr.textContent = "This one for real ass ogs only";
-                                paragr.style.transform = "translate(0, 30px)"; 
-                                paragr.style.color = "#787a80"; 
+                                paragr.style.transform = "translate(0, 30px)";
+                                paragr.style.color = "#787a80";
                                 paragr.style.lineHeight = "0";
 
                                 document.querySelector(".actualposts2").appendChild(newDiv2);
                                 document.querySelector(".maggiemae").appendChild(paragr);
                             }
-                            
-        
-                            
+
+
+
 
                             // arraylength = parseInt(document.getElementById("arraylength").textContent)
                             arraylength = post_ids.length
@@ -1178,7 +1452,7 @@ position: absolute;  z-index: 99 !important;">
 
                             if (firsttime != "yes") {
                                 var arraylength = arraylength - 1
-                                
+
                             } else {
                                 var post_ids = post_ids.reverse();
                                 var names = names.reverse();
@@ -1204,76 +1478,78 @@ position: absolute;  z-index: 99 !important;">
                                 if (increment != 1) {
 
                                 function advert(increment) {
-                                    var advertreal = document.createElement('div');
-                                    var close = document.createElement('button');
+                                    if (friends_only[i] == "no") {
+                                        var advertreal = document.createElement('div');
+                                        var close = document.createElement('button');
 
 
-                                    close.textContent = "✕"
-                                    close.style.background = "white"
-                                    close.style.fontSize = "10px"
-                                    close.style.padding = "0"
-                                    close.style.margin = "5px"
-                                    close.style.float = "right"
-                                    close.style.width = "20px"
-                                    close.style.height = "20px"
-                                    close.style.border = "1px outset"
-                                    close.style.cursor = "pointer"
+                                        close.textContent = "✕"
+                                        close.style.background = "white"
+                                        close.style.fontSize = "10px"
+                                        close.style.padding = "0"
+                                        close.style.margin = "5px"
+                                        close.style.float = "right"
+                                        close.style.width = "20px"
+                                        close.style.height = "20px"
+                                        close.style.border = "1px outset"
+                                        close.style.cursor = "pointer"
 
-                                    
 
-                                    advertreal.className = "advert" + increment;
 
-                                    (function (index) {
-                                        close.onclick = function () {
-                                            document.querySelector(".advert" + index).style.display = "none"; 
-                                        };
+                                        advertreal.className = "advert" + increment;
 
-                                    })(increment);
+                                        (function (index) {
+                                            close.onclick = function () {
+                                                document.querySelector(".advert" + index).style.display = "none";
+                                            };
 
-                                    advertreal.style.marginBottom = "15px";
-                                    advertreal.style.background = "white";
-                                    advertreal.style.height = "175px";
-                                    if (!navigator.userAgent.includes("Firefox")) {
-                                        advertreal.style.width = "calc(100% - 21px)";
-                                        advertreal.style.transform = "translate(17px)"
-                                    } else {
-                                        advertreal.style.width = "calc(100% - 4px)";
+                                        })(increment);
+
+                                        advertreal.style.marginBottom = "15px";
+                                        advertreal.style.background = "white";
+                                        advertreal.style.height = "175px";
+                                        if (!navigator.userAgent.includes("Firefox")) {
+                                            advertreal.style.width = "calc(100% - 21px)";
+                                            advertreal.style.transform = "translate(17px)"
+                                        } else {
+                                            advertreal.style.width = "calc(100% - 4px)";
+                                        }
+                                        advertreal.style.maxWidth = "746px"
+                                        advertreal.style.border = "2px outset"
+                                        advertreal.style.backgroundPosition = "center center"
+                                        advertreal.style.backgroundSize = "cover"
+
+
+
+
+
+
+
+
+
+
+                                        document.querySelector(".actualposts2").appendChild(advertreal);
+                                        document.querySelector(".advert" + increment).appendChild(close);
+
+
+                                        fetch('/get_random_advert')
+                                            .then(response => {
+                                                if (!response.ok) {
+                                                    throw new Error('Failed to fetch');
+                                                }
+                                                return response.text();
+                                            })
+                                            .then(image => {
+                                                console.log(image)
+                                                advertreal.style.background = "url('data:image/jpeg;base64, " + image + "')"
+
+
+
+                                            })
+                                            .catch(error => {
+                                                console.error('Error fetching advert:', error);
+                                            });
                                     }
-                                    advertreal.style.maxWidth = "746px"
-                                    advertreal.style.border = "2px outset"
-                                    advertreal.style.backgroundPosition = "center center"
-                                    advertreal.style.backgroundSize = "cover"
-
-                                    
-
-
-                                    
-                                    
-                                    
-
-                                    
-                                    
-                                    document.querySelector(".actualposts2").appendChild(advertreal);
-                                    document.querySelector(".advert" + increment).appendChild(close);
-
-
-                                    fetch('/get_random_advert')
-                                        .then(response => {
-                                            if (!response.ok) {
-                                                throw new Error('Failed to fetch');
-                                            }
-                                            return response.text();
-                                        })
-                                        .then(image => {
-                                            console.log(image)
-                                            advertreal.style.background = "url('data:image/jpeg;base64, " + image + "')"
-
-                                            
-
-                                        })
-                                        .catch(error => {
-                                            console.error('Error fetching advert:', error);
-                                        });
                                 }
 
 
@@ -1284,18 +1560,18 @@ position: absolute;  z-index: 99 !important;">
                                         advert(increment);
                                     }
                                 }
-        
+
                                 var newDiv = document.createElement('div');
                                 var invite_text2 = document.createElement("P");
                                 var link = document.createElement("button");
                                 var invite_text = document.createElement("textarea");
                                 var deletebutton = document.createElement("button");
-        
+
                                 var text = messages[i]
                                 var text2 = names[i]
                                 var time2 = times[i]
-        
-        
+
+
                                 newDiv.style.fontSize = "20px";
                                 newDiv.style.backgroundColor = 'white';
                                 newDiv.className = "post" + increment;
@@ -1303,18 +1579,18 @@ position: absolute;  z-index: 99 !important;">
                                 newDiv.style.borderRadius = "10px";
                                 newDiv.style.borderBottom = "2px solid #caccd0";
 
-                                
+
 
                                 newDiv.style.maxWidth = "100%";
                                 newDiv.style.width = "100%";
 
-                                
+
                                 if (!navigator.userAgent.includes("Firefox")) {
                                     newDiv.style.maxWidth = "calc(750px - 17px)";
                                     newDiv.style.transform = "translate(17px)";
-                                } 
-        
-                                
+                                }
+
+
 
                                 function likepost(post_id, likestate) {
                                     var xhr = new XMLHttpRequest();
@@ -1326,7 +1602,7 @@ position: absolute;  z-index: 99 !important;">
                                     xhr.onreadystatechange = function() {
                                         if (xhr.readyState == 4 && xhr.status == 200) {
                                             console.log(xhr.responseText);
-                                            
+
                                         }
                                     };
 
@@ -1343,7 +1619,7 @@ position: absolute;  z-index: 99 !important;">
                                     xhr.onreadystatechange = function() {
                                         if (xhr.readyState == 4 && xhr.status == 200) {
                                             console.log(xhr.responseText);
-                                            
+
                                         }
                                     };
 
@@ -1372,9 +1648,9 @@ position: absolute;  z-index: 99 !important;">
                                         if (document.getElementById("newpostsarea").innerHTML.trim() === '') {
 
                                             no_posts();
-                                        
+
                                         }
-                                        
+
                                     }
 
 
@@ -1387,13 +1663,13 @@ position: absolute;  z-index: 99 !important;">
                                     xhr.onreadystatechange = function() {
                                         if (xhr.readyState == 4 && xhr.status == 200) {
                                             console.log(xhr.responseText);
-                                            
+
                                         }
                                     };
 
                                     xhr.send("");
 
-                                    
+
 
 
                                 }
@@ -1452,7 +1728,7 @@ position: absolute;  z-index: 99 !important;">
                                         window.location.href = "/users/" + user_id + "/posts";
                                     };
 
-                                    
+
 
                                     visit.onmouseover = function() {
                                         document.querySelector(".visit" + index).style.backgroundColor = "#caccd0";
@@ -1463,7 +1739,7 @@ position: absolute;  z-index: 99 !important;">
                                     };
 
                                     deletebutton.onclick = function (event) {
-                                            event.stopPropagation(); 
+                                            event.stopPropagation();
 
                                             var existingdropdown = document.querySelector('.delete-dropdown');
                                             if (existingdropdown) {
@@ -1480,12 +1756,12 @@ position: absolute;  z-index: 99 !important;">
                                             confirmdeletebutton.style.width = "150px";
                                             confirmdeletebutton.style.borderRadius = "5px";
                                             confirmdeletebutton.style.cursor = "pointer";
-                                            
+
 
                                             var deletedropdown = document.createElement("div");
-                                            deletedropdown.classList.add('delete-dropdown'); 
+                                            deletedropdown.classList.add('delete-dropdown');
                                             deletedropdown.style.position = "absolute";
-                                            deletedropdown.style.top = (event.clientY + window.pageYOffset + 10) + "px"; 
+                                            deletedropdown.style.top = (event.clientY + window.pageYOffset + 10) + "px";
                                             deletedropdown.style.left = event.clientX - 150 + "px";
                                             deletedropdown.style.backgroundColor = "white";
                                             deletedropdown.style.boxShadow = "0 0 5px rgba(0, 0, 0, 0.35)";
@@ -1499,8 +1775,8 @@ position: absolute;  z-index: 99 !important;">
 
                                             deletedropdown.style.overflow = "hidden"
 
-                                            deletedropdown.style.height = "0px"; 
-                                            deletedropdown.style.transition = "height 0.2s"; 
+                                            deletedropdown.style.height = "0px";
+                                            deletedropdown.style.transition = "height 0.2s";
                                             requestAnimationFrame(() => {
                                                 deletedropdown.style.height = deletedropdown.scrollHeight - 15 + "px";
                                             });
@@ -1541,7 +1817,7 @@ position: absolute;  z-index: 99 !important;">
                                             function handleclickoutside(event) {
                                                 if (!deletedropdown.contains(event.target)) {
                                                     document.body.removeChild(deletedropdown);
-                                                    document.removeEventListener('click', handleclickoutside); 
+                                                    document.removeEventListener('click', handleclickoutside);
                                                 }
                                             }
 
@@ -1559,7 +1835,7 @@ position: absolute;  z-index: 99 !important;">
 
 
                                     if (likers.split("_LIKERS_").includes(String(your_id))) {
-                                        like.onclick = function() { 
+                                        like.onclick = function() {
                                             function blue() {
                                                 likepost(post_id, "unlike");
                                                 document.querySelector(".like02" + index).textContent = parseInt(likes) - 1;
@@ -1589,7 +1865,7 @@ position: absolute;  z-index: 99 !important;">
                                                         document.querySelector(".likeicon" + index).style.color = "rgb(180, 180, 180)";
                                                     }
                                                     document.querySelector(".like" + index).onclick = function() {
-                                                        
+
                                                         blue();
                                                     }
                                                 }
@@ -1597,7 +1873,7 @@ position: absolute;  z-index: 99 !important;">
                                             blue();
                                         };
                                     } else {
-                                        like.onclick = function() { 
+                                        like.onclick = function() {
                                             function grey() {
                                                 clickdislike();
                                                 likepost(post_id, "like");
@@ -1617,7 +1893,7 @@ position: absolute;  z-index: 99 !important;">
                                                     document.querySelector(".like" + index).style.color = "rgb(180, 180, 180)";
                                                     document.querySelector(".likeicon" + index).style.color = "rgb(180, 180, 180)";
                                                 }
-                                                
+
                                                 document.querySelector(".like" + index).onclick = function() {
                                                     likepost(post_id, "unlike");
                                                     document.querySelector(".like02" + index).textContent = parseInt(likes) + 1 - 1;
@@ -1636,7 +1912,7 @@ position: absolute;  z-index: 99 !important;">
                                     }
 
                                     if (dislikers.split("_DISLIKERS_").includes(String(your_id))) {
-                                        dislike.onclick = function() { 
+                                        dislike.onclick = function() {
                                             function disblue() {
                                                 dislikepost(post_id, "undislike");
                                                 document.querySelector(".dislike02" + index).textContent = parseInt(dislikes) - 1;
@@ -1667,7 +1943,7 @@ position: absolute;  z-index: 99 !important;">
                                                         document.querySelector(".dislikeicon" + index).style.color = "rgb(180, 180, 180)";
                                                     }
                                                     document.querySelector(".dislike" + index).onclick = function() {
-                                                        
+
                                                         disblue();
                                                     }
                                                 }
@@ -1675,7 +1951,7 @@ position: absolute;  z-index: 99 !important;">
                                             disblue();
                                         };
                                     } else {
-                                        dislike.onclick = function() { 
+                                        dislike.onclick = function() {
                                             function disgrey() {
                                                 clicklike();
                                                 dislikepost(post_id, "dislike");
@@ -1695,14 +1971,14 @@ position: absolute;  z-index: 99 !important;">
                                                     document.querySelector(".dislike" + index).style.color = "rgb(180, 180, 180)";
                                                     document.querySelector(".dislikeicon" + index).style.color = "rgb(180, 180, 180)";
                                                 }
-                                                
+
 
                                                 document.querySelector(".dislike" + index).onclick = function() {
-                                                    
+
                                                     dislikepost(post_id, "undislike");
                                                     document.querySelector(".dislike02" + index).textContent = parseInt(dislikes) + 1 - 1;
-                                                    
-                                                
+
+
                                                     document.querySelector(".dislike" + index).style.backgroundColor = "#0866ff";
                                                     document.querySelector(".dislikeicon" + index).style.backgroundColor = "#0866ff";
 
@@ -1711,7 +1987,7 @@ position: absolute;  z-index: 99 !important;">
 
 
                                                     document.querySelector(".dislike" + index).onclick = function() {
-                                                        
+
                                                         disgrey();
                                                     }
                                                 }
@@ -1721,8 +1997,8 @@ position: absolute;  z-index: 99 !important;">
                                     }
                                     function clicklike() {
                                         console.log("LIKE IS CLICKING");
-                                            
-                                            
+
+
                                         var likeElement = document.querySelector(".like" + index);
                                         var computedStyle = window.getComputedStyle(likeElement);
                                         var backgroundColor = computedStyle.backgroundColor;
@@ -1744,12 +2020,12 @@ position: absolute;  z-index: 99 !important;">
                                             dislikeElement.click();
                                         }
                                     }
-                                    visit.onclick = function() { 
+                                    visit.onclick = function() {
                                         window.location.href = "/posts/" + post_id
-                                        
+
                                     };
                                 })(increment, user_ids[i], photos[i], post_ids[i], likes[i], dislikes[i], likers[i], dislikers[i], replying_to[i]);
-        
+
                                 var user_id = user_ids[i];
 
                                 invite_text2.textContent = text2
@@ -1775,7 +2051,7 @@ position: absolute;  z-index: 99 !important;">
                                 time.style.marginLeft = "10px";
                                 time.style.fontSize = "14px";
                                 time.style.color = "gray";
-                                
+
                                 function matchAndRemoveYoutubeUrls(text) {
                                     var p = /(?:https?:\/\/)?(?:m\.|www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?/g;
                                     var matches = [];
@@ -1803,7 +2079,7 @@ position: absolute;  z-index: 99 !important;">
                                 }
 
                                 console.log("Cleaned Text:", result.cleanedText);
-                                                                    
+
 
                                 invite_text.textContent = result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, '');
                                 invite_text.id = "invite_text";
@@ -1844,9 +2120,9 @@ position: absolute;  z-index: 99 !important;">
                                 image.src = "data:image/jpeg;base64," + profile_pictures[i]
                                 image.className = "image" + post_ids[i]
 
-                                
-                                
-                                
+
+
+
 
                                 var icon = document.createElement('i');
                                 icon.classList.add('fas', 'fa-trash-can');
@@ -1891,7 +2167,7 @@ position: absolute;  z-index: 99 !important;">
                                     if (replytext[i] != ""){
                                         link.textContent = replytext[i].replace(/_THISISALINEBREAK_/g, " ").replace(/_THISISANAPOSTROPHE_/g, "'").substring(0, 30) + "...";
                                     }
-                                    
+
                                 }
 
                                 try {
@@ -1905,7 +2181,7 @@ position: absolute;  z-index: 99 !important;">
                                             var rizz = ".link" + index2
                                             console.log(rizz)
 
-                                            var link = document.querySelector(rizz); 
+                                            var link = document.querySelector(rizz);
                                             var url = '/get/reply_message/' + replying_to[index];
 
                                             console.log(url)
@@ -1918,14 +2194,14 @@ position: absolute;  z-index: 99 !important;">
                                                         }
                                                         return response.text();
                                                     })
-                                                    
+
                                                     .then(message => {
                                                         let message2 = message
 
                                                         message2 = message2.replace(/_THISISALINEBREAK_/g, " ").replace(/_THISISANAPOSTROPHE_/g, "'").substring(0, 30) + "...";
-                                                        
+
                                                         link.textContent = message2
-                                                        
+
                                                     })
                                                     .catch(error => {
                                                         console.error('error fetching image for post id:', error);
@@ -1938,17 +2214,17 @@ position: absolute;  z-index: 99 !important;">
                                 } catch {
                                     console.log("nahh blkud")
                                 }
-                                
+
 
 
                                 document.querySelector(".actualposts3").style.overflowX = "hidden";
 
-                                    
+
                                 var actualimageparent = document.createElement("div");
                                 var actualimagediv = document.createElement("div");
                                 var actualimage = document.createElement("img");
 
-                                
+
                                 actualimage.style.cursor = "pointer";
                                 actualimage.style.objectFit = "contain";
                                 actualimage.id = "actualimage" + increment;
@@ -1960,17 +2236,17 @@ position: absolute;  z-index: 99 !important;">
                                 actualimage.style.left = "50%";
                                 actualimage.style.transform = "translate(-50%, -50%)";
 
-                                
+
                                 actualimagediv.style.background = "url(data:image/jpeg;base64," + photos[i] + ")";
                                 actualimagediv.style.width = "100%";
                                 actualimagediv.style.height = "100%";
-                                
+
                                 actualimagediv.style.filter = "blur(15px) brightness(50%)";
                                 actualimagediv.style.backgroundPosition = "center center";
                                 actualimagediv.style.backgroundSize = "cover";
                                 actualimagediv.className = "actualimagediv" + post_ids[i];
 
-                                
+
                                 actualimageparent.style.marginBottom = "5px";
                                 actualimageparent.style.marginTop = "5px";
                                 actualimageparent.style.position = "relative";
@@ -1981,9 +2257,9 @@ position: absolute;  z-index: 99 !important;">
                                 actualimage.alt = "For all intents and purposes this image has loaded"
                                 image.alt = "Profile Picture"
 
-                                
-                                
-                                
+
+
+
 
 
 
@@ -1991,11 +2267,11 @@ position: absolute;  z-index: 99 !important;">
                                 hr.style.width = "100%";
 
                                 var likesdiv = document.createElement("div");
-                                
+
                                 likesdiv.className = "likesdiv" + increment
                                 likesdiv.style.height = "45px"
 
-                                
+
 
                                 likeicon.classList.add('fas', 'fa-thumbs-up');
                                 likeicon.style.paddingRight = "5px";
@@ -2094,6 +2370,8 @@ position: absolute;  z-index: 99 !important;">
                                 visit.className = "visit" + increment
 
                                 if (friends_only[i] == "yes") {
+                                    console.log("FRIENDZ ONLY (it was yes): " + friends_only[i]);
+
                                     function friendsonlydiv() {
                                         var friendsonlydiv = document.createElement("div");
 
@@ -2109,38 +2387,37 @@ position: absolute;  z-index: 99 !important;">
 
                                         newDiv.appendChild(friendsonlydiv);
                                     }
-                                    
+
                                     if (!friending[i].split("_ITEM_").includes(String(your_id))) {
 
                                         newDiv.style.display = "none";
+
+                                        number = document.getElementById("repliesamount").textContent.replace(")", "").replace("(", "")
+                                        number = parseInt(number)
+                                        number = number - 1
+
+
+                                        document.getElementById("repliesamount").textContent = "(" + number + ")"
+
                                         if (parseInt(user_ids[i]) == parseInt(your_id)) {
                                             newDiv.style.display = "block";
 
+                                            number = number + 1
+
                                             friendsonlydiv();
                                         }
+
+                                        document.getElementById("repliesamount").textContent = "(" + number + ")"
+
                                     } else {
                                         friendsonlydiv();
 
                                     }
                                 }
 
-                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
-                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
-                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
-                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
-                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
-                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
-                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
-                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
-                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
-                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
-                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
-                                console.log(friends_only[i] + result.cleanedText.replace(/_THISISALINEBREAK_/g, "\n").replace(/_THISISANAPOSTROPHE_/g, "'").replace(/^\s+/, ''));
-                                
-
 
                                 document.querySelector(".actualposts2").appendChild(newDiv);
-                                
+
                                 document.querySelector(".post" + increment).appendChild(image);
 
                                 try {
@@ -2148,10 +2425,10 @@ position: absolute;  z-index: 99 !important;">
                                         if (index !== 0) {
                                             var post_id = post_ids[index];
 
-                                            
 
 
-                                            var imagen = document.querySelector(".image" + post_id); 
+
+                                            var imagen = document.querySelector(".image" + post_id);
                                             var url = '/get/pfp/' + post_id;
 
                                             fetch(url)
@@ -2163,8 +2440,8 @@ position: absolute;  z-index: 99 !important;">
                                                 })
                                                 .then(image => {
                                                     imagen.src = "data:image/jpeg;base64," + image;
-                                                    
-                                                    
+
+
                                                 })
                                                 .catch(error => {
                                                     console.error('error fetching image for post id:', post_id, error);
@@ -2176,7 +2453,7 @@ position: absolute;  z-index: 99 !important;">
                                 }
 
                                 if (parseInt(user_id) == parseInt(your_id)) {
-                                    document.querySelector(".post" + increment).appendChild(deletebutton); 
+                                    document.querySelector(".post" + increment).appendChild(deletebutton);
                                 }
 
                                 document.querySelector(".post" + increment).appendChild(div);
@@ -2214,8 +2491,8 @@ position: absolute;  z-index: 99 !important;">
                                                 var post_id = post_ids[index];
 
                                                 try {
-                                                    var actualimage = document.querySelector(".actualimage" + post_id); 
-                                                    var actualimagediv = document.querySelector(".actualimagediv" + post_id); 
+                                                    var actualimage = document.querySelector(".actualimage" + post_id);
+                                                    var actualimagediv = document.querySelector(".actualimagediv" + post_id);
                                                 } catch {
                                                     console.log("stoopid")
                                                 }
@@ -2237,14 +2514,14 @@ position: absolute;  z-index: 99 !important;">
                                                         actualimagediv.style.backgroundPosition = "center center";
                                                         actualimagediv.style.backgroundSize = "cover";
 
-                                                        
+
                                                         actualimage.onload = function() {
                                                             actualimagediv.style.height = actualimage.offsetHeight + "px";
                                                             actualimagediv.style.maxHeight = "500px";
                                                             actualimage.style.maxHeight = "500px";
                                                         };
 
-                                                        
+
 
                                                         actualimage.onclick = function () {
                                                             function displayimage(){
@@ -2365,23 +2642,23 @@ position: absolute;  z-index: 99 !important;">
                                                             displayimage();
 
                                                         };
-                                                        
+
                                                         } catch {
                                                             console.error("stoopid")
                                                         }
-                                                        
-                                                        
+
+
 
                                                     })
                                                     .catch(error => {
                                                         console.error('error fetching imageERFFRRFRF for post id:', post_id, error);
                                                     });
 
-                                                    
-                                                
 
 
-                                                
+
+
+
                                             }
                                         })(i);
                                     } catch {
@@ -2514,17 +2791,17 @@ position: absolute;  z-index: 99 !important;">
                                                             displayimage();
 
                                                         };
-                                                        
+
                                                         } catch {
                                                             console.error("stoopid")
                                                         }
-                                                        
-
-                                                    
-                                                
 
 
-                                                
+
+
+
+
+
                                             }
                                         })(i);
                                     } catch {
@@ -2542,8 +2819,8 @@ position: absolute;  z-index: 99 !important;">
                                 document.querySelector(".likesdiv" + increment).appendChild(visit);
                                 document.querySelector(".likesdiv" + increment).appendChild(like2);
                                 document.querySelector(".likesdiv" + increment).appendChild(dislike2);
-                                
-                                
+
+
                                 invite_text.style.height = (invite_text.scrollHeight) + 'px';
 
 
@@ -2551,7 +2828,7 @@ position: absolute;  z-index: 99 !important;">
                                 }
                             }
                             for (var i = 0; i < arraylength; i++) {
-                                    
+
                                 (function (index) {
                                     if (index !== 0) {
                                         // var replying_to = replying_to[index];
@@ -2562,7 +2839,7 @@ position: absolute;  z-index: 99 !important;">
                                         var rizz = ".link" + index2
                                         console.log(rizz)
 
-                                        var link = document.querySelector(rizz); 
+                                        var link = document.querySelector(rizz);
                                         var url = '/get/reply_message/' + replying_to[index];
 
                                         console.log(url)
@@ -2575,14 +2852,14 @@ position: absolute;  z-index: 99 !important;">
                                                     }
                                                     return response.text();
                                                 })
-                                                
+
                                                 .then(message => {
                                                     let message2 = message
 
                                                     message2 = message2.replace(/_THISISALINEBREAK_/g, " ").replace(/_THISISANAPOSTROPHE_/g, "'").substring(0, 30) + "...";
-                                                    
+
                                                     link.textContent = message2
-                                                    
+
                                                 })
                                                 .catch(error => {
                                                     console.error('error fetching image for post id:', error);
@@ -2595,12 +2872,12 @@ position: absolute;  z-index: 99 !important;">
                             }
 
 
-                                
-                        }
-                        
 
-                        
-                            
+                        }
+
+
+
+
                         //document.getElementById("clickme").click()
 
                         var showmorebutton = document.createElement("button");
@@ -2618,10 +2895,10 @@ position: absolute;  z-index: 99 !important;">
                             arraylength = document.getElementById("arraylength").textContent
                             arraylength = parseInt(arraylength)
                             arraylength = arraylength + 10
-                            
+
                             document.getElementById("arraylength").textContent = arraylength
 
-                            for (let i = 0; i < 10; i++) { 
+                            for (let i = 0; i < 10; i++) {
                                 fetch('/get_more_posts')
                                     .then(response => {
                                         if (!response.ok) {
@@ -2637,7 +2914,7 @@ position: absolute;  z-index: 99 !important;">
                                         document.querySelector(".actualposts2").appendChild(document.getElementById("sharebutton2"));
                                         document.getElementById("sharebutton2").appendChild(document.getElementById("showmorebutton"));
                                         document.getElementById("showmorebutton").onmouseout();
-                                        
+
 
                                     })
                                     .catch(error => {
@@ -2667,31 +2944,31 @@ position: absolute;  z-index: 99 !important;">
                         showmorebutton.style.maxWidth = "100%";
                         showmorebutton.style.width = "100vw";
 
-                        
+
                         showmorebutton.style.float = "right";
 
                         if (!navigator.userAgent.includes("Firefox")) {
                             showmorebutton.style.maxWidth = "calc(750px - 17px)";
                         }
 
-                        
+
                         document.querySelector(".actualposts2").appendChild(sharebutton2);
                         document.getElementById("sharebutton2").appendChild(showmorebutton);
 
 
                         showmorebutton.click();
-                        
-        
+
+
                     </script>
 
-                    
+
 
                 </div>
             </div>
         </div>
 
-    
-    
+
+
 </div>
 
 
@@ -2699,15 +2976,15 @@ position: absolute;  z-index: 99 !important;">
     function updateposition() {
       const div1 = document.querySelector(".mainbox");
       const div2 = document.querySelector(".posts");
-  
+
       const position = div1.getBoundingClientRect();
       const scrolltop = window.scrollY || document.documentElement.scrollTop;
-  
+
       div2.style.top = `${position.bottom + scrolltop}px`;
     }
-  
+
     updateposition();
-  
+
     setInterval(updateposition, 0);
 </script>
 

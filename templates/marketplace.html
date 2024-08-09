@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="data:image/jpeg;base64,{{ logo }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <title>Friendface︱"{{ searchterm }}"</title>
+    <title>Friendface︱Marketplace</title>
 
     <style>
         body {
             margin: 0;
             padding: 0;
-            height: 100vh;
+
             overflow-x: hidden;
             background: #f0f2f5;
             font-family: Helvetica, arial;
-            overflow-y: hidden;
+            overflow-y: scroll;
 
         }
 
@@ -620,73 +620,125 @@
 
             xhr.send(data);
         }
+
+        if (!navigator.userAgent.includes("Firefox")) {
+            document.getElementById("uploadButton").style.marginRight = "15px";
+        }
     </script>
     
     <div onclick="{{ displaymatches }}" style="display: none;" id="clickme"></div>
 
 
-    <div class="evenmainerbox">
-        <div class="mainbox">
-            <div style="background-color: #f0f2f5; width: 100%; max-width: 1280px; height: 20px;"></div>
-            <div style="background-color: #f0f2f5; width: 100%; max-width: 1280px;">
-                <div style="background-color: white; width: 100%; max-width: 1280px; border-radius: 10px; height: 55px; border-bottom: 2px solid #caccd0;">
-                    <h2 style="padding-left: 20px; margin-top: 0; transform: translate(0, 10px);">Search Users</h2>
-                
-                </div>
+    <div class="evenmainerbox" id="thecodewasstolen">
+        <div class="mainbox" style="display: flex; align-items: center; flex-direction: column; background: linear-gradient(to bottom, white 95%, #f0f2f5 5%);">
+            <div style="background-color: #f0f2f5;">
+                <div style="display: flex; justify-content: center; background-color: white; height: 12px;
+                width: 100vw; max-width: 1280px; border-radius: 10px 10px 0 0; margin-top: 20px;"></div>
+            </div>
+            
+            <div style="display: flex; justify-content: center; background-color: white;
+            margin-top: 12px; width: 100vw; max-width: 1280px;">
+            
+            <img
+                class="uploadButton"
+                style="width: 50px; height: 50px; padding: 7px 0px 0px 0px; float: left; object-fit: cover;"
+                src="data:image/jpeg;base64,{{ logo }}"
+            alt=":(">
+
+            <div class="logo" title="Friendface" style="float: left; color: #0866ff; font-family: Helvetica, arial; padding: 0px 0 0px 1px;">
+                <h1 style="transform: translate(0, -7px);">riendface</h1>
+
+            </div>
+            <div style="transform: translate(0, 16px);">
+                <div style="font-size: 24px; font-weight: normal; float: left; padding-left: 12px;">Marketplace</div>
             </div>
 
-            <div style="background-color: #f0f2f5; width: 100%; max-width: 1280px; height: 20px;"></div>
-            <div style="background-color: #f0f2f5; width: 100%; max-width: 1280px;">
-                <div style="background-color: white; width: 100%; max-width: 1280px; border-radius: 10px 10px 0 0; height: 10px;">
-                    
-                
-                </div>
             </div>
 
+
+            <div style="background-color: #f0f2f5;">
+                <div style="display: flex; justify-content: center; background-color: white; height: 12px;
+                width: 100vw; max-width: 1280px; border-radius: 0 0 10px 10px; border-bottom: 2px solid #caccd0;"></div>
+            </div>
+
+
+            <div style="background-color: #f0f2f5;"><div style="height: 67px; width: 100vw; max-width: 1280px; background-color: white;
+            border-radius: 10px 10px 0 0;"><h2 style="margin-left: 22px; padding-top: 14px;">Our Latest Innovation</h2></div></div>
             
 
 
-            <p style="margin-left: 20px; line-height: 16px; font-size: 22px; transform: translate(0, -4px); float: left;">Showing results for: "{{ searchterm }}"</p>
-            <p id="allusers" style="float: right; margin-right: 20px; line-height: 16px; font-size: 22px; transform: translate(0, -4px); cursor: pointer;">All Users</p>
+            <div style="width: 100%; text-align: left;">
+                <hr style="transform: translate(0, -10px);">
+                <p style="margin: 0; margin-left: 22px; font-size: 18px; max-width: 800px; line-height: 28px; padding-top: 10px;">
+                    Since the year {{ date }}, the Friendface Corporation has strived to Innovate, and has recently entered into
+                    the world of online retail, which is why in {{ date2 }}, our team of unpaid interns began collaboratively developing the latest
+                    of e-commerce technology.
+                </p>
 
-            <script>
-                document.getElementById("allusers").style.color = "#787a80"
+                <img src="{{ url_for('static', filename='image1.png') }}" style="max-width: 800px; margin: 22px; border-radius: 10px; margin-bottom: 0;">
 
-                document.getElementById("allusers").onmouseover = function() {
-                    this.style.color = "#caccd0"
-                }
-                document.getElementById("allusers").onmouseout = function() {
-                    this.style.color = "#787a80"
-                }
-                document.getElementById("allusers").onclick = function() {
-                    window.location.href = "/all_users";
-                }
-            </script>
+                <p style="margin-left: 22px; font-size: 16px; max-width: 800px; line-height: 0; color: #787a80; margin-top: 5px; padding-bottom: 25px;">
+                    Friendface developers glad to finally be allowed to see their families ({{ date2 }})
+                </p>
 
-            <hr>
-            <div class="resultsbox" style="max-height: calc(100vh - 300px); overflow-y: scroll; width: 1280px; overflow-x: hidden;">
+                <p style="margin: 0; margin-left: 22px; font-size: 18px; max-width: 800px; line-height: 28px;">
+                    Fueled by ambition, our developers are working tirelessly, pushing the boundaries of 
+                    innovation to create something that will change the way you shop online. 
+                    Here at Friendface, we take innovation so seriously that we must unfortunately postpone the
+                    release of our Marketplace until further notice.
+                    <br /><br />
+                    Whilst we understand this may be frustrating, it is important to remember that this is 
+                    essential to the quality and usability of the product.
+                    Now, as we prepare to unveil our latest creation, we invite you to witness the next chapter in the 
+                    Friendface story — a story of passion, perseverance, and the power of unpaid labor. 
+                    Because at Friendface, we believe in dreaming big, and redefining the future of 
+                    e-commerce for a new generation of users.
+                </p>
 
+                <img src="{{ url_for('static', filename='image2.png') }}" style="max-width: 800px; margin: 22px; border-radius: 10px; margin-bottom: 0;">
+
+                <p style="margin-left: 22px; font-size: 16px; max-width: 800px; line-height: 0; color: #787a80; margin-top: 5px; padding-bottom: 25px;">
+                    Annoying Hipsters enjoying Friendface Marketplace's intuitive and user-friendly design
+                </p>
+
+                <p style="margin: 0; margin-left: 22px; font-size: 18px; max-width: 800px; line-height: 28px; padding-bottom: 20px;">
+                    To conclude, we are proud to announce the continued progress of Friendface Marketplace and look 
+                    forward to seeing where this project takes us in the near future.
+                </p>
+
+                <hr>
+
+                <p style="margin: 0; margin-left: 22px; font-size: 18px; max-width: 800px; line-height: 28px; padding-bottom: 20px; padding-top: 30px;">
+                    Written by Garry Burgess, Friendface Spokesperson
+                </p>
+            
             </div>
+
+
             <style>
                 hr {  
                     height: 2px;  
-                    width: 100%;
                     background-color: #caccd0;  
                     border: none;  
                     margin-bottom: 0;
                 }  
             </style>
 
-            <div style="background-color: #f0f2f5;"><div style="height: 15px; border-bottom: 2px solid #caccd0; background-color: white; 
-            border-radius: 0 0 10px 10px; width: 100%; max-width: 1280px;"></div></div>
+            <div style="background-color: #f0f2f5;">
+                <div style="display: flex; justify-content: center; background-color: white; height: 12px;
+                width: 100vw; max-width: 1280px; border-radius: 0 0 10px 10px; border-bottom: 2px solid #caccd0;"></div>
+            </div>
 
             <div style="height: 10px; background-color: #f0f2f5; width: 100%; max-width: 1280px; 
-            color: #787a80; padding-bottom: 12px; padding-left: 10px;">Copyright © Friendface Corporation 2024</div>
+            color: #787a80; padding-bottom: 100px; padding-left: 10px;">Copyright © Friendface Corporation 2024</div>
 
-            <div style="height: 10px; background-color: #f0f2f5; width: 100%; max-width: 1280px; 
+            <div style="height: 10px; background: transparent; width: 100%; max-width: 1280px; transform: translate(0, -87px);
             color: #787a80; padding-bottom: 12px; padding-left: 10px;">"Based" in British Virgin Islands</div>
             
         </div>
+
+
+
 
 
 
@@ -695,6 +747,8 @@
 
 
     </div>
+
+    <div style="height: 2000px;"></div>
 
 
 
@@ -800,16 +854,15 @@
                 name.textContent = namesarray[i];
 
                 name.style.fontSize = "22px";
-
+                name.style.position = "absolute";
                 name.style.fontWeight = "bold"
                 name.style.cursor = "pointer"
-                name.style.width = "400px"
-                //name.style.transform = "translate(100px, 0px)";
+                name.style.transform = "translate(100px, 0px)";
 
                 desc.textContent = descriptionsarray[i].replace(/_THISISALINEBREAK_/g, " ").replace(/_THISISANAPOSTROPHE_/g, "'").substring(0, 30) + "...";
-
+                desc.style.position = "absolute";
                 desc.style.fontSize = "16px";
-                desc.style.transform = "translate(0, -35px)";
+                desc.style.transform = "translate(100px, 27px)";
                 desc.style.color = "#787a80";
 
 
@@ -834,7 +887,7 @@
                 visit.style.backgroundColor = "#0866ff";
                 visit.style.border = "0px"; 
                 visit.style.margin = "0px 0px 0px 0px"; 
-                visit.style.transform = "translate(-10px, -100px)";
+                visit.style.transform = "translate(-10px, 31px)";
                 visit.style.padding = "7px"; 
                 visit.style.width = "70px"; 
                 visit.style.borderRadius = "8px"; 

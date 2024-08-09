@@ -209,6 +209,9 @@
                 if (mouseover2 == "yes"){
                     element.style.transition = transition
                 }
+
+                document.querySelector(".friendbutton").style.color = "white";
+                document.getElementById("followicon").style.color = "white";
                 
                 
 
@@ -373,9 +376,7 @@
 
         <script>
             window.onload = (event) => {
-                if (document.getElementById("longhealthylife").textContent == "User ID: 1"){
-                    document.getElementById("longhealthylife").textContent = "real ass og"
-                }
+
 
                 document.getElementById('everyday').click();
                 
@@ -829,7 +830,7 @@
 
 
                 <div id="container div">
-                                                                    
+                                                    
                     <div class="littlebit" style="padding: 10px 0px 0px 250px; transform: translate(); box-sizing: border-box;
                     line-height: 20px; position: absolute; width: 1280px; max-width: 100vw; height: 10px; background-color: white;">
                         <h1>{{ theirname }}</h1>
@@ -847,7 +848,7 @@
 
                                             <i class="fa-solid fa-cross" style="padding-right: 8px; background: #0866ff;"></i>{{ followbuttonmessage }}
 
-                                        <script>
+                                            <script>
                                             async function follow(state) {
                                                 var path = window.location.pathname;
                                                 var parts = path.split("/");
@@ -889,28 +890,35 @@
                                                     document.querySelector(".friendbutton").textContent = "";
                                                     var icon = document.createElement('i');
                                                     icon.classList.add('fa-brands', 'fa-facebook');
+                                                    icon.id = "followicon";
                                                     icon.style.paddingRight = "8px";
+                                                    icon.style.color = "white";
                                                     var text = document.createTextNode('Become Judas');
                                                     document.querySelector(".friendbutton").appendChild(icon);
                                                     document.querySelector(".friendbutton").appendChild(text);
 
                                                     document.querySelector(".friendbutton").style.background = "linear-gradient(to bottom, #0866ff, rgb(222, 62, 60))";
-
+                                                    
                                                     
 
                                                     document.querySelector(".friendbutton").onclick = function() {
                                                         follow("unfollow")
+
+                                                        document.getElementById("followicon").remove();
                                                         
                                                         document.querySelector(".friendbutton").textContent = "";
                                                         var icon = document.createElement('i');
                                                         icon.classList.add('fas', 'fa-cross');
+                                                        icon.id = "followicon";
                                                         icon.style.paddingRight = "8px";
                                                         icon.style.background = "#0866ff";
+                                                        icon.style.color = "white";
                                                         var text = document.createTextNode('Become a Disciple');
                                                         document.querySelector(".friendbutton").appendChild(icon);
                                                         document.querySelector(".friendbutton").appendChild(text);
                                                         
                                                         document.querySelector(".friendbutton").style.background = "#0866ff";
+                                                        document.querySelector(".friendbutton").style.color = "white";
                                                     }
 
                                                 } else {
@@ -923,28 +931,35 @@
                                                     document.querySelector(".friendbutton").textContent = "";
                                                     var icon = document.createElement('i');
                                                     icon.classList.add('fas', 'fa-cross');
+                                                    icon.id = "followicon";
                                                     icon.style.paddingRight = "8px";
                                                     icon.style.background = "#0866ff";
+                                                    icon.style.color = "white";
                                                     var text = document.createTextNode('Become a Disciple');
                                                     document.querySelector(".friendbutton").appendChild(icon);
                                                     document.querySelector(".friendbutton").appendChild(text);
 
                                                     document.querySelector(".friendbutton").style.background = "#0866ff";
+                                                    document.querySelector(".friendbutton").style.color = "white";
                                                                                                         
                                                     
                                                     document.querySelector(".friendbutton").onclick = function() {
                                                         follow("follow")
+
+                                                        document.getElementById("followicon").remove();
                                                         
                                                         document.querySelector(".friendbutton").textContent = "";
                                                         var icon = document.createElement('i');
                                                         icon.classList.add('fa-brands', 'fa-facebook');
+                                                        icon.id = "followicon";
                                                         icon.style.paddingRight = "8px";
+                                                        icon.style.color = "white";
                                                         var text = document.createTextNode('Become Judas');
                                                         document.querySelector(".friendbutton").appendChild(icon);
                                                         document.querySelector(".friendbutton").appendChild(text);
 
                                                         document.querySelector(".friendbutton").style.background = "linear-gradient(to bottom, #0866ff, rgb(222, 62, 60))";
-
+                                                        
                                                         
                                                         
                                                     }
@@ -967,12 +982,19 @@
                                                 xhr.send("");
                                             }
 
+                                            document.querySelector(".friendbutton").click();
+                                            setTimeout(() => {
+                                                document.querySelector(".friendbutton").click();
+                                            }, 0);
+
                                             if (document.getElementById("followbuttonmessage").textContent == "Become Judas") {
                                                 console.log(document.querySelector(".friendbutton").value)
                                                 document.querySelector(".friendbutton").textContent = "";
                                                 var icon = document.createElement('i');
                                                 icon.classList.add('fa-brands', 'fa-facebook');
+                                                icon.id = "followicon";
                                                 icon.style.paddingRight = "8px";
+                                                icon.style.color = "white";
                                                 var text = document.createTextNode('Become Judas');
                                                 document.querySelector(".friendbutton").appendChild(icon);
                                                 document.querySelector(".friendbutton").appendChild(text);
@@ -1217,7 +1239,7 @@
                     <h2 style="margin: 22px; line-height: 18px;">About</h2>
                     <hr>
 
-                    <textarea readonly id="aboutsection" style="font-family: Arial, Helvetica, sans-serif; resize: none; 
+                    <textarea readonly id="aboutsection" style="font-family: Arial, Helvetica, sans-serif; resize: none; max-height: 50vh; overflow-y: scroll;
                                     border-radius: 5px; color: black;
                                     outline: 0; border: 0px solid #caccd0; margin: 5px 20px 5px 12px; padding: 10px; 
                                     font-size: 18px; width: calc(100vw - 45px); max-width: 1235px;"></textarea>
@@ -1226,6 +1248,17 @@
                     <hr>
 
                     <p id="longhealthylife" style="margin-left: 22px; font-size: 18px;">User ID: {{ theirid }}</p>
+                    <script>
+
+                        if (document.getElementById("longhealthylife").textContent == "User ID: 1"){
+                            document.getElementById("longhealthylife").textContent = "real ass og"
+                        }                        
+
+                    </script>
+
+                    <hr>
+
+                    <p id="longhealthylife" style="margin-left: 22px; font-size: 18px;">Streak: {{ streak }}</p>
 
                 </div>
                 

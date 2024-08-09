@@ -8,15 +8,29 @@ import os, base64, random, sqlite3, editdistance
 from io import BytesIO
 from PIL import Image
 
+from flask import Flask, render_template, request, redirect, url_for, session
+from flask_socketio import SocketIO, emit, join_room, leave_room
+from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+
+
+
 
 app = Flask(__name__, static_url_path='/static')
 app.secret_key = token_hex(16)
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///friendface.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+socketio = SocketIO(app, max_http_buffer_size=100000000)
+db = SQLAlchemy(app)
 
 bcrypt = Bcrypt(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'index'
+
+#logout_user()
 
 class User(UserMixin):
     def __init__(self, user_id, forename, surname, email, password, profile_picture):
@@ -27,15 +41,100 @@ class User(UserMixin):
         self.password = password
         self.profile_picture = profile_picture
 
-@app.route('/get_post_id')
+class UserModel(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    forename = db.Column(db.String(80), nullable=False)
+    surname = db.Column(db.String(80), nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(120), nullable=False)
+    profile_picture = db.Column(db.String(200), nullable=True)
+
+    def get_user(self):
+        return User(self.id, self.forename, self.surname, self.email, self.password, self.profile_picture)
+
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user_model.id'), nullable=False)
+    receiver_id = db.Column(db.Integer, nullable=False)
+    content = db.Column(db.String(200), nullable=False)
+    timestamp = db.Column(db.DateTime, default=db.func.current_timestamp())
+
+
+
+@app.route('/logout', methods=['POST', "GET"])
 @login_required
-def get_post_id():
+def logout():
+    logout_user()
+
+    return "biggle"
+
+
+def new_to_old(name):
     db_path = os.path.join(os.getcwd(), 'friendface.db')
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    return str(get_max_post_id(cursor))
+    cursor.execute("""UPDATE direct_messages SET new=? WHERE receiver_id=? AND name=?""", ("no", current_user.id, name,))
 
+    conn.commit()
+    conn.close()
+
+
+@socketio.on('join')
+def on_join(data):
+    try:
+        new_to_old(data["name"])
+    
+    except:
+        pass
+
+    print("DATA: " + str(data))
+    username = current_user.forename
+    room = str(current_user.id)
+    join_room(room)
+    emit('message', {'msg': f'{username} has entered the room.'}, room=room)
+
+@socketio.on('join_nice')
+def on_join_nice(data):
+    print("DATA: " + str(data))
+    username = current_user.forename
+    room = str(current_user.id)
+    join_room(room)
+    emit('message', {'msg': f'{username} has entered the room.'}, room=room)
+
+
+@socketio.on('disconnect')
+def disconnect():
+    db_path = os.path.join(os.getcwd(), 'friendface.db')
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute("""SELECT last_convo FROM users WHERE user_id = ?""", (current_user.id,))
+    last_convo = cursor.fetchone()
+    last_convo = last_convo[0]
+
+    
+
+    conn.close()
+
+    try:
+        new_to_old(last_convo)
+
+    
+    except:
+        pass
+
+
+
+# @socketio.event
+# def disconnect():
+
+#     #new_to_old(data["name"])
+
+#     username = current_user.forename
+#     room = str(current_user.id)
+#     leave_room(room)
+#     emit('message', {'msg': f'{username} has left the room.'}, room=room)
 
 def resize(image, targetwidth, formatstate):
     image_data = base64.b64decode(image)
@@ -51,7 +150,6 @@ def resize(image, targetwidth, formatstate):
         resizedimage = image.resize((newwidth, newheight), Image.LANCZOS)
     else:
         resizedimage = image
-
 
 
     transparent = False
@@ -74,6 +172,73 @@ def resize(image, targetwidth, formatstate):
     resizedimage = base64.b64encode(resizedio.read()).decode('utf-8')
 
     return resizedimage
+
+
+@socketio.on('send_message')
+def handle_send_message_event(data):
+    db_path = os.path.join(os.getcwd(), 'friendface.db')
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    sender_id = current_user.id
+    receiver_id = data['receiver_id']
+    content = data['content'].replace("\n", "_THISISALINEBREAK_").replace("'", "_THISISANAPOSTROPHE_")
+
+    if "_THISISANIMAGE_" in content:
+        content = "_THISISANIMAGE_" + resize(content.replace("_THISISANIMAGE_", ""), 300, "png")
+
+    if sender_id > int(receiver_id):
+        sender_id, receiver_id = receiver_id, sender_id
+    name = f"{sender_id}&{receiver_id}"
+
+    cursor.execute("""CREATE TABLE IF NOT EXISTS direct_messages (
+            message_id INTEGER PRIMARY KEY,
+            name TEXT,
+            content TEXT,
+            user_id INTERGER,
+            date TEXT,
+            receiver_id INTEGER,
+            new TEXT)"""
+    )
+
+    try:
+        cursor.execute("""
+                INSERT INTO direct_messages (name, content, user_id, date, receiver_id, new)
+                VALUES (?, ?, ?, ?, ?, ?)
+                """, (name, content, current_user.id, datetime.now().strftime("%d/%m/%Y %H:%M"), data['receiver_id'], "yes")
+        )
+    except:
+        pass
+
+    finally:
+        conn.commit()
+        conn.close()
+
+    print(name)
+
+    sender_id = current_user.id
+    receiver_id = data['receiver_id']
+    content = data['content']
+    
+    message = Message(sender_id=sender_id, receiver_id=receiver_id, content=content)
+    db.session.add(message)
+    db.session.commit()
+    emit('receive_message', {'sender_id': sender_id, 'content': content, 'username' : f"{current_user.forename} {current_user.surname}"}, room=str(receiver_id))
+
+
+
+
+@app.route('/get_post_id')
+@login_required
+def get_post_id():
+    db_path = os.path.join(os.getcwd(), 'friendface.db')
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    return str(get_max_post_id(cursor))
+
+
+
 
 
 @app.route('/get_more_posts')
@@ -104,17 +269,21 @@ def get_more_posts():
 
     cursor2.execute("""
         SELECT * FROM posts 
-        WHERE dislikers NOT LIKE ? 
+        WHERE dislikers NOT LIKE ? AND user_id != ?
         ORDER BY RANDOM() 
         LIMIT 2
-    """, (f"%{current_user.id}%",))
+                    
+    """, (f"%{current_user.id}%", current_user.id))
     posts = cursor2.fetchall()
 
     columns = {description[0]: index for index, description in enumerate(cursor2.description)}
 
     increment = 0
 
+
     for post in posts:
+
+
         increment += 1
 
         post_id = post[columns['post_id']]
@@ -152,7 +321,7 @@ def get_more_posts():
             else:
                 profile_pictures.append("default_picture")
         except Exception as e:
-            print(f"Error fetching profile picture for user_id {user_id}: {e}")
+
             profile_pictures.append("default_picture")
 
         
@@ -165,7 +334,6 @@ def get_more_posts():
             else:
                 replytext.append("No reply text")
         except Exception as e:
-            print(f"Error fetching reply text for post_id {post_id}: {e}")
             replytext.append("No reply text")
 
         try:
@@ -186,14 +354,15 @@ def get_more_posts():
                 except:
                     friending.append("")
 
-                    print("ERROR: " + friendingvalue2)
             else:
                 friending.append("")
         except Exception as e:
-            print(f"Error fetching friending list for user_id {user_id}: {e}")
             friending.append("")
 
-        print("ERROR: " + str(friending) + str(increment))
+        
+        
+
+        
 
 
     post_ids_str = "_SEPARATOR_".join(map(str, post_ids))
@@ -214,6 +383,7 @@ def get_more_posts():
     friending_str = "_SEPARATOR_".join(friending)
 
     posts = f"'{post_ids_str}', '{names_str}', '{messages_str}', '{user_ids_str}', '{profile_pictures_str}', '{likes_str}', '{dislikes_str}', '{comments_amounts_str}', '{photos_str}', '{times_str}', '{likers_str}', '{dislikers_str}', '{replying_to_str}', {current_user.id}, '{replytext_str}', 'no', '{friends_only_str}', '{friending_str}'"
+
 
     conn2.close()
 
@@ -262,11 +432,73 @@ def get_max_post_id(cursor):
     result = cursor.fetchone()[0]
     return result if result is not None else 0
 
+
+
+def update_streak(user_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    user = cursor.execute('SELECT * FROM users WHERE user_id = ?', (user_id,)).fetchone()
+    if user is None:
+        print(f"No user found with user_id: {user_id}")
+        return
+
+    last_active_str = user['last_active']
+    try:
+        last_active = datetime.strptime(last_active_str, '%Y-%m-%d').date() if last_active_str else None
+    except ValueError:
+        last_active = None
+
+    today = datetime.now().date()
+
+    if last_active is None or last_active < today - timedelta(days=1):
+        streak = 1
+    elif last_active == today - timedelta(days=1):
+        streak = user['streak'] + 1
+    else:
+        streak = user['streak']
+
+    cursor.execute('UPDATE users SET streak = ?, last_active = ? WHERE user_id = ?', (streak, today, user_id))
+
+    conn.commit()
+    conn.close()
+
+
+def reset_streak_if_needed(user_id):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    user = cursor.execute('SELECT * FROM users WHERE user_id = ?', (user_id,)).fetchone()
+    if user is None:
+        print(f"No user found with user_id: {user_id}")
+        return
+
+    last_active_str = user['last_active']
+    try:
+        last_active = datetime.strptime(last_active_str, '%Y-%m-%d').date() if last_active_str else None
+    except ValueError:
+        last_active = None
+
+    today = datetime.now().date()
+
+    if last_active is None or last_active < today - timedelta(days=1):
+        streak = 0
+    else:
+        streak = user['streak']
+
+    cursor.execute('UPDATE users SET streak = ? WHERE user_id = ?', (streak, user_id))
+
+    conn.commit()
+    conn.close()
+
+
+
 @app.route('/createpost/<isreply>/<replying_to>/<friends_only>', methods=['POST'])
 def create_post(isreply, replying_to, friends_only):
     data = request.form.get('imageData')
 
     print("POST HAS BEEN CREATED")
+    update_streak(current_user.id)
 
     try:
         photo = data.split("_SEPARATINGIMAGEDATAFROMMESSAGEDATA_")[1]
@@ -313,6 +545,7 @@ def create_post(isreply, replying_to, friends_only):
 
 
     profile_picture = ""
+    last_convo = ""
 
     conn.close()
 
@@ -367,16 +600,6 @@ def like(likestate, post_id):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
-    print(f"/like/{likestate}/{post_id}")
-    print(f"/like/{likestate}/{post_id}")
-    print(f"/like/{likestate}/{post_id}")
-    print(f"/like/{likestate}/{post_id}")
-    print(f"/like/{likestate}/{post_id}")
-    print(f"/like/{likestate}/{post_id}")
-    print(f"/like/{likestate}/{post_id}")
-    print(f"/like/{likestate}/{post_id}")
-    print(f"/like/{likestate}/{post_id}")
-    print(f"/like/{likestate}/{post_id}")
 
     cursor.execute("SELECT likers, likes FROM posts WHERE post_id=?", (post_id,))
     row = cursor.fetchone()
@@ -436,8 +659,8 @@ def dislike(likestate, post_id):
 
 @app.route('/insert', methods=['POST'])
 def insert_data():
-    forename = request.form['forename']
-    surname = request.form['surname']
+    forename = request.form['forename'].replace("/n", "").replace("'",  "")
+    surname = request.form['surname'].replace("/n", "").replace("'",  "")
     email = request.form['email'].lower()
     verify = f"{forename}{surname}{email}"
 
@@ -464,6 +687,10 @@ def insert_data():
     followinglist = []
     following = str(followinglist)
 
+    relationshipstatus = ""
+    location = ""
+
+    last_convo = ""
 
     total_views = 0
 
@@ -496,12 +723,17 @@ def insert_data():
                 liking TEXT,
                 disliking TEXT,
                 dark_mode TEXT,
-                total_views INTEGER)""")
+                total_views INTEGER,
+                streak INTEGER DEFAULT 0,
+                last_active DATE,
+                last_convo TEXT,
+                relationshipstatus TEXT,
+                location TEXT)""")
 
         cursor.execute("""
-                INSERT INTO users (forename, surname, email, password, verify, profile_picture, banner, friends, friending, followers, following, pendingfriends, about, dark_mode, total_views)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """, (forename, surname, email.lower(), hashed_password, verify, profile_picture, banner, friends, friending, followers, following, pendingfriends, about, dark_mode, total_views))
+                INSERT INTO users (forename, surname, email, password, verify, profile_picture, banner, friends, friending, followers, following, pendingfriends, about, dark_mode, total_views, last_convo, relationshipstatus, location)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                """, (forename, surname, email.lower(), hashed_password, verify, profile_picture, banner, friends, friending, followers, following, pendingfriends, about, dark_mode, total_views, last_convo, relationshipstatus, location))
 
         conn.commit()
 
@@ -523,7 +755,7 @@ def insert_data():
 @app.route('/changebanner', methods=['GET', 'POST'])
 @login_required
 def changebanner():
-     if request.method == 'POST':
+    if request.method == 'POST':
         image_data = request.form.get('imageData')
         image_data = resize(image_data, 1280, "png")
 
@@ -536,6 +768,38 @@ def changebanner():
         conn.close()
 
         return "biggle"
+     
+
+
+@app.route('/changelocation/<string>', methods=['GET', 'POST'])
+@login_required
+def changelocation(string):
+    db_path = os.path.join(os.getcwd(), 'friendface.db')
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute("""UPDATE users SET location=? WHERE email=?""", (string, current_user.email))
+    conn.commit()
+    conn.close()
+
+    return "biggle"
+
+
+
+@app.route('/changerelationshipstatus/<string>', methods=['GET', 'POST'])
+@login_required
+def changerelationshipstatus(string):
+    db_path = os.path.join(os.getcwd(), 'friendface.db')
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute("""UPDATE users SET relationshipstatus=? WHERE email=?""", (string, current_user.email))
+    conn.commit()
+    conn.close()
+
+    return "biggle"
+
+
 
 
 
@@ -556,6 +820,89 @@ def darkmode(yayornay):
 
 
 
+
+@app.route('/marketplace', methods=['GET', "POST"])
+@login_required
+def marketplace():
+    db_path = os.path.join(os.getcwd(), 'friendface.db')
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute("""SELECT profile_picture FROM users WHERE email=?""", (current_user.email,))
+    user_data = cursor.fetchone()
+
+    cursor.execute("""SELECT user_id FROM users WHERE email=?""", (current_user.email,))
+    user_id = cursor.fetchone()
+    user_id = user_id[0]
+
+    name = str(f"{current_user.forename} {current_user.surname}")
+
+    image_path = "static/logo.png"
+    with open(image_path, "rb") as file:
+        logo = file.read()
+    logo = base64.b64encode(logo).decode('utf-8')
+
+    with open("splash_messages.txt", "r") as file:
+        splashes = file.readlines()
+    splash = random.choice(splashes)
+    if splash == "Your graphics card has mined 0.056 Bitcoin today!\n":
+        splash = f"Your graphics card has mined {random.randint(1, 999)/10000} Bitcoin today!"
+    if splash == "Established 2004\n":
+        splash = f"Established {random.randint(1997, 2009)}"
+
+    cursor.execute("""SELECT dark_mode FROM users WHERE user_id =?""", (current_user.id,))
+    dark_mode = cursor.fetchone()
+    dark_mode = dark_mode[0]
+
+    date = random.randint(1997, 2009)
+
+    date2 = random.randint(2018, 2024)
+
+    return render_template('marketplace.html', profile_picture=user_data[0], theirid = user_id, forename = current_user.forename, surname = current_user.surname,
+                           profile_text=name, logo=logo, user_id = user_id, splashmessage=splash, dark_mode=dark_mode, date=date, date2=date2)
+
+
+
+
+@app.route('/premium', methods=['GET', "POST"])
+@login_required
+def premium():
+    db_path = os.path.join(os.getcwd(), 'friendface.db')
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute("""SELECT profile_picture FROM users WHERE email=?""", (current_user.email,))
+    user_data = cursor.fetchone()
+
+    cursor.execute("""SELECT user_id FROM users WHERE email=?""", (current_user.email,))
+    user_id = cursor.fetchone()
+    user_id = user_id[0]
+
+    name = str(f"{current_user.forename} {current_user.surname}")
+
+    image_path = "static/logo.png"
+    with open(image_path, "rb") as file:
+        logo = file.read()
+    logo = base64.b64encode(logo).decode('utf-8')
+
+    with open("splash_messages.txt", "r") as file:
+        splashes = file.readlines()
+    splash = random.choice(splashes)
+    if splash == "Your graphics card has mined 0.056 Bitcoin today!\n":
+        splash = f"Your graphics card has mined {random.randint(1, 999)/10000} Bitcoin today!"
+    if splash == "Established 2004\n":
+        splash = f"Established {random.randint(1997, 2009)}"
+
+    cursor.execute("""SELECT dark_mode FROM users WHERE user_id =?""", (current_user.id,))
+    dark_mode = cursor.fetchone()
+    dark_mode = dark_mode[0]
+
+    date = random.randint(1997, 2009)
+
+    date2 = random.randint(2018, 2024)
+
+    return render_template('premium.html', profile_picture=user_data[0], theirid = user_id, forename = current_user.forename, surname = current_user.surname,
+                           profile_text=name, logo=logo, user_id = user_id, splashmessage=splash, dark_mode=dark_mode, date=date, date2=date2)
 
 
 
@@ -602,7 +949,7 @@ def settings():
     about = cursor.fetchone()
     about = about[0]
 
-    cursor.execute("""SELECT dark_mode FROM users WHERE user_id =?""", (user_id,))
+    cursor.execute("""SELECT dark_mode FROM users WHERE user_id =?""", (current_user.id,))
     dark_mode = cursor.fetchone()
     dark_mode = dark_mode[0]
 
@@ -616,7 +963,7 @@ def settings():
 @app.route('/get_random_advert', methods=['GET'])
 @login_required
 def get_random_advert():
-    image_path = f"static/adverts/advert{random.randint(0, 10)}.png"
+    image_path = f"static/adverts/advert{random.randint(0, 12)}.png"
     with open(image_path, "rb") as file:
         advert = file.read()
     advert = base64.b64encode(advert).decode('utf-8')
@@ -676,16 +1023,46 @@ def get_image(image, post_id):
         photoalbum = ""
         increment = 0
 
+        columns = {description[0]: index for index, description in enumerate(cursor.description)}
 
         for post in reversed(posts):
-            for column_name, value in zip(cursor.description, post):
-                if column_name[0] == "photo":
-                    if value != "":
-                        print("PHOTOYES")
+            user_id = post[columns['user_id']]
+
+            db_path = os.path.join(os.getcwd(), 'friendface.db')
+            conn = sqlite3.connect(db_path)
+            cursor = conn.cursor()
+
+            cursor.execute("""SELECT friending FROM users WHERE user_id=?""", (user_id,))
+            friendingvalue2 = cursor.fetchone()
+            friendingvalue2 = friendingvalue2[0]
+
+            conn.close()
+
+            try:
+                friendingvalue = json.loads(friendingvalue2)
+
+                
+                
+
+            except:
+                friendingvalue = []
+
+
+            photo = post[columns['photo']]
+            friends_only = post[columns['friends_only']]
+
+            if photo != "":
+                if friends_only == "yes":
+                    if int(current_user.id) in friendingvalue or user_id == str(current_user.id):
+                        photoalbum = f"{photoalbum}{photo}_SEPARATOR_"
                         increment += 1
-                        photoalbum = f"{photoalbum}{resize(value, 1280, 'png')}_SEPARATOR_"
-                    if increment >= 9:
-                        return photoalbum
+
+                else:
+                    photoalbum = f"{photoalbum}{photo}_SEPARATOR_"
+                    increment += 1
+
+            if increment >= 9:
+                break
 
         return photoalbum
 
@@ -974,7 +1351,7 @@ def search_users():
     displaymatches = f"displaymatches('{names}', '{pfps}', '{user_ids}', '{descriptions}')"
 
 
-    cursor.execute("""SELECT dark_mode FROM users WHERE user_id =?""", (user_id,))
+    cursor.execute("""SELECT dark_mode FROM users WHERE user_id =?""", (current_user.id,))
     dark_mode = cursor.fetchone()
     dark_mode = dark_mode[0]
 
@@ -984,6 +1361,60 @@ def search_users():
                             user_id = user_id, splashmessage=splash, searchterm = searchterm, displaymatches = displaymatches)
 
 
+
+
+@app.route('/all_users', methods=['GET'])
+@login_required
+def all_users():
+    db_path = os.path.join(os.getcwd(), 'friendface.db')
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+
+    cursor.execute("""SELECT profile_picture FROM users WHERE email=?""", (current_user.email,))
+    user_data = cursor.fetchone()
+
+    cursor.execute("""SELECT user_id FROM users WHERE email=?""", (current_user.email,))
+    user_id = cursor.fetchone()
+    user_id = user_id[0]
+
+    name = str(f"{current_user.forename} {current_user.surname}")
+
+    image_path = "static/logo.png"
+    with open(image_path, "rb") as file:
+        logo = file.read()
+    logo = base64.b64encode(logo).decode('utf-8')
+
+    with open("splash_messages.txt", "r") as file:
+        splashes = file.readlines()
+    splash = random.choice(splashes)
+    if splash == "Your graphics card has mined 0.056 Bitcoin today!\n":
+        splash = f"Your graphics card has mined {random.randint(1, 999)/10000} Bitcoin today!"
+    if splash == "Established 2004\n":
+        splash = f"Established {random.randint(1997, 2009)}"
+
+    cursor.execute("""SELECT user_id, forename, surname, profile_picture, about FROM users ORDER BY total_views DESC""")
+    all_users = cursor.fetchall()
+
+    user_ids = ""
+    names = ""
+    pfps = ""
+    descriptions = ""
+
+    for user in all_users:
+        item, forename, surname, pfp, description, = user
+        names += f"{forename} {surname}_MATCHES_"
+        pfps += f"{pfp}_MATCHES_"
+        user_ids += f"{item}_MATCHES_"
+        descriptions += f"{description}_MATCHES_"
+
+    displaymatches = f"displaymatches('{names}', '{pfps}', '{user_ids}', '{descriptions}')"
+
+    cursor.execute("""SELECT dark_mode FROM users WHERE user_id =?""", (current_user.id,))
+    dark_mode = cursor.fetchone()
+    dark_mode = dark_mode[0]
+
+    return render_template('all_users.html', profile_picture=user_data[0], profile_text=name, logo=logo, dark_mode=dark_mode,
+                           user_id=user_id, splashmessage=splash, displaymatches=displaymatches)
 
 
 
@@ -1099,7 +1530,9 @@ def posts(post_id):
             views = cursor.fetchone()
             views = views[0]
 
-
+            cursor.execute("""SELECT friends_only FROM posts WHERE post_id=?""", (post_id,))
+            friends_only2 = cursor.fetchone()
+            friends_only2 = friends_only2[0]
 
 
 
@@ -1281,14 +1714,14 @@ def posts(post_id):
 
 
             if isphoto == "yes":
-                return render_template("posts_image.html", theirname=name, views=views, dark_mode = dark_mode,
+                return render_template("posts_image.html", theirname=name, views=views, dark_mode = dark_mode, friends_only = friends_only2,
                     theirpicture=pfp, profile_picture=userdata, pfp=pfp, theirid = theirid, likebutton = f"likebutton('{likers2}', '{current_user.id}', '{post_id}', '{likes2}')",
                     profile_text=name3, logo=logo, date=date, message=message, dislikebutton = f"dislikebutton('{dislikers2}', '{current_user.id}', '{post_id}', '{dislikes2}')",
                     likes=likes2, dislikes=dislikes2, newposts = newposts, theirbanner = banner,
                     user_id = user_id1, splashmessage = splash, image=image, post_id=post_id, commentslist=commentslist, isreply = isreply, replying_to=replying_to2, displayposts = posts)
 
             else:
-                return render_template("posts_message.html", theirname=name, views=views, dark_mode = dark_mode,
+                return render_template("posts_message.html", theirname=name, views=views, dark_mode = dark_mode, friends_only = friends_only2,
                     theirpicture=pfp, profile_picture=userdata, pfp=pfp, theirid = theirid, likebutton = f"likebutton('{likers2}', '{current_user.id}', '{post_id}', '{likes2}')",
                     profile_text=name3, logo=logo, date=date, message=message, dislikebutton = f"dislikebutton('{dislikers2}', '{current_user.id}', '{post_id}', '{dislikes2}')",
                     likes=likes2, dislikes=dislikes2, newposts = newposts, theirbanner = banner,
@@ -1336,7 +1769,7 @@ def post_not_found(error):
         splash = f"Established {random.randint(1997, 2009)}"
 
 
-    cursor.execute("""SELECT dark_mode FROM users WHERE user_id =?""", (user_id,))
+    cursor.execute("""SELECT dark_mode FROM users WHERE user_id =?""", (current_user.id,))
     dark_mode = cursor.fetchone()
     dark_mode = dark_mode[0]
 
@@ -1614,15 +2047,80 @@ def home(mode):
         return "biggle"
 
 
-
-
     else:
+        try:
+            db_path = os.path.join(os.getcwd(), 'friendface.db')
+            conn2 = sqlite3.connect(db_path)
+            cursor2 = conn2.cursor()
+
+            cursor2.execute("""UPDATE users SET last_convo = ? WHERE user_id = ?""", ("", current_user.id,))
+            conn2.commit()
+
+            contents = ""
+            user_ids = ""
+            message_ids = ""
+            dates = ""
+            names = ""
+
+            cursor2.execute("""SELECT * FROM direct_messages WHERE receiver_id = ? AND new = ?""", (current_user.id, "yes",))
+            posts = cursor2.fetchall()
+
+            print(posts)
+
+            def get_value(value):
+                cursor2.execute("""SELECT forename FROM users WHERE user_id = ?""", (value,))
+                forename = cursor2.fetchone()
+                forename = forename[0]
+
+                cursor2.execute("""SELECT surname FROM users WHERE user_id = ?""", (value,))
+                surname = cursor2.fetchone()
+                surname = surname[0]
+
+                value = f"{forename} {surname}"
+
+                return value
+
+
+            for i in range(len(posts)):
+                for column_name, value in zip(cursor2.description, posts[i]):
+                    if column_name[0] == "content":
+                        if "_THISISANIMAGE_" in value:
+                            value = "Sent an image"
+                        contents = f"{contents}{value}_SEPARATOR_"; 
+
+                    if column_name[0] == "user_id":
+                        user_ids = f"{user_ids}{value}_SEPARATOR_"
+
+                    if column_name[0] == "message_id":
+                        message_ids = f"{message_ids}{value}_SEPARATOR_"
+                    if column_name[0] == "date":
+                        dates = f"{dates}{value}_SEPARATOR_"
+
+            for user_id in user_ids.split("_SEPARATOR_"):
+                try:
+                    print("LUCAS POLL: " + get_value(user_id))
+                    names = f"{names}{get_value(user_id)}_SEPARATOR_"
+                except:
+                    pass
+
+
+            direct_messages = f"display_direct_messages('{user_ids}', '{contents}', '{dates}', '{message_ids}', '{names}')"
+
+            conn2.close()
+
+        except:
+            direct_messages = ""
+
+
+    
         db_path = os.path.join(os.getcwd(), 'friendface.db')
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
 
         cursor.execute("""SELECT profile_picture FROM users WHERE email=?""", (current_user.email,))
         user_data = cursor.fetchone()
+
+        
 
         cursor.execute("""SELECT user_id FROM users WHERE email=?""", (current_user.email,))
         user_id = cursor.fetchone()
@@ -1756,7 +2254,7 @@ def home(mode):
         recommended_surname = ""
         recommended_pfp = ""
 
-        cursor.execute("""SELECT dark_mode FROM users WHERE user_id =?""", (user_id,))
+        cursor.execute("""SELECT dark_mode FROM users WHERE user_id =?""", (current_user.id,))
         dark_mode = cursor.fetchone()
         dark_mode = dark_mode[0]
 
@@ -1841,14 +2339,18 @@ def home(mode):
                             conn = sqlite3.connect(db_path)
                             cursor = conn.cursor()
 
-                            cursor.execute("""SELECT friending FROM users WHERE user_id=?""", (value,))
-                            friendingvalue2 = cursor.fetchone()
-                            friendingvalue2 = friendingvalue2[0]
+                            try:
+                                cursor.execute("""SELECT friending FROM users WHERE user_id=?""", (value,))
+                                friendingvalue2 = cursor.fetchone()
+                                friendingvalue2 = friendingvalue2[0]
+                            except:
+                                print("ERROR: " + friendingvalue2)
+                                print("ERROR: " + friendingvalue2)
 
                             conn.close()
 
                             try:
-                                friendingvalue = json.loads(friendingvalue2)
+                                friendingvalue = eval(friendingvalue2)
                                 friendingvalue = '_ITEM_'.join(map(str, friendingvalue))
 
                                 friendingvalue = friendingvalue + "_ITEM_"
@@ -1856,6 +2358,8 @@ def home(mode):
                                 friendingvalue = ""
 
                                 print("ERROR: " + friendingvalue2)
+                                print("ERROR: " + friendingvalue2)
+
                                 
 
                             
@@ -1893,6 +2397,10 @@ def home(mode):
                         if column_name[0] == "friends_only":
                             friends_only = f"{friends_only}{value}_SEPARATOR_"
 
+                print("FRIENDING: " + friending)
+                print("FRIENDS ONLY: " + friends_only)
+                print("CURRENT USER ID: " + str(current_user.id))
+
                 posts = f"displayposts('{post_ids}', '{names}', '{messages}', '{user_ids}', '{profile_pictures}', '{likes}', '{dislikes}', '{comments_amounts}', '{photos}', '{times}', '{likers}', '{dislikers}', '{replying_to}', {current_user.id}, 'yes', '', '{friends_only}', '{friending}')"
 
                 conn2.close()
@@ -1902,18 +2410,12 @@ def home(mode):
             if mode == "feed":
                 return render_template('index_feed.html', profile_picture=user_data, profile_text=name, recommended_user_id=recommended_user_id, num_mutuals=num_mutuals,
                                     recommended_forename=recommended_forename, recommended_surname=recommended_surname, recommended_pfp=recommended_pfp, dark_mode = dark_mode,
-                                       logo=logo, user_id = user_id, splashmessage=splash, displayposts = posts, forename = current_user.forename)
+                                       logo=logo, user_id = user_id, splashmessage=splash, displayposts = posts, forename = current_user.forename, direct_messages=direct_messages)
 
             elif mode == "liked":
                 return render_template('index_liked.html', profile_picture=user_data, profile_text=name, recommended_user_id=recommended_user_id, num_mutuals=num_mutuals,
                                     recommended_forename=recommended_forename, recommended_surname=recommended_surname, recommended_pfp=recommended_pfp, dark_mode = dark_mode,
-                                       logo=logo, user_id = user_id, splashmessage=splash, displayposts = posts, forename = current_user.forename)
-
-            elif mode == "most_viewed":
-                return render_template('index_most_viewed.html', profile_picture=user_data, profile_text=name, recommended_user_id=recommended_user_id, num_mutuals=num_mutuals,
-                                    recommended_forename=recommended_forename, recommended_surname=recommended_surname, recommended_pfp=recommended_pfp, dark_mode = dark_mode,
-                                       logo=logo, user_id = user_id, splashmessage=splash, displayposts = posts, forename = current_user.forename)
-
+                                       logo=logo, user_id = user_id, splashmessage=splash, displayposts = posts, forename = current_user.forename, direct_messages=direct_messages)
 
         else:
             conn.close()
@@ -2018,16 +2520,16 @@ def changenames_func(forename, surname, location):
 @app.route('/changenames', methods=["POST"])
 @login_required
 def changenames():
-    forename = request.form['forename']
-    surname = request.form['surname']
+    forename = request.form['forename'].replace("/n", "").replace("'",  "")
+    surname = request.form['surname'].replace("/n", "").replace("'",  "")
     return redirect(changenames_func(forename, surname, "nope"))
 
 
 @app.route('/changenames_fromsettings', methods=["POST"])
 @login_required
 def changenames_fromsettings():
-    forename = request.form['forename']
-    surname = request.form['surname']
+    forename = request.form['forename'].replace("/n", "").replace("'",  "")
+    surname = request.form['surname'].replace("/n", "").replace("'",  "")
     return redirect(changenames_func(forename, surname, "fromsettings"))
 
 
@@ -2040,6 +2542,55 @@ def user_profile(user_id, typeofthing):
     db_path = os.path.join(os.getcwd(), 'friendface.db')
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
+
+    reset_streak_if_needed(user_id)
+
+    try:
+        db_path = os.path.join(os.getcwd(), 'friendface.db')
+        conn2 = sqlite3.connect(db_path)
+        cursor2 = conn2.cursor()
+
+        contents = ""
+        user_ids = ""
+        message_ids = ""
+        dates = ""
+
+        sender_id = current_user.id
+        receiver_id = user_id
+
+        if sender_id > receiver_id:
+            sender_id, receiver_id = receiver_id, sender_id
+        name = f"{sender_id}&{receiver_id}"
+
+        cursor2.execute("""UPDATE users SET last_convo = ? WHERE user_id = ?""", (name, current_user.id,))
+        conn2.commit()
+
+        cursor2.execute("""SELECT * FROM direct_messages WHERE name = ?""", (name,))
+        posts = cursor2.fetchall()
+
+        conn2.close()
+
+        for post in posts:
+            for column_name, value in zip(cursor2.description, post):
+                if column_name[0] == "content":
+                    contents = f"{contents}{value}_SEPARATOR_"
+                if column_name[0] == "user_id":
+                    user_ids = f"{user_ids}{value}_SEPARATOR_"
+                if column_name[0] == "message_id":
+                    message_ids = f"{message_ids}{value}_SEPARATOR_"
+                if column_name[0] == "date":
+                    dates = f"{dates}{value}_SEPARATOR_"
+
+
+        direct_messages = f"display_direct_messages('{user_ids}', '{contents}', '{dates}', '{message_ids}')"
+
+    except:
+        direct_messages = ""
+
+
+
+
+
 
     try:
         cursor.execute("""SELECT * FROM users WHERE user_id=?""", (user_id,))
@@ -2217,6 +2768,10 @@ def user_profile(user_id, typeofthing):
             about = cursor.fetchone()
             about = about[0]
 
+            cursor.execute("""SELECT streak FROM users WHERE user_id =?""", (user_id,))
+            streak = cursor.fetchone()
+            streak = streak[0]
+
             var1 = "')"
             var2 = "insertdesc('"
 
@@ -2227,9 +2782,18 @@ def user_profile(user_id, typeofthing):
             friendlist = f"displayfriends('{user_ids}', '{forenames}', '{surnames}', '{pfps}', '{descriptions}')"
 
 
-            cursor.execute("""SELECT dark_mode FROM users WHERE user_id =?""", (user_id,))
+            cursor.execute("""SELECT dark_mode FROM users WHERE user_id =?""", (current_user.id,))
             dark_mode = cursor.fetchone()
             dark_mode = dark_mode[0]
+
+
+            cursor.execute("""SELECT relationshipstatus FROM users WHERE user_id =?""", (user_id,))
+            relationshipstatus = cursor.fetchone()
+            relationshipstatus = relationshipstatus[0]
+
+            cursor.execute("""SELECT location FROM users WHERE user_id =?""", (user_id,))
+            location = cursor.fetchone()
+            location = location[0]
 
 
             conn.close()
@@ -2238,7 +2802,7 @@ def user_profile(user_id, typeofthing):
 
             try:
 
-                if typeofthing == "posts":
+                if typeofthing == "posts" or typeofthing == "posts_up":
                     post_ids = ""
                     names = ""
                     messages = ""
@@ -2352,7 +2916,7 @@ def user_profile(user_id, typeofthing):
 
                     conn2.close()
 
-                elif typeofthing == "photos":
+                elif typeofthing == "photos" or typeofthing == "photos_up":
 
                     post_ids = ""
                     names = ""
@@ -2460,34 +3024,38 @@ def user_profile(user_id, typeofthing):
 
                     conn2.close()
                 else:
-                    posts = ""
-
-                
-
+                    posts = "displayposts()"
 
 
             except:
-                posts = ""
+                posts = "displayposts()"
 
             newposts = f"newpost('{current_user.forename} {current_user.surname}', '{profile_picture}', '{current_user.id}')"
 
 
 
-
-
             def user_profile2(filename):
                 return render_template(filename, theirname=name, theirid = user_id, forename = current_user.forename, surname = current_user.surname,
-                                        theirpicture=profile_picture, profile_picture=userdata, dark_mode=dark_mode,
-                                        profile_text=name2, logo=logo, theirbanner=banner,
+                                        theirpicture=profile_picture, profile_picture=userdata, dark_mode=dark_mode, streak = streak, relationshipstatus=relationshipstatus,
+                                        profile_text=name2, logo=logo, theirbanner=banner, location=location,
                                         user_id = user_id1, splashmessage = splash, followers = followers, friends = friends, onclick = onclick,
                                         pendingfriendlist = pendingfriendlist, friendlist = friendlist, about = about, displayposts = posts, followbuttonmessage = followbuttonmessage,
-                                        followbuttonstate = followbuttonstate, friendbuttonmessage = friendbuttonmessage, photoalbum = photoalbum,
+                                        followbuttonstate = followbuttonstate, friendbuttonmessage = friendbuttonmessage, photoalbum = photoalbum, direct_messages=direct_messages,
                                         onclickfriend = onclickfriend)
+
+            def user_profile_up(filename):
+                return render_template(filename, theirname=name, theirid = user_id, forename = current_user.forename, surname = current_user.surname,
+                                        theirpicture=profile_picture, profile_picture=userdata, dark_mode=dark_mode, streak = streak, relationshipstatus=relationshipstatus,
+                                        profile_text=name2, logo=logo, theirbanner=banner, location=location,
+                                        user_id = user_id1, splashmessage = splash, followers = followers, friends = friends, onclick = onclick,
+                                        pendingfriendlist = pendingfriendlist, friendlist = friendlist, about = about, displayposts = posts, followbuttonmessage = followbuttonmessage,
+                                        followbuttonstate = followbuttonstate, friendbuttonmessage = friendbuttonmessage, photoalbum = photoalbum, direct_messages=direct_messages,
+                                        onclickfriend = onclickfriend, up="yes")
 
             def your_user_profile(filename):
                 return render_template(filename, theirname=name, theirid = user_id, forename = current_user.forename, surname = current_user.surname, about = about,
-                                        theirpicture=profile_picture, profile_picture=userdata, dark_mode=dark_mode,
-                                        profile_text=name2, logo=logo, theirbanner=banner,
+                                        theirpicture=profile_picture, profile_picture=userdata, dark_mode=dark_mode, streak = streak, relationshipstatus=relationshipstatus,
+                                        profile_text=name2, logo=logo, theirbanner=banner, location=location,
                                         user_id = user_id1, splashmessage = splash, followers = followers, friends = friends,
                                         pendingfriendlist = pendingfriendlist, friendlist = friendlist, displayposts = posts, newposts = newposts, photoalbum = photoalbum)
 
@@ -2501,6 +3069,14 @@ def user_profile(user_id, typeofthing):
                     return user_profile2("user_profile_FRIENDS.html")
                 elif typeofthing == "photos":
                     return user_profile2("user_profile_PHOTOS.html")
+                elif typeofthing == "posts_up":
+                    return user_profile_up("user_profile.html")
+                elif typeofthing == "about_up":
+                    return user_profile_up("user_profile_ABOUT.html")
+                elif typeofthing == "friends_up":
+                    return user_profile_up("user_profile_FRIENDS.html")
+                elif typeofthing == "photos_up":
+                    return user_profile_up("user_profile_PHOTOS.html")
                 else:
                     pass
             else:
@@ -2514,6 +3090,7 @@ def user_profile(user_id, typeofthing):
                     return your_user_profile("YOUR_user_profile_PHOTOS.html")
                 else:
                     pass
+
 
 
     except sqlite3.Error:
@@ -2580,11 +3157,7 @@ def view(post_id):
         conn.close()
 
 
-
-
-
-
-
-
 if __name__ == "__main__":
-    app.run(port=5500, debug=True)
+    with app.app_context():
+        db.create_all() 
+    socketio.run(app, port=5500, debug=True)
